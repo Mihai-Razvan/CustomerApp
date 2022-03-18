@@ -1,25 +1,23 @@
 package com.example.customerapp_client;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.example.customerapp_client.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         getActivityElements();
         act_main_test_button_onClick();
+        setAct_main_request_button_onClick();
     }
 
     private void getActivityElements() {
@@ -55,5 +54,37 @@ public class MainActivity extends AppCompatActivity {
                 act_main_tw.setText("Test");
             }
         });
+    }
+
+    private void setAct_main_request_button_onClick() {
+        act_main_request_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act_main_tw.setText("Request");
+                sendRequestTest();
+            }
+        });
+    }
+
+    private void sendRequestTest()
+    {
+        try {
+            URL url = new URL("localhost:8000/test");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setDoOutput(true);
+            urlConnection.setChunkedStreamingMode(0);
+            OutputStream outputStream = new BufferedOutputStream(urlConnection.getOutputStream());
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+            outputStreamWriter.write("REQUEST FROM ANDROID");
+            outputStreamWriter.flush();
+            outputStreamWriter.close();
+        }
+        catch (MalformedURLException e) {
+            System.out.println("MalformedURLException: " + e.getMessage());
+        }
+        catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
+
     }
 }

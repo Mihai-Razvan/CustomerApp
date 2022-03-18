@@ -24,10 +24,12 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">>
+        app:layout_constraintStart_toStartOf="parent"><![CDATA[>
+
+        ]]>
 
         <Button
-            android:id="@+id/act_main_request_button"
+            android:id="@+id/act_main_home_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -36,7 +38,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/act_main_home_button"
+            android:id="@+id/act_main_request_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
