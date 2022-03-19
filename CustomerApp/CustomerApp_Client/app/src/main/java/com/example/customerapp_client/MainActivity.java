@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -26,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private Button act_main_request_button;
     private Button act_main_test_button;
     private TextView act_main_tw;
-
-   // SQLiteDatabase database = openOrCreateDatabase("Users", MODE_PRIVATE, null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,30 +62,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 act_main_tw.setText("Request");
-                sendRequestTest();
+                Connection connection = new Connection();
+                Thread connectionThread = new Thread(connection);
+                connectionThread.start();
+             //   Connection.connect();
             }
         });
-    }
-
-    private void sendRequestTest()
-    {
-        try {
-            URL url = new URL("localhost:8000/test");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-            urlConnection.setChunkedStreamingMode(0);
-            OutputStream outputStream = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-            outputStreamWriter.write("REQUEST FROM ANDROID");
-            outputStreamWriter.flush();
-            outputStreamWriter.close();
-        }
-        catch (MalformedURLException e) {
-            System.out.println("MalformedURLException: " + e.getMessage());
-        }
-        catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        }
-
     }
 }
