@@ -23,6 +23,7 @@ public class Connection {
     {
         try {
             server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
+            System.out.println("Server started");
         }
         catch(BindException e) {
             System.out.println("BindException: " + e.getMessage());
@@ -38,20 +39,19 @@ public class Connection {
                 System.out.println("Request received: " + counter);
 
                 String message = "RESPONSE FROM SERVER";
+                exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=UTF-8");
                 exchange.sendResponseHeaders(200, message.length());
-                OutputStream response = exchange.getResponseBody();
-                response.write(message.getBytes(StandardCharsets.UTF_8));
-                /*    BufferedReader requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                OutputStream responseStream = exchange.getResponseBody();
+                responseStream.write(message.getBytes(StandardCharsets.UTF_8));
+                responseStream.close();
+                    BufferedReader requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String line;
                 line = requestBody.readLine();
-                System.out.println(line);*/
+                System.out.println(line);
             }
         });
 
-        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-        server.setExecutor(threadPoolExecutor);
+        server.setExecutor(Executors.newSingleThreadExecutor());
         server.start();
-
-        System.out.println("Server started");
     }
 }
