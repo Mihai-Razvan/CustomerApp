@@ -1,13 +1,11 @@
 package com.company;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executor;
@@ -16,42 +14,27 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class Connection {
 
-    private HttpServer server;
-    private int counter = 0;
+    BufferedReader request;
+    PrintWriter response;
 
     public void startServer()
     {
-        try {
-            server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
-            System.out.println("Server started");
-        }
-        catch(BindException e) {
-            System.out.println("BindException: " + e.getMessage());
-        }
-        catch(IOException e) {
-            System.out.println("IOException: " + e.getMessage());
-        }
+        try (ServerSocket serverSocket = new ServerSocket(8080)){
+            System.out.println("SERVER OPENED");
+            
+            Socket clientSocket = serverSocket.accept();
 
-        server.createContext("/test", new HttpHandler() {
-            @Override
-            public void handle(HttpExchange exchange) throws IOException {
-                counter++;
-                System.out.println("Request received: " + counter);
-
-                String message = "RESPONSE FROM SERVER";
-                exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=UTF-8");
-                exchange.sendResponseHeaders(200, message.length());
-                OutputStream responseStream = exchange.getResponseBody();
-                responseStream.write(message.getBytes(StandardCharsets.UTF_8));
-                responseStream.close();
-                    BufferedReader requestBody = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-                String line;
-                line = requestBody.readLine();
-                System.out.println(line);
+            try {
+                request = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                response = new PrintWriter(clientSocket.getOutputStream(), true);
+                System.out.println("CLIENT CONNECTED");
             }
-        });
-
-        server.setExecutor(Executors.newSingleThreadExecutor());
-        server.start();
+            catch (IOException exception) {
+                System.out.println("CLIENT COULDN'T CONNECT");
+            }
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T START SERVER");
+        }
     }
 }

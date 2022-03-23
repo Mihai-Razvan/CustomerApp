@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 Connection connection = new Connection();
                 Thread connectionThread = new Thread(connection);
                 connectionThread.start();
-             //   Connection.connect();
             }
         });
     }
