@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Connection connection = new Connection();
-        connection.startServer();
+        HttpConnection connection = new HttpConnection();
+        connection.createServer();
     }
 }

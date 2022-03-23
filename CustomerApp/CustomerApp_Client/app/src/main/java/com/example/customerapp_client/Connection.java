@@ -18,17 +18,28 @@ public class Connection implements Runnable {
     public void connect()
     {
         try {
-            URL url = new URL("http://10.0.2.2:8080/test");
+            URL url = new URL("http://10.0.2.2:8080/test");            //http://10.0.2.2:8080/test
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
-            int status = connection.getResponseCode();
-            System.out.println(status);
+            connection.setDoOutput(true);
 
             DataOutputStream request = new DataOutputStream(connection.getOutputStream());
             String message = "REQUEST FROM ANDROID";
             request.writeBytes(message);
             request.flush();
             request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+            while(responseLine != null)
+            {
+                System.out.println(responseLine);
+                responseLine = response.readLine();
+            }
+
+//            int status = connection.getResponseCode();
+//            System.out.println(status);
+
         }
         catch (MalformedURLException e) {
             System.out.println("MalformedURLException: " + e.getMessage());
