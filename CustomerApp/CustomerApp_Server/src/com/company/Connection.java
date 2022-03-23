@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import javax.naming.MalformedLinkException;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -14,27 +15,25 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class Connection {
 
-    BufferedReader request;
-    PrintWriter response;
 
-    public void startServer()
-    {
-        try (ServerSocket serverSocket = new ServerSocket(8080)){
-            System.out.println("SERVER OPENED");
-            
-            Socket clientSocket = serverSocket.accept();
+    public void startServer() {
+        try  {
+            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
+            server.createContext("/test", new HttpHandler() {
+                @Override
+                public void handle(HttpExchange exchange) throws IOException {
+                    System.out.println("REQUEST");
+                }
+            });
 
-            try {
-                request = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                response = new PrintWriter(clientSocket.getOutputStream(), true);
-                System.out.println("CLIENT CONNECTED");
-            }
-            catch (IOException exception) {
-                System.out.println("CLIENT COULDN'T CONNECT");
-            }
-        }
-        catch (IOException e) {
-            System.out.println("COULDN'T START SERVER");
+
+            ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+            server.setExecutor(threadPoolExecutor);
+            server.start();
+            System.out.println("SERVER STARTED");
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
         }
     }
 }

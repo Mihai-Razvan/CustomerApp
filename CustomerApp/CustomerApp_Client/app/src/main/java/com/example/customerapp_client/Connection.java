@@ -15,25 +15,26 @@ import java.net.URL;
 
 public class Connection implements Runnable {
 
-    PrintWriter response;
-    BufferedReader request;
-
     public void connect()
     {
         try {
-            Socket socket = new Socket("localhost", 8080);
-//            request = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            response = new PrintWriter(socket.getOutputStream(), true);
+            URL url = new URL("http://10.0.2.2:8080/test");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            int status = connection.getResponseCode();
+            System.out.println(status);
 
-            System.out.println("CONNECTED");
-
-            while(true)
-            {
-                String echo = request.readLine();
-            }
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = "REQUEST FROM ANDROID";
+            request.writeBytes(message);
+            request.flush();
+            request.close();
         }
-        catch (IOException exception) {
-            System.out.println("COULDN'T CONNECT");
+        catch (MalformedURLException e) {
+            System.out.println("MalformedURLException: " + e.getMessage());
+        }
+        catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
         }
     }
 
