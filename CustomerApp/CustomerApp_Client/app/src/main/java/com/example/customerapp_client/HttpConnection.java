@@ -13,7 +13,7 @@ import java.net.URL;
 
 
 
-public class Connection implements Runnable {
+public class HttpConnection implements Runnable {
 
     public void connect()
     {

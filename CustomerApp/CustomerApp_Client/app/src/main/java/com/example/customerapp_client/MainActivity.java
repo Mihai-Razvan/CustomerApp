@@ -11,17 +11,6 @@ import com.example.customerapp_client.databinding.ActivityMainBinding;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -62,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 act_main_tw.setText("Request");
-                Connection connection = new Connection();
-                Thread connectionThread = new Thread(connection);
+                HttpConnection httpConnection = new HttpConnection();
+                Thread connectionThread = new Thread(httpConnection);
                 connectionThread.start();
             }
         });

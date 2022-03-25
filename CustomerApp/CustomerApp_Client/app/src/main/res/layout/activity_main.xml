@@ -19,14 +19,12 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"><![CDATA[>
-
-        ]]>
+        app:layout_constraintStart_toStartOf="parent"><![CDATA[>]]>
 
         <Button
             android:id="@+id/act_main_home_button"
@@ -35,7 +33,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="Home"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <Button
             android:id="@+id/act_main_request_button"
@@ -44,7 +42,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="Request"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <Button
             android:id="@+id/act_main_test_button"
@@ -53,7 +51,16 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="Test"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/act_main_bills_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Bills"
+            android:textSize="10sp" />
     </LinearLayout>
 
 

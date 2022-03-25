@@ -14,7 +14,6 @@ public class DatabaseConnection {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
             Statement statement = connection.createStatement();
-            statement.execute("CREATE TABLE Client (id INTEGER, username TEXT, password TEXT)");
         }
         catch (SQLException e) {
             System.out.println("SQLException: " + e.getMessage());
