@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class HttpConnection {
 
-    HttpServer server;
+    private HttpServer server;
 
     public void createServer() {
         try  {

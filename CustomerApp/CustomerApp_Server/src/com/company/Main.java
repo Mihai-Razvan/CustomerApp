@@ -6,5 +6,8 @@ public class Main {
 
         HttpConnection connection = new HttpConnection();
         connection.createServer();
+
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        databaseConnection.connect();
     }
 }
