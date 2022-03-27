@@ -12,11 +12,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class HttpConnection {
 
     private HttpServer server;
+    private HttpContextTest httpContextTest;
+    private HttpContextBills httpContextBills;
 
     public void createServer() {
         try  {
             server = HttpServer.create(new InetSocketAddress("localhost", 8080), 0);
-            createContexts(); //sets the http paths
+            createRoutes(); //sets the http paths
             ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
             server.setExecutor(threadPoolExecutor);
             server.start();
@@ -29,28 +31,13 @@ public class HttpConnection {
     }
 
 
-    private void createContexts()
+    private void createRoutes()
     {
-        server.createContext("/test", new HttpHandler() {
-            @Override
-            public void handle(HttpExchange exchange) throws IOException {
-
-                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-                String requestLine = request.readLine();
-                while(requestLine != null)
-                {
-                    System.out.println(requestLine);
-                    requestLine = request.readLine();
-                }
-
-                String responseMessage = "YOU REQUESTED /test";
-                exchange.sendResponseHeaders(200, responseMessage.length());
-                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
-                response.writeBytes(responseMessage);
-                response.flush();
-                response.close();
-            }
-        });
+        httpContextTest = new HttpContextTest(server);
+        httpContextBills = new HttpContextBills(server);
     }
 
+    public HttpServer getServer() {
+        return server;
+    }
 }

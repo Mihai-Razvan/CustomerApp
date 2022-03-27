@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Button act_main_home_button;
-    private Button act_main_request_button;
     private Button act_main_test_button;
+    private Button act_main_bills_button;
     private TextView act_main_tw;
 
     @Override
@@ -27,14 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
         getActivityElements();
         act_main_test_button_onClick();
-        setAct_main_request_button_onClick();
+        act_main_bills_button_onClick();
     }
 
     private void getActivityElements() {
         act_main_home_button = findViewById(R.id.act_main_home_button);
-        act_main_request_button = findViewById(R.id.act_main_request_button);
         act_main_tw = findViewById(R.id.act_main_tw);
         act_main_test_button = findViewById(R.id.act_main_test_button);
+        act_main_bills_button = findViewById(R.id.act_main_bills_button);
     }
 
     private void act_main_test_button_onClick() {
@@ -42,17 +42,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 act_main_tw.setText("Test");
+                HttpRequestsTest httpRequestsTest = new HttpRequestsTest("/test");
+                Thread connectionThread = new Thread(httpRequestsTest);
+                connectionThread.start();
             }
         });
     }
 
-    private void setAct_main_request_button_onClick() {
-        act_main_request_button.setOnClickListener(new View.OnClickListener() {
+
+    private void act_main_bills_button_onClick() {
+        act_main_bills_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                act_main_tw.setText("Request");
-                HttpConnection httpConnection = new HttpConnection();
-                Thread connectionThread = new Thread(httpConnection);
+                act_main_tw.setText("Bills");
+                HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
+                Thread connectionThread = new Thread(httpRequestsBills);
                 connectionThread.start();
             }
         });

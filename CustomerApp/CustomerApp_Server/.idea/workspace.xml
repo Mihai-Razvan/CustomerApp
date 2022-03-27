@@ -5,19 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/BillsActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_bills.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/navigation/nav_graph2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/HttpContextBills.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/HttpContextTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpConnection.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

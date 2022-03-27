@@ -4,18 +4,34 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.URL;
 
+public class HttpRequestsTest implements Runnable{
+
+    private String path;
+
+    public HttpRequestsTest(String path) {
+        this.path = path;
+    }
+
+    private void choose_path()
+    {
+        if(path == "/test")
+        {
+            path_test();
+        }
+    }
+
+    public void run()
+    {
+        choose_path();
+        return;
+    }
 
 
-public class HttpConnection implements Runnable {
-
-    public void connect()
+    private void path_test()
     {
         try {
             URL url = new URL("http://10.0.2.2:8080/test");            //http://10.0.2.2:8080/test
@@ -37,9 +53,6 @@ public class HttpConnection implements Runnable {
                 responseLine = response.readLine();
             }
 
-//            int status = connection.getResponseCode();
-//            System.out.println(status);
-
         }
         catch (MalformedURLException e) {
             System.out.println("MalformedURLException: " + e.getMessage());
@@ -47,10 +60,5 @@ public class HttpConnection implements Runnable {
         catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         }
-    }
-
-    public void run()
-    {
-        connect();
     }
 }
