@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/HttpContextBills.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/HttpContextTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpConnection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/HttpConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpConnection.java" afterDir="false" />
-    </list>
+    <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
