@@ -28,12 +28,12 @@ public class BillsActivity extends AppCompatActivity {
         binding = ActivityBillsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getActivityElements();
+       // getActivityElements();
     }
 
     private void getActivityElements()
     {
-        act_bills_bill_id_TW = findViewById(R.id.act_bills_bill_id_TW);
-        act_bills_bill_id_TW = findViewById(R.id.act_bills_bill_price_TW);
+     //   act_bills_bill_id_TW = findViewById(R.id.act_bills_bill_id_TW);
+      //  act_bills_bill_id_TW = findViewById(R.id.act_bills_bill_price_TW);
     }
 }

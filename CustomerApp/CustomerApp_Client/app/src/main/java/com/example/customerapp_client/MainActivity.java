@@ -1,5 +1,6 @@
 package com.example.customerapp_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
         act_main_bills_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                act_main_tw.setText("Bills");
-                HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
-                Thread connectionThread = new Thread(httpRequestsBills);
-                connectionThread.start();
+                startActivity(new Intent(MainActivity.this, BillsActivity.class));
+//                HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
+//                Thread connectionThread = new Thread(httpRequestsBills);
+//                connectionThread.start();
             }
         });
     }
