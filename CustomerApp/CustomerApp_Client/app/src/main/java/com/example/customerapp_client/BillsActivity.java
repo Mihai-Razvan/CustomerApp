@@ -2,29 +2,29 @@ package com.example.customerapp_client;
 
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.customerapp_client.databinding.ActivityBillsBinding;
+
+import java.util.ArrayList;
 
 public class BillsActivity extends AppCompatActivity {
 
     private ActivityBillsBinding binding;
     private ConstraintLayout act_bills_root_layout;
-    private RecyclerView act_bills_recyclerView;
     private Button act_bills_add_button;
+    private RecyclerView act_bills_recyclerView;
+
+    private ArrayList<Bill> billsList;
+    private BillsAdapter billsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,10 @@ public class BillsActivity extends AppCompatActivity {
 
         getActivityElements();
         act_bills_add_button_onClick();
+
+        billsList = new ArrayList<>();
+        setBillsInfo();
+        setAdapter();
     }
 
     private void getActivityElements()
@@ -53,10 +57,25 @@ public class BillsActivity extends AppCompatActivity {
         });
     }
 
+    private void setAdapter()
+    {
+        billsAdapter = new BillsAdapter(billsList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        act_bills_recyclerView.setLayoutManager(layoutManager);
+        act_bills_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        act_bills_recyclerView.setAdapter(billsAdapter);
+    }
+
+    private void setBillsInfo()
+    {
+        for(int i = 1; i <= 50; i++)
+            billsList.add(new Bill("John", Integer.toString(100 * i), "PAIED"));
+
+    }
+
     private void addBillCard()
     {
-        View view = getLayoutInflater().inflate(R.layout.bill_card, null);
-
-        act_bills_recyclerView.addView(view);
+        billsList.add(new Bill("Andrew", "20000", "PENDING"));
+        billsAdapter.notifyItemInserted(billsList.size() - 1);
     }
 }
