@@ -1,5 +1,6 @@
 package com.example.customerapp_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class BillsActivity extends AppCompatActivity {
     private ArrayList<Bill> billsList;
     private BillsAdapter billsAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,9 @@ public class BillsActivity extends AppCompatActivity {
         getActivityElements();
         act_bills_add_button_onClick();
 
+
         billsList = new ArrayList<>();
-        setBillsInfo();
+        setInitialBills();
         setAdapter();
     }
 
@@ -66,16 +69,73 @@ public class BillsActivity extends AppCompatActivity {
         act_bills_recyclerView.setAdapter(billsAdapter);
     }
 
-    private void setBillsInfo()
-    {
-        for(int i = 1; i <= 50; i++)
-            billsList.add(new Bill("John", Integer.toString(100 * i), "PAIED"));
 
+    /////////////////////////////////////////
+
+    private void setInitialBills()
+    {
+//        for(int i = 1; i <= 5; i++)
+//            billsList.add(new Bill("John", Integer.toString(100 * i), "PAID"));
+
+        String name = "";
+        String value = "";
+        String status = "";
+        String connectionStatus = "Failed";
+
+        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
+        Thread connectionThread = new Thread(httpRequestsBills);
+        connectionThread.start();
+
+        try {
+            connectionThread.join();
+            connectionStatus = httpRequestsBills.getConnectionStatus();
+
+            if(connectionStatus.equals("Successful"))
+            {
+                name = httpRequestsBills.getName();
+                value = httpRequestsBills.getValue();
+                status = httpRequestsBills.getStatus();
+
+                billsList.add(new Bill(name, value, status));
+            }
+            else
+                System.out.println("COULDN'T ADD CARD");
+        }
+        catch (InterruptedException e) {
+            System.out.println("COULDN'T ADD CARD");
+        }
     }
 
-    private void addBillCard()
+    public void addBillCard()
     {
-        billsList.add(new Bill("Andrew", "20000", "PENDING"));
-        billsAdapter.notifyItemInserted(billsList.size() - 1);
+        String name = "";
+        String value = "";
+        String status = "";
+        String connectionStatus = "Failed";
+
+        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills/add");
+        Thread connectionThread = new Thread(httpRequestsBills);
+        connectionThread.start();
+
+        try {
+            connectionThread.join();
+            connectionStatus = httpRequestsBills.getConnectionStatus();
+
+            if(connectionStatus.equals("Successful"))
+            {
+                name = httpRequestsBills.getName();
+                value = httpRequestsBills.getValue();
+                status = httpRequestsBills.getStatus();
+
+                billsList.add(new Bill(name, value, status));
+                billsAdapter.notifyItemInserted(billsList.size() - 1);
+            }
+            else
+                System.out.println("COULDN'T ADD CARD");
+        }
+        catch (InterruptedException e) {
+            System.out.println("COULDN'T ADD CARD");
+        }
     }
+
 }

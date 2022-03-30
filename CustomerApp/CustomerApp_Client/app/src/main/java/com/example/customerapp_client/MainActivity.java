@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, BillsActivity.class));
-//                HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
-//                Thread connectionThread = new Thread(httpRequestsBills);
-//                connectionThread.start();
             }
         });
     }

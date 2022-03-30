@@ -25,6 +25,12 @@ public class HttpContextBills {
     }
 
     private void context_test() {
+        context_bills();
+        context_bills_add();
+    }
+
+    private void context_bills()
+    {
         server.createContext("/bills", new HttpHandler() {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
@@ -38,7 +44,14 @@ public class HttpContextBills {
                 }
 
                 System.out.println("");
-                String responseMessage = "YOU REQUESTED /bills";
+                String responseMessage = "{'numOfBills': 3," +
+                        "'test': testValue," +
+                        "'id1': {'name': Marcu," +
+                                "'value': 2000}," +
+                        "'id2': {'name': John," +
+                                "'value': 3000}" +
+                        "}";
+            //    String responseMessage = "{'name': Marcu, value: '2500', status: 'Unsolved'}";
                 exchange.sendResponseHeaders(200, responseMessage.length());
                 DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
                 response.writeBytes(responseMessage);
@@ -48,5 +61,30 @@ public class HttpContextBills {
         });
     }
 
+
+    private void context_bills_add()
+    {
+        server.createContext("/bills/add", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /bills/test");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                while (requestLine != null) {
+                    System.out.println(requestLine);
+                    requestLine = request.readLine();
+                }
+
+                System.out.println("");
+                String responseMessage = "{'name': Marcu, value: '2500', status: 'Unsolved'}";
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
 
 }
