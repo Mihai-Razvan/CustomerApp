@@ -1,13 +1,14 @@
 package com.company;
 
+import java.awt.dnd.DropTarget;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        HttpConnection connection = new HttpConnection();
-        connection.createServer();
+        HttpConnection httpConnection = new HttpConnection();
+        httpConnection.createServer();
 
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        databaseConnection.connect();
+        DatabaseGET.getAllBills();
     }
 }

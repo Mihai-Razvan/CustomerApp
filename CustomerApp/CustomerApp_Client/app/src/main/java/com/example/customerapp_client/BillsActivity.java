@@ -55,7 +55,7 @@ public class BillsActivity extends AppCompatActivity {
         act_bills_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addBillCard();
+                System.out.println("ADD BILL BUTTON PRESSED");
             }
         });
     }
@@ -74,11 +74,8 @@ public class BillsActivity extends AppCompatActivity {
 
     private void setInitialBills()
     {
-//        for(int i = 1; i <= 5; i++)
-//            billsList.add(new Bill("John", Integer.toString(100 * i), "PAID"));
-
         String name = "";
-        String value = "";
+        String total = "";
         String status = "";
         String connectionStatus = "Failed";
 
@@ -92,11 +89,7 @@ public class BillsActivity extends AppCompatActivity {
 
             if(connectionStatus.equals("Successful"))
             {
-                name = httpRequestsBills.getName();
-                value = httpRequestsBills.getValue();
-                status = httpRequestsBills.getStatus();
-
-                billsList.add(new Bill(name, value, status));
+                billsList = httpRequestsBills.getBillList();
             }
             else
                 System.out.println("COULDN'T ADD CARD");
@@ -106,36 +99,32 @@ public class BillsActivity extends AppCompatActivity {
         }
     }
 
-    public void addBillCard()
-    {
-        String name = "";
-        String value = "";
-        String status = "";
-        String connectionStatus = "Failed";
-
-        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills/add");
-        Thread connectionThread = new Thread(httpRequestsBills);
-        connectionThread.start();
-
-        try {
-            connectionThread.join();
-            connectionStatus = httpRequestsBills.getConnectionStatus();
-
-            if(connectionStatus.equals("Successful"))
-            {
-                name = httpRequestsBills.getName();
-                value = httpRequestsBills.getValue();
-                status = httpRequestsBills.getStatus();
-
-                billsList.add(new Bill(name, value, status));
-                billsAdapter.notifyItemInserted(billsList.size() - 1);
-            }
-            else
-                System.out.println("COULDN'T ADD CARD");
-        }
-        catch (InterruptedException e) {
-            System.out.println("COULDN'T ADD CARD");
-        }
-    }
+//    public void addBillCard()
+//    {
+//        String name = "";
+//        String value = "";
+//        String status = "";
+//        String connectionStatus = "Failed";
+//
+//        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills/add");
+//        Thread connectionThread = new Thread(httpRequestsBills);
+//        connectionThread.start();
+//
+//        try {
+//            connectionThread.join();
+//            connectionStatus = httpRequestsBills.getConnectionStatus();
+//
+//            if(connectionStatus.equals("Successful"))
+//            {
+//                billsList.add(httpRequestsBills.getBill());
+//                billsAdapter.notifyItemInserted(billsList.size() - 1);
+//            }
+//            else
+//                System.out.println("COULDN'T ADD CARD");
+//        }
+//        catch (InterruptedException e) {
+//            System.out.println("COULDN'T ADD CARD");
+//        }
+//    }
 
 }

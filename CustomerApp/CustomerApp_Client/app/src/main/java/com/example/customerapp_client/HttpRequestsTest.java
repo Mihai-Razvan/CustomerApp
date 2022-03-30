@@ -34,7 +34,7 @@ public class HttpRequestsTest implements Runnable{
     private void path_test()
     {
         try {
-            URL url = new URL("http://10.0.2.2:8080/test");            //http://10.0.2.2:8080/test
+            URL url = new URL("http://56fc-2a02-2f0c-5700-d000-e0cf-ad6a-dbb7-a3d1.ngrok.io/test");            //http://10.0.2.2:8080/test
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
