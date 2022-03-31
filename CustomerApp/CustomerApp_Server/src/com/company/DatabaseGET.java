@@ -15,7 +15,7 @@ public class DatabaseGET {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', b.total AS 'Total', b.status AS 'Status'\n" +
                                                              "FROM Client_Info ci, Bill b\n" +
-                                                             "WHERE ci.id = b.id;");
+                                                             "WHERE ci.client_id = b.client_id;");
 
             while (resultSet.next())
             {

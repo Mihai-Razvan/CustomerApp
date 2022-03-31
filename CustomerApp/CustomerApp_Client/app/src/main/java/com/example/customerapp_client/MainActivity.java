@@ -10,15 +10,15 @@ import android.view.View;
 import com.example.customerapp_client.databinding.ActivityMainBinding;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ActivityBasics {
 
     private ActivityMainBinding binding;
-    private Button act_main_home_button;
-    private Button act_main_test_button;
-    private Button act_main_bills_button;
-    private TextView act_main_tw;
+    private ImageButton act_main_test_button;
+    private ImageButton act_main_bills_button;
+    private ImageButton act_main_account_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +27,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getActivityElements();
-        act_main_test_button_onClick();
-        act_main_bills_button_onClick();
+        setListeners();
     }
 
-    private void getActivityElements() {
-        act_main_home_button = findViewById(R.id.act_main_home_button);
-        act_main_tw = findViewById(R.id.act_main_tw);
+    @Override
+    public void getActivityElements() {
         act_main_test_button = findViewById(R.id.act_main_test_button);
         act_main_bills_button = findViewById(R.id.act_main_bills_button);
+        act_main_account_button = findViewById(R.id.act_main_account_button);
+    }
+
+    @Override
+    public void setListeners()
+    {
+        act_main_test_button_onClick();
+        act_main_bills_button_onClick();
+        act_main_account_button_onClick();
     }
 
     private void act_main_test_button_onClick() {
         act_main_test_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                act_main_tw.setText("Test");
                 HttpRequestsTest httpRequestsTest = new HttpRequestsTest("/test");
                 Thread connectionThread = new Thread(httpRequestsTest);
                 connectionThread.start();
@@ -50,12 +56,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     private void act_main_bills_button_onClick() {
         act_main_bills_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, BillsActivity.class));
+            }
+        });
+    }
+
+    private void act_main_account_button_onClick() {
+        act_main_account_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AccountActivity.class));
             }
         });
     }

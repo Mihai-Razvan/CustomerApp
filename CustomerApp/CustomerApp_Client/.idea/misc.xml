@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.285" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/ic_launcher_background.xml" value="0.285" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/placeHolder_background.xml" value="0.285" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/activity_account.xml" value="0.2953311617806732" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/activity_bills.xml" value="0.33" />
-        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/bill_card.xml" value="0.25" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/bills.xml" value="0.36666666666666664" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/billsactivity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/content_account.xml" value="0.1393110435663627" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/test.xml" value="0.25" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/mipmap-anydpi-v26/placeHolder.xml" value="0.285" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/xml/network_security_config.xml" value="0.23958333333333334" />
         <entry key="..\:/Projects/AndroidStudio-Projects/CustomerApp_Client/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2985" />
         <entry key="..\:/Projects/AndroidStudio-Projects/CustomerApp_Client/app/src/main/res/layout/activity_main.xml" value="0.33" />

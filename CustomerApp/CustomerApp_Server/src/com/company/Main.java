@@ -8,7 +8,5 @@ public class Main {
 
         HttpConnection httpConnection = new HttpConnection();
         httpConnection.createServer();
-
-        DatabaseGET.getAllBills();
     }
 }

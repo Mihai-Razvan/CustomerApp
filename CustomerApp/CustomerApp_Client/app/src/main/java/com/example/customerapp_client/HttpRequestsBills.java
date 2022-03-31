@@ -53,7 +53,7 @@ public class HttpRequestsBills implements Runnable {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://56fc-2a02-2f0c-5700-d000-e0cf-ad6a-dbb7-a3d1.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL("http://4ae2-2a02-2f0c-5700-d000-9051-1dbe-9e65-4054.ngrok.io/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

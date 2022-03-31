@@ -17,7 +17,7 @@ import com.example.customerapp_client.databinding.ActivityBillsBinding;
 
 import java.util.ArrayList;
 
-public class BillsActivity extends AppCompatActivity {
+public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private ActivityBillsBinding binding;
     private ConstraintLayout act_bills_root_layout;
@@ -35,19 +35,24 @@ public class BillsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getActivityElements();
-        act_bills_add_button_onClick();
-
+        setListeners();
 
         billsList = new ArrayList<>();
         setInitialBills();
         setAdapter();
     }
 
-    private void getActivityElements()
+    @Override
+    public void getActivityElements()
     {
         act_bills_root_layout = findViewById(R.id.act_bill_root_layout);
         act_bills_recyclerView = findViewById(R.id.act_bills_recyclerView);
         act_bills_add_button = findViewById(R.id.act_bills_add_button);
+    }
+
+    @Override
+    public void setListeners() {
+        act_bills_add_button_onClick();
     }
 
     private void act_bills_add_button_onClick()
