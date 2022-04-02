@@ -41,10 +41,6 @@ public class HttpRequestsBills implements Runnable {
         {
             path_bills();
         }
-//        else if(path.equals("/bills/add"))
-//        {
-//            path_bills_add();
-//        }
     }
 
 
@@ -53,19 +49,13 @@ public class HttpRequestsBills implements Runnable {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://4ae2-2a02-2f0c-5700-d000-9051-1dbe-9e65-4054.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL("http://ea2a-2a02-2f0c-5700-d000-8448-c58-99a5-656.ngrok.io/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
             connection.setConnectTimeout(2000);
-
-            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
-            String message = "REQUEST FROM ANDROID";
-            request.writeBytes(message);
-            request.flush();
-            request.close();
 
             BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String responseLine = response.readLine();
@@ -117,47 +107,4 @@ public class HttpRequestsBills implements Runnable {
         return billList;
     }
 
-
-
-//    private void path_bills_add()
-//    {
-//        try {
-//            URL url = new URL("http://10.0.2.2:8080/bills/add");            //http://10.0.2.2:8080/test
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("GET");
-//            connection.setRequestProperty("Content-Type", "application/json; utf-8");
-//            connection.setRequestProperty("Accept", "application/json");
-//            connection.setDoOutput(true);
-//            connection.setConnectTimeout(2000);
-//
-//            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
-//            String message = "REQUEST FROM ANDROID";
-//            request.writeBytes(message);
-//            request.flush();
-//            request.close();
-//
-//            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//            String responseLine = response.readLine();
-//            parseBillJson(responseLine);
-//
-//            connectionStatus = "Successful";
-//        }
-//        catch (MalformedURLException e) {
-//            System.out.println("MalformedURLException: " + e.getMessage());
-//        }
-//        catch (IOException e) {
-//            System.out.println("IOException: " + e.getMessage());
-//        }
-//    }
-//
-//
-//
-//    private void parseBillJson(String input)
-//    {
-//        JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
-//        String name = jsonObject.get("name").getAsString();
-//        String total = jsonObject.get("total").getAsString();
-//        String status = jsonObject.get("status").getAsString();
-//        bill = new Bill(name, total, status);
-//    }
 }

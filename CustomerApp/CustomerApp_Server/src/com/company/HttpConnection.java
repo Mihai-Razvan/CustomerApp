@@ -12,8 +12,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class HttpConnection {
 
     private HttpServer server;
-    private HttpContextTest httpContextTest;
     private HttpContextBills httpContextBills;
+    private HttpContextAccount httpContextAccount;
 
     public void createServer() {
         try  {
@@ -33,8 +33,8 @@ public class HttpConnection {
 
     private void createRoutes()
     {
-        httpContextTest = new HttpContextTest(server);
         httpContextBills = new HttpContextBills(server);
+        httpContextAccount = new HttpContextAccount(server);
     }
 
     public HttpServer getServer() {

@@ -33,14 +33,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/act_account_location_TI"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:textColorHint="#CBB5FD">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/act_account_location_TI_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/black"
                 android:hint="location..."
-                android:textColor="#000000" />
+                android:textColor="#FAF6F6"
+                android:inputType="textCapSentences"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

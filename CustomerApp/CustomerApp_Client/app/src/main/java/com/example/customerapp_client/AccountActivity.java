@@ -54,8 +54,13 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
         act_account_send_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String text = act_account_location_TI_edit.getText().toString().trim();
-                System.out.println(text);
+                String location = act_account_location_TI_edit.getText().toString().trim();
+
+                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
+                Thread connectionThread = new Thread(httpRequestsAccount);
+                connectionThread.start();
+
+                act_account_location_TI_edit.getText().clear();
             }
         });
     }

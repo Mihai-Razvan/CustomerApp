@@ -104,32 +104,4 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
         }
     }
 
-//    public void addBillCard()
-//    {
-//        String name = "";
-//        String value = "";
-//        String status = "";
-//        String connectionStatus = "Failed";
-//
-//        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills/add");
-//        Thread connectionThread = new Thread(httpRequestsBills);
-//        connectionThread.start();
-//
-//        try {
-//            connectionThread.join();
-//            connectionStatus = httpRequestsBills.getConnectionStatus();
-//
-//            if(connectionStatus.equals("Successful"))
-//            {
-//                billsList.add(httpRequestsBills.getBill());
-//                billsAdapter.notifyItemInserted(billsList.size() - 1);
-//            }
-//            else
-//                System.out.println("COULDN'T ADD CARD");
-//        }
-//        catch (InterruptedException e) {
-//            System.out.println("COULDN'T ADD CARD");
-//        }
-//    }
-
 }

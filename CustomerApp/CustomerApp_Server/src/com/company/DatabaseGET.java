@@ -8,6 +8,7 @@ public class DatabaseGET {
 
     public static ArrayList<BillData> getAllBills()  //return a list of billdata objects
     {
+        String dbConnectionStatus;
         ArrayList<BillData> billDataList = new ArrayList<>();
 
         try {
@@ -25,11 +26,15 @@ public class DatabaseGET {
                 BillData billData = new BillData(first_name, total, status);
                 billDataList.add(billData);
             }
+
+            dbConnectionStatus = "Bills extracted successfully from database";
         }
         catch (SQLException e) {
             System.out.println("COULDN'T RETRIEVE BILLS FROM DATABASE: " + e.getMessage());
+            dbConnectionStatus = "Failed to extract bills from database";
         }
 
+        System.out.println(dbConnectionStatus);
         return billDataList;
     }
 }

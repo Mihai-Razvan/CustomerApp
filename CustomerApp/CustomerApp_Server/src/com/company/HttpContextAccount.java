@@ -9,11 +9,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class HttpContextBills {
+public class HttpContextAccount {
 
     private HttpServer server;
 
-    public HttpContextBills(HttpServer server)
+    public HttpContextAccount(HttpServer server)
     {
         this.server = server;
         createContexts();
@@ -21,30 +21,24 @@ public class HttpContextBills {
 
     private void createContexts()
     {
-        context_bills();
+        context_account_locations_new();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
 
 
-    private void context_bills()
+    private void context_account_locations_new()
     {
-        server.createContext("/bills", new HttpHandler() {
+        server.createContext("/account/locations/new", new HttpHandler() {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
 
-                System.out.println("REQUEST RECEIVED ON /bills");
+                System.out.println("REQUEST RECEIVED ON /account/locations/new");
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();       //the request contains only one line, the location
 
-                String responseMessage = HttpBillsMethods.billListToJson(DatabaseGET.getAllBills());
-
-                exchange.sendResponseHeaders(200, responseMessage.length());
-                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
-                response.writeBytes(responseMessage);
-                response.flush();
-                response.close();
+                DatabasePOST.postLocation(requestLine);
             }
         });
     }
-
 }

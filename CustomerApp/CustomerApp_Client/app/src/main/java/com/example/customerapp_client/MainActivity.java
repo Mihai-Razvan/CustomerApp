@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_test_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HttpRequestsTest httpRequestsTest = new HttpRequestsTest("/test");
-                Thread connectionThread = new Thread(httpRequestsTest);
-                connectionThread.start();
+                System.out.println("TEST BUTTON PRESSED");
             }
         });
     }
