@@ -46,7 +46,7 @@ public class HttpRequestsAccount implements Runnable {
 
     private void path_locations_new() {
         try {
-            URL url = new URL("http://ea2a-2a02-2f0c-5700-d000-8448-c58-99a5-656.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL("http://56c4-2a02-2f0c-5700-d000-b100-5ac6-ceb5-df15.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -62,9 +62,8 @@ public class HttpRequestsAccount implements Runnable {
 
             BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream())); //this line has to be kept to complet the http request-response cycle
             connectionStatus = "Successful";
-        } catch (MalformedURLException e) {
-            System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
         }
 

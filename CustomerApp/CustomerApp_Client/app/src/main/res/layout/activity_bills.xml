@@ -16,20 +16,30 @@
         android:text="Bills"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/act_bills_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/act_bills_locations_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:background="@color/testColor2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/act_bills_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/act_bills_add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/act_bills_locations_spinner" />
 
     <Button
         android:id="@+id/act_bills_add_button"

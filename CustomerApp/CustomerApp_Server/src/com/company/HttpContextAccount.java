@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class HttpContextAccount {
 
-    private HttpServer server;
+    private final HttpServer server;
 
     public HttpContextAccount(HttpServer server)
     {

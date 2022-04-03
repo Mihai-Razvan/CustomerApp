@@ -10,12 +10,14 @@ public class BillData {  //class contains info about a bill, so info from table 
     private String status;
 
     private String first_name;
+    private String address_name;
 
-    public BillData(String first_name, int total, String status)
+    public BillData(String first_name, int total, String status, String address_name)
     {
         this.first_name = first_name;
         this.total = total;
         this.status = status;
+        this.address_name = address_name;
     }
 
 
@@ -29,6 +31,9 @@ public class BillData {  //class contains info about a bill, so info from table 
 
     public String getStatus() {
         return status;
+    }
+    public String  getAddress_name() {
+        return address_name;
     }
 
 }

@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class HttpContextBills {
 
-    private HttpServer server;
+    private final HttpServer server;
 
     public HttpContextBills(HttpServer server)
     {
@@ -32,9 +32,7 @@ public class HttpContextBills {
         server.createContext("/bills", new HttpHandler() {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
-
                 System.out.println("REQUEST RECEIVED ON /bills");
-                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
 
                 String responseMessage = HttpBillsMethods.billListToJson(DatabaseGET.getAllBills());
 

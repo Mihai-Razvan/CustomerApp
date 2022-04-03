@@ -49,7 +49,7 @@ public class HttpRequestsBills implements Runnable {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://ea2a-2a02-2f0c-5700-d000-8448-c58-99a5-656.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL("http://56c4-2a02-2f0c-5700-d000-b100-5ac6-ceb5-df15.ngrok.io/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -63,13 +63,9 @@ public class HttpRequestsBills implements Runnable {
 
             connectionStatus = "Successful";
         }
-        catch (MalformedURLException e) {
-            System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
-        }
         catch (IOException e) {
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
         }
-
     }
 
 
@@ -85,10 +81,13 @@ public class HttpRequestsBills implements Runnable {
         for(int i = 0; i < numOfBills; i++)  //bills get their id indexed from 0 in json
         {
             String key = "id" + Integer.toString(i);
-            String name = jsonObject.getAsJsonObject(key).get("name").getAsString();
-            String total = jsonObject.getAsJsonObject(key).get("total").getAsString();
-            String status = jsonObject.getAsJsonObject(key).get("status").getAsString();
-            bill = new Bill(name, total, status);
+            JsonObject jsonBill = jsonObject.getAsJsonObject(key);
+            String name = jsonBill.get("name").getAsString();
+            String total = jsonBill.get("total").getAsString();
+            String status = jsonBill.get("status").getAsString();
+            String address = jsonBill.get("address").getAsString();
+
+            bill = new Bill(name, total, status, address);
             billList.add(bill);
         }
     }
