@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class HttpBillsMethods {
@@ -10,13 +12,13 @@ public class HttpBillsMethods {
 
         for(int i = 0; i < billDataList.size(); i++)
         {
-            String nameField = "'name': " + billDataList.get(i).getFirst_name();
+            String nameField = "'name': " + billDataList.get(i).getFirstName();
             String totalField = "'total': " + billDataList.get(i).getTotal();
             String statusField = "'status': " + billDataList.get(i).getStatus();
-            String addressField = "'address': " + billDataList.get(i).getAddress_name();
+            String addressField = "'address': " + billDataList.get(i).getAddressName();
+            String dueDateField = "'dueDate': " + billDataList.get(i).getDueDate();
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "," + totalField + "," + statusField + "," + addressField
-                    + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "," + totalField + "," + statusField + "," + addressField + "," + dueDateField + "}";
         }
 
         jsonResponse += "}";

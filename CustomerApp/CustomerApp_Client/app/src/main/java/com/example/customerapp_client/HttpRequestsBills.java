@@ -49,7 +49,7 @@ public class HttpRequestsBills implements Runnable {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://56c4-2a02-2f0c-5700-d000-b100-5ac6-ceb5-df15.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL("http://11e6-2a02-2f0c-5700-d000-1dbc-fd4-d560-214c.ngrok.io/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -86,8 +86,9 @@ public class HttpRequestsBills implements Runnable {
             String total = jsonBill.get("total").getAsString();
             String status = jsonBill.get("status").getAsString();
             String address = jsonBill.get("address").getAsString();
+            String dueDate = jsonBill.get("dueDate").getAsString();
 
-            bill = new Bill(name, total, status, address);
+            bill = new Bill(name, total, status, address, dueDate);
             billList.add(bill);
         }
     }

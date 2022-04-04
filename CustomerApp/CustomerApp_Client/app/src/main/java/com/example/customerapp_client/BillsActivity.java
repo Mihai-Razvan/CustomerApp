@@ -140,9 +140,6 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private void setInitialBills()
     {
-        String name = "";
-        String total = "";
-        String status = "";
         String connectionStatus = "Failed";
 
         HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");

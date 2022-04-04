@@ -21,6 +21,7 @@ public class DatabasePOST {
             dbConnectionStatus = "Address added successfully to database";
         }
         catch (SQLException e) {
+            System.out.println(e.getMessage());
             dbConnectionStatus = "Failed to add address to database";
         }
 
