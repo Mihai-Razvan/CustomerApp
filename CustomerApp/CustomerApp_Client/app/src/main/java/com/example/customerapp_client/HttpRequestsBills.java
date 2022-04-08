@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HttpRequestsBills implements Runnable {
+public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private String path;
     private String connectionStatus;
@@ -32,10 +32,11 @@ public class HttpRequestsBills implements Runnable {
     @Override
     public void run()
     {
-        choose_path();
+        choosePath();
     }
 
-    private void choose_path()
+    @Override
+    public void choosePath()
     {
         if(path.equals("/bills"))
         {
@@ -49,7 +50,7 @@ public class HttpRequestsBills implements Runnable {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://11e6-2a02-2f0c-5700-d000-1dbc-fd4-d560-214c.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL("http://15c8-2a02-2f0c-5700-d000-6998-3444-80c8-cc3d.ngrok.io/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

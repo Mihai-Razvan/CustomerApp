@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class HttpContextBills {
+public class HttpContextBills implements HttpContextBasics {
 
     private final HttpServer server;
 
@@ -22,7 +22,8 @@ public class HttpContextBills {
         createContexts();
     }
 
-    private void createContexts()
+    @Override
+    public void createContexts()
     {
         context_bills();
     }

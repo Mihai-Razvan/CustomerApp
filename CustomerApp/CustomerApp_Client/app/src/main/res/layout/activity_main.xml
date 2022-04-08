@@ -101,12 +101,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/act_main_linear_button_4"
+                    android:id="@+id/act_main_login_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/action_settings"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@color/testColor2" />
 
                 <ImageButton
                     android:id="@+id/act_main_linear_button_5"

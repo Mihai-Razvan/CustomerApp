@@ -9,7 +9,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class HttpContextAccount {
+public class HttpContextAccount implements HttpContextBasics {
 
     private final HttpServer server;
 
@@ -19,7 +19,8 @@ public class HttpContextAccount {
         createContexts();
     }
 
-    private void createContexts()
+    @Override
+    public void createContexts()
     {
         context_account_locations_new();
     }

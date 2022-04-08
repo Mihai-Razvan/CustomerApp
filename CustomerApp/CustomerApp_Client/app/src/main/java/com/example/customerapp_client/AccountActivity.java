@@ -55,12 +55,11 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
             @Override
             public void onClick(View view) {
                 String location = act_account_location_TI_edit.getText().toString().trim();
+                act_account_location_TI_edit.getText().clear();
 
                 HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
-
-                act_account_location_TI_edit.getText().clear();
             }
         });
     }

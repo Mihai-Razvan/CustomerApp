@@ -7,11 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 
-import com.example.customerapp_client.databinding.ActivityMainBinding;
-
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
+
+import com.example.customerapp_client.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements ActivityBasics {
 
@@ -19,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
     private ImageButton act_main_test_button;
     private ImageButton act_main_bills_button;
     private ImageButton act_main_account_button;
+    private ImageButton act_main_login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_test_button = findViewById(R.id.act_main_test_button);
         act_main_bills_button = findViewById(R.id.act_main_bills_button);
         act_main_account_button = findViewById(R.id.act_main_account_button);
+        act_main_login_button = findViewById(R.id.act_main_login_button);
     }
 
     @Override
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_test_button_onClick();
         act_main_bills_button_onClick();
         act_main_account_button_onClick();
+        act_main_login_button_onClick();
     }
 
     private void act_main_test_button_onClick() {
@@ -68,6 +69,15 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, AccountActivity.class));
+            }
+        });
+    }
+
+    private void act_main_login_button_onClick() {
+        act_main_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
     }

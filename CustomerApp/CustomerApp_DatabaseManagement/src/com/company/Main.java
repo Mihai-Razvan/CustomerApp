@@ -9,5 +9,7 @@ public class Main {
         DatabaseUpdatesOnTime databaseUpdatesOnTime = new DatabaseUpdatesOnTime();
         Thread connectionThread_1 = new Thread(databaseUpdatesOnTime);
         connectionThread_1.start();
+
+        Test.GUID();
     }
 }

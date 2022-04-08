@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class HttpRequestsAccount implements Runnable {
+public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private String path;
     private String connectionStatus;
@@ -32,10 +32,11 @@ public class HttpRequestsAccount implements Runnable {
 
     @Override
     public void run() {
-        choose_path();
+        choosePath();
     }
 
-    private void choose_path() {
+    @Override
+    public void choosePath() {
         if (path.equals("/account/locations/new")) {
             path_locations_new();
         }
@@ -46,7 +47,7 @@ public class HttpRequestsAccount implements Runnable {
 
     private void path_locations_new() {
         try {
-            URL url = new URL("http://11e6-2a02-2f0c-5700-d000-1dbc-fd4-d560-214c.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL("http://15c8-2a02-2f0c-5700-d000-6998-3444-80c8-cc3d.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

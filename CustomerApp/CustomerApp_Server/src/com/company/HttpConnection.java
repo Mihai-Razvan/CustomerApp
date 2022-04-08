@@ -14,6 +14,7 @@ public class HttpConnection {
     private HttpServer server;
     private HttpContextBills httpContextBills;
     private HttpContextAccount httpContextAccount;
+    private HttpContextAuthentication httpContextAuthentication;
 
     public void createServer() {
         try  {
@@ -35,6 +36,7 @@ public class HttpConnection {
     {
         httpContextBills = new HttpContextBills(server);
         httpContextAccount = new HttpContextAccount(server);
+        httpContextAuthentication = new HttpContextAuthentication(server);
     }
 
     public HttpServer getServer() {

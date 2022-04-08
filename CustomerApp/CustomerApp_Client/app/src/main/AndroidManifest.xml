@@ -16,6 +16,15 @@
         android:theme="@style/Theme.CustomerApp_Client"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_authentification"
+            android:theme="@style/Theme.CustomerApp_Client.NoActionBar" />
+        <activity
+            android:name=".ui.login.AuthentificationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_authentification" />
+        <activity
             android:name=".AccountActivity"
             android:exported="false"
             android:label="@string/title_activity_account"
