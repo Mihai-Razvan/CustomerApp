@@ -16,6 +16,11 @@
         android:theme="@style/Theme.CustomerApp_Client"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.CustomerApp_Client.NoActionBar" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:label="@string/title_activity_authentification"

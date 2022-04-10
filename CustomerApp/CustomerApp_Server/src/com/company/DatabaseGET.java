@@ -48,4 +48,35 @@ public class DatabaseGET {
         System.out.println(dbConnectionStatus);
         return billDataList;
     }
+
+    public static int getClientLoginInfo(String emailOrUsername, String password)  //returns -2 if client doesn't exist, -1 if password is wrong,0 if dbconnection failed, clientId if login details are ok
+    {
+        String dbConnectionStatus;
+        int responseCode;
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Client\n" +
+                                                             "WHERE LOWER(username) = LOWER('" + emailOrUsername + "')\n" +
+                                                             "OR LOWER(email) = LOWER('" + emailOrUsername + "')");
+
+            if(!resultSet.next())   //means that the query didn't return anything, so there was no client found with the specified emailOrUsername
+                responseCode = -2;
+            else if(!password.equals(resultSet.getString("password")))  //client exists but the password is wrong
+                responseCode = -1;
+            else
+                responseCode = resultSet.getInt("client_id");  //client exists and the password is right
+
+            dbConnectionStatus = "Client log in check successfully executed";
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            responseCode = 0;
+            dbConnectionStatus = "Failed to check client log in details";
+        }
+
+        System.out.println(dbConnectionStatus);
+        return responseCode;
+    }
 }

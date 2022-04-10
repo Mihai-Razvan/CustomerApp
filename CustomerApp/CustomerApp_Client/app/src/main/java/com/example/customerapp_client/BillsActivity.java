@@ -62,6 +62,11 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
         act_bills_locations_spinner_OnItemSelected();
     }
 
+    @Override
+    public void getExtras() {
+
+    }
+
     private void act_bills_add_button_onClick()
     {
         act_bills_add_button.setOnClickListener(new View.OnClickListener() {
@@ -140,15 +145,13 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private void setInitialBills()
     {
-        String connectionStatus = "Failed";
-
         HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
         Thread connectionThread = new Thread(httpRequestsBills);
         connectionThread.start();
 
         try {
             connectionThread.join();
-            connectionStatus = httpRequestsBills.getConnectionStatus();
+            String connectionStatus = httpRequestsBills.getConnectionStatus();
 
             if(connectionStatus.equals("Successful"))
             {

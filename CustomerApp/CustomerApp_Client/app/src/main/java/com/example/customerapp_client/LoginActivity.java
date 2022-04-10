@@ -1,19 +1,14 @@
 package com.example.customerapp_client;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import android.widget.TextView;
 
 import com.example.customerapp_client.databinding.ActivityLoginBinding;
 
@@ -21,9 +16,11 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
 
     private ActivityLoginBinding binding;
 
-    private EditText act_login_email_sau_nume;
-    private EditText act_login_password;
-    private Button act_login_button;
+    private EditText act_login_email_or_username_editText;
+    private EditText act_login_password_editText;
+    private Button act_login_signIn_button;
+    private Button act_login_toRegister_button;
+    private TextView act_logIn_status_TW;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +35,72 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
 
     @Override
     public void getActivityElements() {
-        act_login_email_sau_nume = findViewById(R.id.act_login_email_sau_nume);
-        act_login_password = findViewById(R.id.act_login_password);
-        act_login_button = findViewById(R.id.act_login_button);
+        act_login_email_or_username_editText = findViewById(R.id.act_register_email_editText);
+        act_login_password_editText = findViewById(R.id.act_register_username_editText);
+        act_login_signIn_button = findViewById(R.id.act_login_signIn_button);
+        act_login_toRegister_button = findViewById(R.id.act_login_toRegister_button);
+        act_logIn_status_TW = findViewById(R.id.act_register_status_TW);
     }
 
     @Override
     public void setListeners() {
-        act_login_button_onClick();
+
+        act_login_signIn_button_onClick();
+        act_login_toRegister_button_onClick();
     }
 
-    private void act_login_button_onClick()
+    @Override
+    public void getExtras() {
+
+    }
+
+    private void act_login_signIn_button_onClick()
     {
-        act_login_button.setOnClickListener(new View.OnClickListener() {
+        act_login_signIn_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailOrUsername = act_login_email_sau_nume.getText().toString().trim();
-                String password = act_login_password.getText().toString().trim();
-                act_login_email_sau_nume.getText().clear();
-                act_login_password.getText().clear();
+                String emailOrUsername = act_login_email_or_username_editText.getText().toString().trim();
+                String password = act_login_password_editText.getText().toString().trim();
 
                 HttpRequestsAuthentication httpRequestsAuthentication = new HttpRequestsAuthentication("/authentication/login", emailOrUsername, password);
                 Thread connectionThread = new Thread(httpRequestsAuthentication);
                 connectionThread.start();
+
+                try {
+                    connectionThread.join();
+                    int logInResponseCode = httpRequestsAuthentication.getLoginResponseCode();
+                    switch (logInResponseCode) {
+                        case -2:
+                            act_logIn_status_TW.setText("User does not exist!");
+                            act_login_email_or_username_editText.getText().clear();
+                            act_login_password_editText.getText().clear();
+                            break;
+                        case -1:
+                            act_logIn_status_TW.setText("Wrong password!");
+                            act_login_password_editText.getText().clear();
+                            break;
+                        case 0:
+                            act_logIn_status_TW.setText("Failed to check user! Please try again later");
+                            break;
+                        default:
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("clientId", logInResponseCode);
+                            startActivity(intent);
+                    }
+                }
+                catch (InterruptedException e) {
+                    System.out.println("COULDN'T LOG IN USER" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void act_login_toRegister_button_onClick()
+    {
+        act_login_toRegister_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }

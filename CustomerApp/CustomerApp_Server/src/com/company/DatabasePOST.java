@@ -27,4 +27,22 @@ public class DatabasePOST {
 
         System.out.println(dbConnectionStatus);
     }
+
+    public static void registerUser(String email, String username, String password)
+    {
+        String dbConnectionStatus;
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Statement statement = connection.createStatement();
+
+            dbConnectionStatus = "Successfully added/tried to add user to database";
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            dbConnectionStatus = "Failed to register user";
+        }
+
+        System.out.println(dbConnectionStatus);
+    }
 }

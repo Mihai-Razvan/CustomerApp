@@ -19,12 +19,15 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
     private ImageButton act_main_account_button;
     private ImageButton act_main_login_button;
 
+    private int clientId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getExtras();
         getActivityElements();
         setListeners();
     }
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_bills_button_onClick();
         act_main_account_button_onClick();
         act_main_login_button_onClick();
+    }
+
+    @Override
+    public void getExtras()
+    {
+        clientId = getIntent().getIntExtra("clientId", 0);
     }
 
     private void act_main_test_button_onClick() {

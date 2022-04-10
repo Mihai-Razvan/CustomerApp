@@ -49,6 +49,11 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
         act_account_send_button_onClick();
     }
 
+    @Override
+    public void getExtras() {
+
+    }
+
     private void act_account_send_button_onClick()
     {
         act_account_send_button.setOnClickListener(new View.OnClickListener() {
