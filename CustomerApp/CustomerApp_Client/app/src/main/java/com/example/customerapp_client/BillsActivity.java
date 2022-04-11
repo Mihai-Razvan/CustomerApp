@@ -31,6 +31,8 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
     private BillsAdapter billsAdapter;
     private ArrayList<String> addressList;
 
+    private int clientId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
         allBillsList= new ArrayList<>();
         usedBillsList = new ArrayList<>();
         addressList = new ArrayList<>();
+        getExtras();
         setInitialBills();
         setBillsAdapter();
     }
@@ -64,7 +67,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     @Override
     public void getExtras() {
-
+        clientId = getIntent().getIntExtra("clientId", 0);
     }
 
     private void act_bills_add_button_onClick()
@@ -145,7 +148,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private void setInitialBills()
     {
-        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
+        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills", clientId);
         Thread connectionThread = new Thread(httpRequestsBills);
         connectionThread.start();
 

@@ -25,12 +25,15 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
     private TextInputEditText act_account_location_TI_edit;
     private Button act_account_send_button;
 
+    private int clientId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getExtras();
         getActivityElements();
         setListeners();
     }
@@ -51,7 +54,7 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
 
     @Override
     public void getExtras() {
-
+        clientId = getIntent().getIntExtra("clientId", 0);
     }
 
     private void act_account_send_button_onClick()
@@ -62,7 +65,7 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
                 String location = act_account_location_TI_edit.getText().toString().trim();
                 act_account_location_TI_edit.getText().clear();
 
-                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
+                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location, clientId);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
             }

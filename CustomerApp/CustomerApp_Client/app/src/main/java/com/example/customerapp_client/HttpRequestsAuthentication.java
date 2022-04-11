@@ -49,7 +49,7 @@ public class HttpRequestsAuthentication implements Runnable, HttpRequestBasics{
     private void path_authentication_login()
     {
         try {
-            URL url = new URL("http://84b4-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/authentication/login");            //http://10.0.2.2:8080/authentication/login
+            URL url = new URL("http://c2de-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/authentication/login");            //http://10.0.2.2:8080/authentication/login
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -75,7 +75,7 @@ public class HttpRequestsAuthentication implements Runnable, HttpRequestBasics{
     private void path_authentication_register()
     {
         try {
-            URL url = new URL("http://84b4-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/authentication/register");            //http://10.0.2.2:8080/authentication/login
+            URL url = new URL("http://c2de-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/authentication/register");            //http://10.0.2.2:8080/authentication/login
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

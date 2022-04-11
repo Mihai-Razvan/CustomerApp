@@ -22,23 +22,25 @@ public class HttpContextAccount implements HttpContextBasics {
     @Override
     public void createContexts()
     {
-        context_account_locations_new();
+        context_addresses_locations_new();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
 
 
-    private void context_account_locations_new()
+    private void context_addresses_locations_new()
     {
-        server.createContext("/account/locations/new", new HttpHandler() {
+        server.createContext("/account/addresses/new", new HttpHandler() {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
 
-                System.out.println("REQUEST RECEIVED ON /account/locations/new");
+                System.out.println("REQUEST RECEIVED ON /account/addresses/new");
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
-                String requestLine = request.readLine();       //the request contains only one line, the location
+                String requestLine = request.readLine();
+                int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
+                String address = HttpAccountMethods.extractAddressFromJson(requestLine);
 
-                DatabasePOST.postLocation(requestLine);
+                DatabasePOST.postLocation(clientId, address);
             }
         });
     }

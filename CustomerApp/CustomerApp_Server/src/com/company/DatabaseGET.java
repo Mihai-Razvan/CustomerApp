@@ -11,7 +11,7 @@ import java.util.Date;
 public class DatabaseGET {
 
 
-    public static ArrayList<BillData> getAllBills()  //return a list of billdata objects
+    public static ArrayList<BillData> getAllBills(int clientId)  //return a list of billdata objects
     {
         String dbConnectionStatus;
         ArrayList<BillData> billDataList = new ArrayList<>();
@@ -24,7 +24,7 @@ public class DatabaseGET {
                                                              "FROM Client_Info ci, Bill b, Address a\n" +
                                                              "WHERE ci.client_id = b.client_id\n" +
                                                              "AND a.address_id = b.address_id\n" +
-                                                             "AND b.client_id = 1");   //1 is used for testing purpose, it will be changed to user's id after login system
+                                                             "AND b.client_id = " + clientId);   //1 is used for testing purpose, it will be changed to user's id after login system
 
             while (resultSet.next())
             {

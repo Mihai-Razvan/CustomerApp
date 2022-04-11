@@ -1,33 +1,25 @@
 package com.example.customerapp_client;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
-    private String path;
+    private final String path;
+    private final int clientId;
     private String connectionStatus;
 
-    private String location;     //used for /account/locations/new requests
+    private String address;     //used for /account/locations/new requests
 
-    public HttpRequestsAccount(String path) {
+    public HttpRequestsAccount(String path, String address, int clientId) {      //used for /account/locations/new requests
         this.path = path;
+        this.address = address;
+        this.clientId = clientId;
         this.connectionStatus = "Failed";
-    }
-
-    public HttpRequestsAccount(String path, String location) {      //used for /account/locations/new requests
-        this.path = path;
-        this.connectionStatus = "Failed";
-        this.location = location;
     }
 
     @Override
@@ -38,16 +30,16 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     @Override
     public void choosePath() {
         if (path.equals("/account/locations/new")) {
-            path_locations_new();
+            path_addresses_new();
         }
     }
 
 
     ///////////////PATHS///////////////
 
-    private void path_locations_new() {
+    private void path_addresses_new() {
         try {
-            URL url = new URL("http://84b4-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL("http://c2de-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/account/addresses/new");            //http://10.0.2.2:8080/account/locations/new
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -56,7 +48,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             connection.setConnectTimeout(2000);
 
             DataOutputStream request = new DataOutputStream(connection.getOutputStream());
-            String message = location;
+            String message = parseNewLocationRequestToJson();
             request.writeBytes(message);
             request.flush();
             request.close();
@@ -75,6 +67,12 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     public String getConnectionStatus() {
         return connectionStatus;
+    }
+
+    private String parseNewLocationRequestToJson()
+    {
+        return "{'clientId': " + clientId +
+              ", 'address': " + address + "}";
     }
 
 }

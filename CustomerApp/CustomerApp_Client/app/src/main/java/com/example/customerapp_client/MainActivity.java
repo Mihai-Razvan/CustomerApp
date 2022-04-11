@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
     public void getExtras()
     {
         clientId = getIntent().getIntExtra("clientId", 0);
-        System.out.println("CLIENT ID: " + clientId);
     }
 
     private void act_main_test_button_onClick() {
@@ -69,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_bills_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, BillsActivity.class));
+                Intent intent = new Intent(MainActivity.this, BillsActivity.class);
+                intent.putExtra("clientId", clientId);
+                startActivity(intent);
             }
         });
     }
@@ -78,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_account_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AccountActivity.class));
+                Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                intent.putExtra("clientId", clientId);
+                startActivity(intent);
             }
         });
     }

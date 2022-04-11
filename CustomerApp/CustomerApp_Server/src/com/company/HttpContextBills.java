@@ -38,7 +38,11 @@ public class HttpContextBills implements HttpContextBasics {
             public void handle(HttpExchange exchange) throws IOException {
                 System.out.println("REQUEST RECEIVED ON /bills");
 
-                String responseMessage = HttpBillsMethods.billListToJson(DatabaseGET.getAllBills());
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+
+                int clientId = HttpBillsMethods.getClientIdFromJson(requestLine);
+                String responseMessage = HttpBillsMethods.billListToJson(DatabaseGET.getAllBills(clientId));
 
                 exchange.sendResponseHeaders(200, responseMessage.length());
                 DataOutputStream response = new DataOutputStream(exchange.getResponseBody());

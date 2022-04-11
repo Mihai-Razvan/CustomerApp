@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabasePOST {
 
-    public static void postLocation(String address)
+    public static void postLocation(int clientId, String address)
     {
         String dbConnectionStatus;
         try {
@@ -13,10 +13,10 @@ public class DatabasePOST {
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
                                                              "FROM Address");
 
-            int id = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
+            int addressId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
 
             statement.execute("INSERT INTO Address\n" +
-                    "VALUES (" + id + ", 1, '" + address + "')");
+                    "VALUES (" + addressId + ", " + clientId + ", '" + address + "')");
 
             dbConnectionStatus = "Address added successfully to database";
         }

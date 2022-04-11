@@ -1,5 +1,8 @@
 package com.company;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +27,13 @@ public class HttpBillsMethods {
         jsonResponse += "}";
 
         return jsonResponse;
+    }
+
+    public static int getClientIdFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("clientId").getAsInt();
     }
 
 }
