@@ -70,17 +70,20 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
                     connectionThread.join();
                     int logInResponseCode = httpRequestsAuthentication.getLoginResponseCode();
                     switch (logInResponseCode) {
-                        case -2:
+                        case -3:
                             act_logIn_status_TW.setText("User does not exist!");
                             act_login_email_or_username_editText.getText().clear();
                             act_login_password_editText.getText().clear();
                             break;
-                        case -1:
+                        case -2:
                             act_logIn_status_TW.setText("Wrong password!");
                             act_login_password_editText.getText().clear();
                             break;
+                        case -1:
+                            act_logIn_status_TW.setText("Failed to connect to database! Please try again!");
+                            break;
                         case 0:
-                            act_logIn_status_TW.setText("Failed to check user! Please try again later");
+                            act_logIn_status_TW.setText("Error trying to connect to server! Please try again!");
                             break;
                         default:
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -104,4 +107,5 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
             }
         });
     }
+
 }

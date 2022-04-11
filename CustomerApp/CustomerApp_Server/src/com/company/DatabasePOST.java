@@ -28,21 +28,47 @@ public class DatabasePOST {
         System.out.println(dbConnectionStatus);
     }
 
-    public static void registerUser(String email, String username, String password)
+    public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 if failed to connect to db, newClientId if ok
     {
         String dbConnectionStatus;
+        int responseCode;
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
             Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT email AS 'Email', username AS 'Username'\n" +    //check if user is already registered
+                                                             "FROM Client\n" +
+                                                             "WHERE email = '" + email + "'\n" +
+                                                             "OR username = '" + username + "'");
+
+            if(resultSet.next())  //user already exists
+            {
+                if(resultSet.getString("Username").equals(username))
+                    responseCode = -3;
+                else
+                    responseCode = -2;
+            }
+            else
+            {
+                ResultSet resultSet2 = statement.executeQuery("SELECT COUNT(*) as 'NumOfClients'\n" +
+                                                                  "FROM Client");
+                int newClientId = resultSet2.getInt("NumOfClients") + 1;
+
+                statement.execute("INSERT INTO Client\n" +
+                                      "VALUES (" + newClientId + ", '" + username + "', '" + password + "', '" + email + "')");
+
+                responseCode = newClientId;
+            }
 
             dbConnectionStatus = "Successfully added/tried to add user to database";
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
             dbConnectionStatus = "Failed to register user";
+            responseCode = -1;
         }
 
         System.out.println(dbConnectionStatus);
+        return responseCode;
     }
 }

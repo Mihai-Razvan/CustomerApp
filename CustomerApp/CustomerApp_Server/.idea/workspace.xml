@@ -5,32 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/RegisterActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/navigation/nav_graph5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/AccountActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/AccountActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityBasics.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityBasics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/BillsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/BillsActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestBasics.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestBasics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsAuthentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsAuthentication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAuthentication$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAuthentication$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAuthentication.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAuthentication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpAuthenticationMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpAuthenticationMethods.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextAuthentication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextAuthentication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextBasics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextBasics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../database.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -47,7 +47,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private void path_locations_new() {
         try {
-            URL url = new URL("http://bc8b-2a02-2f0c-5700-d000-3830-8a34-d05a-9cef.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL("http://84b4-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/account/locations/new");            //http://10.0.2.2:8080/account/locations/new
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");

@@ -62,11 +62,11 @@ public class HttpContextAuthentication implements HttpContextBasics {
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String requestLine = request.readLine();
 
-                String emailOrUsername = HttpAuthenticationMethods.extractLoginEmailOrUsernameFromJson(requestLine);
+                String email = HttpAuthenticationMethods.extractEmailFromJson(requestLine);
+                String username = HttpAuthenticationMethods.extractUsernameFromJson(requestLine);
                 String password = HttpAuthenticationMethods.extractPasswordFromJson(requestLine);
 
-                int logInResponseCode = DatabaseGET.getClientLoginInfo(emailOrUsername, password);
-                System.out.println(logInResponseCode);
+                int logInResponseCode = DatabasePOST.registerUser(email, username, password);
                 String responseMessage = Integer.toString(logInResponseCode);
 
                 exchange.sendResponseHeaders(200, responseMessage.length());

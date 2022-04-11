@@ -49,7 +49,7 @@ public class DatabaseGET {
         return billDataList;
     }
 
-    public static int getClientLoginInfo(String emailOrUsername, String password)  //returns -2 if client doesn't exist, -1 if password is wrong,0 if dbconnection failed, clientId if login details are ok
+    public static int getClientLoginInfo(String emailOrUsername, String password)  //returns -3 if client doesn't exist, -2 if password is wrong,-1 if dbconnection failed, clientId if login details are ok
     {
         String dbConnectionStatus;
         int responseCode;
@@ -62,9 +62,9 @@ public class DatabaseGET {
                                                              "OR LOWER(email) = LOWER('" + emailOrUsername + "')");
 
             if(!resultSet.next())   //means that the query didn't return anything, so there was no client found with the specified emailOrUsername
-                responseCode = -2;
+                responseCode = -3;
             else if(!password.equals(resultSet.getString("password")))  //client exists but the password is wrong
-                responseCode = -1;
+                responseCode = -2;
             else
                 responseCode = resultSet.getInt("client_id");  //client exists and the password is right
 
@@ -72,7 +72,7 @@ public class DatabaseGET {
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
-            responseCode = 0;
+            responseCode = -1;
             dbConnectionStatus = "Failed to check client log in details";
         }
 

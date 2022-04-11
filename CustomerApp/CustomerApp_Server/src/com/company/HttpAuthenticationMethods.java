@@ -18,4 +18,18 @@ public class HttpAuthenticationMethods {
 
         return jsonObject.get("password").getAsString();
     }
+
+    public static String extractEmailFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("email").getAsString();
+    }
+
+    public static String extractUsernameFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("username").getAsString();
+    }
 }

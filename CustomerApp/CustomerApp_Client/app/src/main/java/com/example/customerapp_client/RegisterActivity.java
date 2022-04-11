@@ -73,11 +73,37 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
                 String username = act_register_username_editText.getText().toString().trim();
                 String password = act_register_password_editText.getText().toString().trim();
 
-                HttpRequestsAuthentication httpRequestsAuthentication = new HttpRequestsAuthentication(email, username, password);
+                HttpRequestsAuthentication httpRequestsAuthentication = new HttpRequestsAuthentication("/authentication/register", email, username, password);
                 Thread connectionThread = new Thread(httpRequestsAuthentication);
                 connectionThread.start();
 
-
+                try {
+                    connectionThread.join();
+                    int registerResponseCode = httpRequestsAuthentication.getRegisterResponseCode();
+                    switch (registerResponseCode) {
+                        case -3:
+                            act_register_status_TW.setText("User already exists");
+                            act_register_password_editText.getText().clear();
+                            break;
+                        case -2:
+                            act_register_status_TW.setText("This email is already used!");
+                            act_register_password_editText.getText().clear();
+                            break;
+                        case -1:
+                            act_register_status_TW.setText("Failed to connect to database! Please try again!");
+                            break;
+                        case 0:
+                            act_register_status_TW.setText("Error trying to connect to server! Please try again!");
+                            break;
+                        default:
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            intent.putExtra("clientId", registerResponseCode);
+                            startActivity(intent);
+                    }
+                }
+                catch (InterruptedException e) {
+                    System.out.println("COULDN'T LOG IN USER" + e.getMessage());
+                }
             }
         });
     }

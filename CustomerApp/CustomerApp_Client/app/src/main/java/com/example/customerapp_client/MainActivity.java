@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
     public void getExtras()
     {
         clientId = getIntent().getIntExtra("clientId", 0);
+        System.out.println("CLIENT ID: " + clientId);
     }
 
     private void act_main_test_button_onClick() {
