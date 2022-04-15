@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
-    private ActivityBillsBinding binding;
     private Button act_bills_add_button;
     private RecyclerView act_bills_recyclerView;
     private Spinner act_bills_locations_spinner;
@@ -31,13 +30,10 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
     private BillsAdapter billsAdapter;
     private ArrayList<String> addressList;
 
-    private int clientId;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityBillsBinding.inflate(getLayoutInflater());
+        ActivityBillsBinding binding = ActivityBillsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         getActivityElements();
@@ -46,7 +42,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
         allBillsList= new ArrayList<>();
         usedBillsList = new ArrayList<>();
         addressList = new ArrayList<>();
-        getExtras();
+
         setInitialBills();
         setBillsAdapter();
     }
@@ -63,11 +59,6 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
     public void setListeners() {
         act_bills_add_button_onClick();
         act_bills_locations_spinner_OnItemSelected();
-    }
-
-    @Override
-    public void getExtras() {
-        clientId = getIntent().getIntExtra("clientId", 0);
     }
 
     private void act_bills_add_button_onClick()
@@ -148,7 +139,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private void setInitialBills()
     {
-        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills", clientId);
+        HttpRequestsBills httpRequestsBills = new HttpRequestsBills("/bills");
         Thread connectionThread = new Thread(httpRequestsBills);
         connectionThread.start();
 

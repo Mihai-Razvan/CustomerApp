@@ -1,8 +1,5 @@
 package com.example.customerapp_client;
 
-import android.util.JsonReader;
-
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -11,22 +8,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private final String path;
-    private final int clientId;
     private String connectionStatus;
     private Bill bill;
     private ArrayList<Bill> billList;
 
-    public HttpRequestsBills(String path, int clientId) {
+    public HttpRequestsBills(String path) {
         this.path = path;
-        this.clientId = clientId;
         this.connectionStatus = "Failed";
         billList = new ArrayList<>();
     }
@@ -52,7 +45,7 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
     private void path_bills()
     {
         try {
-            URL url = new URL("http://c2de-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/bills");            //http://10.0.2.2:8080/bills
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/bills");            //http://10.0.2.2:8080/bills
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -82,7 +75,7 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private String parseBillsRequestToJson()
     {
-        return "{'clientId': " + clientId + "}";
+        return "{'clientId': " + GlobalManager.getClientId() + "}";
     }
 
 

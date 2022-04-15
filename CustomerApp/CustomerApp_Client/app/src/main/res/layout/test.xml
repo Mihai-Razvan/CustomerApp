@@ -106,7 +106,7 @@
                     app:srcCompat="@drawable/ic_launcher_foreground" />
 
                 <ImageButton
-                    android:id="@+id/act_main_linear_button_5"
+                    android:id="@+id/act_main_index_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

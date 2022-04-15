@@ -10,15 +10,13 @@ import java.net.URL;
 public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private final String path;
-    private final int clientId;
     private String connectionStatus;
 
     private String address;     //used for /account/locations/new requests
 
-    public HttpRequestsAccount(String path, String address, int clientId) {      //used for /account/locations/new requests
+    public HttpRequestsAccount(String path, String address) {      //used for /account/locations/new requests
         this.path = path;
         this.address = address;
-        this.clientId = clientId;
         this.connectionStatus = "Failed";
     }
 
@@ -39,7 +37,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private void path_addresses_new() {
         try {
-            URL url = new URL("http://c2de-2a02-2f0c-5700-d000-88fe-b666-ab70-3957.ngrok.io/account/addresses/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/addresses/new");            //http://10.0.2.2:8080/account/locations/new
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -71,7 +69,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private String parseNewLocationRequestToJson()
     {
-        return "{'clientId': " + clientId +
+        return "{'clientId': " + GlobalManager.getClientId() +
               ", 'address': " + address + "}";
     }
 

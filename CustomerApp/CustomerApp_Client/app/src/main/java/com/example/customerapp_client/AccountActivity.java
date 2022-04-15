@@ -20,20 +20,15 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class AccountActivity extends AppCompatActivity implements ActivityBasics {
 
-    private ActivityAccountBinding binding;
-    private TextInputLayout act_account_location_TI;
     private TextInputEditText act_account_location_TI_edit;
     private Button act_account_send_button;
-
-    private int clientId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAccountBinding.inflate(getLayoutInflater());
+        ActivityAccountBinding binding = ActivityAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getExtras();
         getActivityElements();
         setListeners();
     }
@@ -41,7 +36,6 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
 
     @Override
     public void getActivityElements() {
-        act_account_location_TI = findViewById(R.id.act_account_location_TI);
         act_account_location_TI_edit = findViewById(R.id.act_account_location_TI_edit);
         act_account_send_button = findViewById(R.id.act_account_send_button);
     }
@@ -52,11 +46,6 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
         act_account_send_button_onClick();
     }
 
-    @Override
-    public void getExtras() {
-        clientId = getIntent().getIntExtra("clientId", 0);
-    }
-
     private void act_account_send_button_onClick()
     {
         act_account_send_button.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +54,7 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
                 String location = act_account_location_TI_edit.getText().toString().trim();
                 act_account_location_TI_edit.getText().clear();
 
-                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location, clientId);
+                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
             }

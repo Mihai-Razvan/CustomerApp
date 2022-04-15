@@ -6,5 +6,4 @@ public interface ActivityBasics {
 
     void getActivityElements();
     void setListeners();
-    void getExtras();
 }

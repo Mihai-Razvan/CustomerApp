@@ -2,5 +2,6 @@
 <resources>
     <color name="testColor">#FFEDBF</color>
     <color name="testColor2">#FFFCAB</color>
+    <color name="testColor3">#03DFFC</color>
 
 </resources>

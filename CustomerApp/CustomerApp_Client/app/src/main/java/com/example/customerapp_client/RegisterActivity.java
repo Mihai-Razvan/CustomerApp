@@ -14,7 +14,6 @@ import com.example.customerapp_client.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity implements ActivityBasics {
 
-    private ActivityRegisterBinding binding;
     private EditText act_register_email_editText;
     private EditText act_register_username_editText;
     private EditText act_register_password_editText;
@@ -25,10 +24,9 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getExtras();
         getActivityElements();
         setListeners();
     }
@@ -47,11 +45,6 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
     public void setListeners() {
         act_register_backToLogIn_button_onClick();
         act_register_register_button_onClick();
-    }
-
-    @Override
-    public void getExtras() {
-
     }
 
     private void act_register_backToLogIn_button_onClick()
@@ -96,9 +89,8 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
                             act_register_status_TW.setText("Error trying to connect to server! Please try again!");
                             break;
                         default:
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            intent.putExtra("clientId", registerResponseCode);
-                            startActivity(intent);
+                            GlobalManager.setClientId(registerResponseCode);
+                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     }
                 }
                 catch (InterruptedException e) {

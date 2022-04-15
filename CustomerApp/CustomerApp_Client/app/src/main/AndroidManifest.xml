@@ -16,6 +16,11 @@
         android:theme="@style/Theme.CustomerApp_Client"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".IndexActivity"
+            android:exported="false"
+            android:label="@string/title_activity_index"
+            android:theme="@style/Theme.CustomerApp_Client.NoActionBar" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:label="@string/title_activity_register"
@@ -45,7 +50,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

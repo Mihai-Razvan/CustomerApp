@@ -14,8 +14,6 @@ import com.example.customerapp_client.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity implements ActivityBasics {
 
-    private ActivityLoginBinding binding;
-
     private EditText act_login_email_or_username_editText;
     private EditText act_login_password_editText;
     private Button act_login_signIn_button;
@@ -25,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         getActivityElements();
@@ -47,11 +45,6 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
 
         act_login_signIn_button_onClick();
         act_login_toRegister_button_onClick();
-    }
-
-    @Override
-    public void getExtras() {
-
     }
 
     private void act_login_signIn_button_onClick()
@@ -86,9 +79,8 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
                             act_logIn_status_TW.setText("Error trying to connect to server! Please try again!");
                             break;
                         default:
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("clientId", logInResponseCode);
-                            startActivity(intent);
+                            GlobalManager.setClientId(logInResponseCode);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
                 }
                 catch (InterruptedException e) {
