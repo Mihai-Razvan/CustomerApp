@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
                             act_register_status_TW.setText("Failed to connect to database! Please try again!");
                             break;
                         case 0:
-                            act_register_status_TW.setText("Error trying to connect to server! Please try again!");
+                            act_register_status_TW.setText("Internal server error! Please try again!");
                             break;
                         default:
                             GlobalManager.setClientId(registerResponseCode);

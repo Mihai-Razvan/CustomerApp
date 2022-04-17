@@ -1,12 +1,8 @@
 package com.company;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DatabaseGET {
 
@@ -49,7 +45,7 @@ public class DatabaseGET {
         return billDataList;
     }
 
-    public static int getClientLoginInfo(String emailOrUsername, String password)  //returns -3 if client doesn't exist, -2 if password is wrong,-1 if dbconnection failed, clientId if login details are ok
+    public static int logInUser(String emailOrUsername, String password)  //returns -3 if client doesn't exist, -2 if password is wrong,-1 if dbconnection failed, clientId if login details are ok
     {
         String dbConnectionStatus;
         int responseCode;
@@ -63,14 +59,19 @@ public class DatabaseGET {
 
             if(!resultSet.next())   //means that the query didn't return anything, so there was no client found with the specified emailOrUsername
                 responseCode = -3;
-            else if(!password.equals(resultSet.getString("password")))  //client exists but the password is wrong
-                responseCode = -2;
             else
-                responseCode = resultSet.getInt("client_id");  //client exists and the password is right
+            {
+                String hashedPassword = HttpAuthenticationMethods.hashPassword(password);
+                if(!hashedPassword.equals(resultSet.getString("password")))  //client exists but the password is wrong
+                    responseCode = -2;
+                else
+                    responseCode = resultSet.getInt("client_id");  //client exists and the password is right
+            }
+
 
             dbConnectionStatus = "Client log in check successfully executed";
         }
-        catch (SQLException e) {
+        catch (SQLException | NoSuchAlgorithmException e) {
             System.out.println(e.getMessage());
             responseCode = -1;
             dbConnectionStatus = "Failed to check client log in details";
