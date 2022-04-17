@@ -2,20 +2,12 @@ package com.example.customerapp_client;
 
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.customerapp_client.databinding.ActivityIndexBinding;
 
 public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,4 +26,5 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     public void setListeners() {
 
     }
+
 }
