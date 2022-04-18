@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +51,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
     {
         act_bills_recyclerView = findViewById(R.id.act_bills_recyclerView);
         act_bills_add_button = findViewById(R.id.act_bills_add_button);
-        act_bills_locations_spinner = findViewById(R.id.act_bills_locations_spinner);
+        act_bills_locations_spinner = findViewById(R.id.act_index_send_category_spinner);
     }
 
     @Override

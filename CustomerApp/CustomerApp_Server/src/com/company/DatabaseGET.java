@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class DatabaseGET {
 
+    /////////////////////////////////////////////////////////////BILLS GET///////////////////////////////////////////////////////////////////////////
 
     public static ArrayList<BillData> getAllBills(int clientId)  //return a list of billdata objects
     {
@@ -45,7 +46,9 @@ public class DatabaseGET {
         return billDataList;
     }
 
-    public static int logInUser(String emailOrUsername, String password)  //returns -3 if client doesn't exist, -2 if password is wrong,-1 if dbconnection failed, clientId if login details are ok
+    /////////////////////////////////////////////////////////////AUTHENTICATION GET///////////////////////////////////////////////////////////////////////////
+
+    public static int logInUser(String emailOrUsername, String password)  //returns -3 if client doesn't exist, -2 if password is wrong,-1 internal server error, clientId if login details are ok
     {
         String dbConnectionStatus;
         int responseCode;
@@ -79,5 +82,32 @@ public class DatabaseGET {
 
         System.out.println(dbConnectionStatus);
         return responseCode;
+    }
+
+    /////////////////////////////////////////////////////////////INDEX GET///////////////////////////////////////////////////////////////////////////
+
+    public static ArrayList<String> getAllAddresses(int clientId)  throws SQLException
+    {
+        try {
+            ArrayList<String> addressesList = new ArrayList<>();
+
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT address_name AS 'AddressName\n" +
+                                                             "FROM Address\n" +
+                                                             "WHERE client_id = " + clientId);
+
+            while(resultSet.next())
+            {
+                String addressName = resultSet.getString("AddressName");
+                addressesList.add(addressName);
+            }
+
+            return addressesList;
+        }
+        catch (SQLException e) {
+            System.out.println("COULDN'T EXTRACT ADDRESSES FROM DATABASE");
+            throw e;
+        }
     }
 }

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/act_bills_locations_spinner"
+        android:id="@+id/act_index_send_category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/act_bills_add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_bills_locations_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/act_index_send_category_spinner" />
 
     <Button
         android:id="@+id/act_bills_add_button"

@@ -15,7 +15,7 @@ public class HttpRequestsAuthentication implements Runnable, HttpRequestBasics{
     private  String username;
     private  String password;
     private String connectionStatus;
-    private int loginResponseCode;  //is -3 if client doesn't exist, -2 if password is wrong,-1 if dbconnection failed, 0 internal server error, clientId if login details a
+    private int loginResponseCode;  //is -3 if client doesn't exist, -2 if password is wrong,-1 internal server error, 0 internal server error, clientId if login details a
     private int registerResponseCode; //is -3 if username already exists, -2 if email exists, -1 if failed to connect to db, 0 if failed to connect to server, 1 if ok
 
     public HttpRequestsAuthentication(String path, String emailOrUsername, String password)     //used for /authentication/login

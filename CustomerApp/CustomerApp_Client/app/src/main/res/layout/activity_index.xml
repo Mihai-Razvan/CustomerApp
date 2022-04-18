@@ -22,17 +22,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal"
         android:background="@color/testColor3"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/act_account_head_TW">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/act_index_send_category_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -44,17 +45,29 @@
             app:iconTint="#FFFFFF" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/act_index_history_category_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/testColor3"
-            android:text="HYSTORY"
+            android:text="HISTORY"
             android:textSize="16sp"
             android:textStyle="bold"
             app:iconTint="#FFFFFF" />
+
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/act_index_send_category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/testColor2"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
