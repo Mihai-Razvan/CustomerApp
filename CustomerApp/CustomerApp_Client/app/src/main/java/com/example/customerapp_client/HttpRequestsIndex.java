@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
 
     private final String path;
-    private String connectionStatus;
+    private String status;
     private ArrayList<String> addressesList;
 
     public HttpRequestsIndex(String path)
@@ -57,10 +57,16 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
             System.out.println(responseLine);
             parseAddressesListJson(responseLine);
 
-            connectionStatus = "Successful";
+            status = "Successful";
         }
         catch (IOException e) {
+            status = "Failed";
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
+        }
+        catch (NullPointerException e)     //this happens if the response is a null string, so there was a db error and couldn't extract addresses
+        {
+            status = "Failed";
+            System.out.println("INTERNAL SERVER ERROR" + e.getMessage());
         }
     }
 
@@ -86,4 +92,8 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
             addressesList.add(addressName);
         }
     }
+
+    public ArrayList<String> getAddressesList() {return addressesList;}
+
+    public String getStatus() {return status;}
 }

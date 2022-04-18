@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.customerapp_client.databinding.ActivityIndexBinding;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
@@ -26,11 +27,10 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         ActivityIndexBinding binding = ActivityIndexBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        sendCategoryAddressesList = new ArrayList<>();
         getActivityElements();
         setListeners();
         setDropdown();
-
-        sendCategoryAddressesList = new ArrayList<>();
     }
 
     @Override
@@ -50,5 +50,24 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/addresses");
         Thread connectionThread = new Thread(httpRequestsIndex);
         connectionThread.start();
+
+        try {
+            connectionThread.join();
+            String status = httpRequestsIndex.getStatus();
+
+            if(status.equals("Successful"))
+            {
+                sendCategoryAddressesList.addAll(httpRequestsIndex.getAddressesList());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.address_dropdown_item, sendCategoryAddressesList);
+                act_index_send_category_spinner.setAdapter(adapter);
+            }
+            else
+                System.out.println("COULDN'T ADD ADDRESS");
+        }
+        catch (InterruptedException e) {
+            System.out.println("COULDN'T ADD ADDRESS");
+        }
+
+
     }
 }

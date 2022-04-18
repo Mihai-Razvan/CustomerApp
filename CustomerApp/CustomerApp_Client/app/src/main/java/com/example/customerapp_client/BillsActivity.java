@@ -153,7 +153,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
                 setDropdown();
             }
             else
-                System.out.println("COULDN'T ADD CARD");
+                System.out.println("COULDN'T ADD BILL CARD");
         }
         catch (InterruptedException e) {
             System.out.println("COULDN'T ADD CARD");

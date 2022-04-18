@@ -93,7 +93,7 @@ public class DatabaseGET {
 
             Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT address_name AS 'AddressName\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT address_name AS 'AddressName'\n" +
                                                              "FROM Address\n" +
                                                              "WHERE client_id = " + clientId);
 
