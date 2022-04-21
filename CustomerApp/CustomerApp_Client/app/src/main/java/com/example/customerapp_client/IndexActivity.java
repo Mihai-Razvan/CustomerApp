@@ -1,9 +1,12 @@
 package com.example.customerapp_client;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +20,10 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     Button act_index_send_category_button;
     Button act_index_history_category_button;
+
     Spinner act_index_send_category_spinner;
+    TextView act_index_send_category_OldIndex_TW;
+    EditText act_index_send_category_NewIndex_ET;
 
     ArrayList<String> sendCategoryAddressesList;
 
@@ -30,7 +36,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         sendCategoryAddressesList = new ArrayList<>();
         getActivityElements();
         setListeners();
-        setDropdown();
+        setSendCategoryDropdown();
     }
 
     @Override
@@ -38,14 +44,28 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         act_index_send_category_button = findViewById(R.id.act_index_send_category_button);
         act_index_history_category_button = findViewById(R.id.act_index_history_category_button);
         act_index_send_category_spinner = findViewById(R.id.act_index_send_category_spinner);
+        act_index_send_category_OldIndex_TW = findViewById(R.id.act_index_send_category_OldIndex_TW);
+        act_index_send_category_NewIndex_ET = findViewById(R.id.act_index_send_category_NewIndex_ET);
     }
 
     @Override
     public void setListeners() {
-
+        act_index_send_category_OldIndex_TW_onClick();
     }
 
-    private void setDropdown()
+    private void act_index_send_category_OldIndex_TW_onClick()
+    {
+        act_index_send_category_OldIndex_TW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/indexes");
+                Thread connectionThread = new Thread(httpRequestsIndex);
+                connectionThread.start();
+            }
+        });
+    }
+
+    private void setSendCategoryDropdown()
     {
         HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/addresses");
         Thread connectionThread = new Thread(httpRequestsIndex);

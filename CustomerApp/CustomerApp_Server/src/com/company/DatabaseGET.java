@@ -110,4 +110,32 @@ public class DatabaseGET {
             throw e;
         }
     }
+
+    public static ArrayList<String> getAllIndexes(int clientId) throws SQLException
+    {
+        try {
+            ArrayList<String> indexesList= new ArrayList<>();
+
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT i.value AS 'Value'\n" +
+                                                             "FROM Index_Table i, Address a\n" +
+                                                             "WHERE i.address_id = a.address_id\n" +
+                                                             "AND a.client_id = " + clientId);
+
+            while(resultSet.next())
+            {
+                String value = resultSet.getString("Value");
+                indexesList.add(value);
+            }
+
+            return indexesList;
+        }
+        catch (SQLException e)
+        {
+            System.out.println("COULDN'T EXTRACT INDEXES FROM DATABASE");
+            throw e;
+        }
+    }
 }
