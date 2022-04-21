@@ -9,7 +9,7 @@ public class DatabasePOST {
     {
         String dbConnectionStatus;
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
                                                              "FROM Address");
@@ -35,7 +35,7 @@ public class DatabasePOST {
         int responseCode;
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT email AS 'Email', username AS 'Username'\n" +    //check if user is already registered
                                                              "FROM Client\n" +

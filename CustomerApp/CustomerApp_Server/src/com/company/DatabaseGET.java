@@ -14,7 +14,7 @@ public class DatabaseGET {
         ArrayList<BillData> billDataList = new ArrayList<>();
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', b.total AS 'Total', b.status AS 'Status', a.address_name AS 'AddressName'," +
                                                             " b.due_date AS 'DueDate'\n" +
@@ -54,7 +54,7 @@ public class DatabaseGET {
         int responseCode;
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Client\n" +
                                                              "WHERE LOWER(username) = LOWER('" + emailOrUsername + "')\n" +
@@ -91,7 +91,7 @@ public class DatabaseGET {
         try {
             ArrayList<String> addressesList = new ArrayList<>();
 
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT address_name AS 'AddressName'\n" +
                                                              "FROM Address\n" +
