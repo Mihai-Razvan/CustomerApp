@@ -1,5 +1,6 @@
 package com.example.customerapp_client;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,8 @@ import com.example.customerapp_client.databinding.ActivityIndexBinding;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import kotlin.ranges.IntRange;
 
 
 public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
@@ -37,6 +40,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         getActivityElements();
         setListeners();
         setSendCategoryDropdown();
+        setOldIndex();
     }
 
     @Override
@@ -50,19 +54,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     @Override
     public void setListeners() {
-        act_index_send_category_OldIndex_TW_onClick();
-    }
 
-    private void act_index_send_category_OldIndex_TW_onClick()
-    {
-        act_index_send_category_OldIndex_TW.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/indexes");
-                Thread connectionThread = new Thread(httpRequestsIndex);
-                connectionThread.start();
-            }
-        });
     }
 
     private void setSendCategoryDropdown()
@@ -87,7 +79,27 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         catch (InterruptedException e) {
             System.out.println("COULDN'T ADD ADDRESS");
         }
+    }
 
+    private void setOldIndex()
+    {
+        HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/indexes");
+        Thread connectionThread = new Thread(httpRequestsIndex);
+        connectionThread.start();
 
+        try {
+            connectionThread.join();
+            String status = httpRequestsIndex.getStatus();
+
+            if(status.equals("Successful"))
+            {
+                act_index_send_category_OldIndex_TW.setText("Old index: " + httpRequestsIndex.getOldIndexValue());
+            }
+            else
+                throw new InterruptedException();
+        }
+        catch (InterruptedException e) {
+            System.out.println("COULDN'T SHOW OLD INDEX");
+        }
     }
 }

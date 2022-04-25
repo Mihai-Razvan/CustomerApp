@@ -16,7 +16,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     private final String path;
     private String status;
     private ArrayList<String> addressesList;
-    private ArrayList<String> indexesList;
+    private ArrayList<Index> indexesList;
 
     public HttpRequestsIndex(String path)
     {
@@ -69,7 +69,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
         catch (NullPointerException e)     //this happens if the response is a null string, so there was a db error and couldn't extract addresses
         {
             status = "Failed";
-            System.out.println("INTERNAL SERVER ERROR" + e.getMessage());
+            System.out.println("INTERNAL SERVER ERROR: " + e.getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
         catch (NullPointerException e)     //this happens if the response is a null string, so there was a db error and couldn't extract addresses
         {
             status = "Failed";
-            System.out.println("INTERNAL SERVER ERROR" + e.getMessage());
+            System.out.println("INTERNAL SERVER ERROR: " + e.getMessage());
         }
     }
 
@@ -135,19 +135,36 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     {
         JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
         indexesList.clear();
-        int numOfAddresses = jsonObject.get("numOfAddresses").getAsInt();
+        int numOfAddresses = jsonObject.get("numOfIndexes").getAsInt();
 
         for(int i = 0; i < numOfAddresses; i++)  //bills get their id indexed from 0 in json
         {
             String key = "id" + Integer.toString(i);
             JsonObject jsonBill = jsonObject.getAsJsonObject(key);
-            String addressName = jsonBill.get("value").getAsString();
+            int value = jsonBill.get("value").getAsInt();
+            Index index = new Index(value);
 
-            indexesList.add(addressName);
+            indexesList.add(index);
         }
     }
 
+    public int getOldIndexValue()   //for old index
+    {
+        //latest index is the one with the biggest value, because every month the index is increasing or stays constant
+
+        int indexListSize = indexesList.size();
+        int oldIndexValue = 0;  //if indexListSize == 0 it means there is no old index, so its the first month for the client, so old index = 0
+
+        for(int i = 0; i < indexListSize; i++)
+            if(indexesList.get(i).getValue() > oldIndexValue)
+                oldIndexValue = indexesList.get(i).getValue();
+
+        return oldIndexValue;
+    }
+
     public ArrayList<String> getAddressesList() {return addressesList;}
+
+    public ArrayList<Index> getIndexesList() {return indexesList;}
 
     public String getStatus() {return status;}
 }
