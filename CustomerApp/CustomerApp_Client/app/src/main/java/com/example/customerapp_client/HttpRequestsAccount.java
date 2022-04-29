@@ -53,6 +53,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
             BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream())); //this line has to be kept to complet the http request-response cycle
             connectionStatus = "Successful";
+
+            System.out.println("SUCCESSFULLY ADDED ADDRESS TO DATABASE");
         }
         catch (IOException e) {
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());

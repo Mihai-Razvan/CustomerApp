@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -40,7 +39,7 @@ public class HttpContextAccount implements HttpContextBasics {
                 int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
                 String address = HttpAccountMethods.extractAddressFromJson(requestLine);
 
-                DatabasePOST.postLocation(clientId, address);
+                DatabasePOST.postAddress(clientId, address);
             }
         });
     }

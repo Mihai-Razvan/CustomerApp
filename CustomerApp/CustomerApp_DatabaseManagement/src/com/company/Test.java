@@ -1,6 +1,9 @@
 package com.company;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Test {
 
@@ -9,7 +12,7 @@ public class Test {
         String dbConnectionStatus;
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:D:\\Projects\\Android Apps\\CustomerApp_GitRep\\database.db");
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT NEWID()");
 
@@ -23,5 +26,24 @@ public class Test {
         }
 
         System.out.println(dbConnectionStatus);
+    }
+
+    public static void date()
+    {
+        LocalDate now = LocalDate.now();
+        System.out.println(now);
+
+        LocalDate date = LocalDate.parse("2022-04-29");
+
+        System.out.println(now.isAfter(date));
+
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }

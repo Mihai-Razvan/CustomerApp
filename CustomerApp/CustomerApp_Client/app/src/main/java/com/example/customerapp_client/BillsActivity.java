@@ -70,12 +70,12 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
         });
     }
 
-    private void act_bills_locations_spinner_OnItemSelected()
+    private void act_bills_locations_spinner_OnItemSelected()       //when you select one of the addresses
     {
         act_bills_locations_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //i is the position of the selected item in the adapter, so the position in the addressList
+                //i is the position of the selected item in the adapter, so the position in the addressList, so i in the addressList is the same in the spinner
                 String newAddress = addressList.get(i);
                 if(!newAddress.equals("All"))
                 {

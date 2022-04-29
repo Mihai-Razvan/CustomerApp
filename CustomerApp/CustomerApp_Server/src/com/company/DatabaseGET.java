@@ -35,6 +35,10 @@ public class DatabaseGET {
                 billDataList.add(billData);
             }
 
+            connection.close();
+            statement.close();
+            resultSet.close();
+
             dbConnectionStatus = "Bills extracted successfully from database";
         }
         catch (SQLException e) {
@@ -71,6 +75,9 @@ public class DatabaseGET {
                     responseCode = resultSet.getInt("client_id");  //client exists and the password is right
             }
 
+            connection.close();
+            statement.close();
+            resultSet.close();
 
             dbConnectionStatus = "Client log in check successfully executed";
         }
@@ -103,6 +110,10 @@ public class DatabaseGET {
                 addressesList.add(addressName);
             }
 
+            connection.close();
+            statement.close();
+            resultSet.close();
+
             return addressesList;
         }
         catch (SQLException e) {
@@ -111,24 +122,45 @@ public class DatabaseGET {
         }
     }
 
-    public static ArrayList<String> getAllIndexes(int clientId) throws SQLException
+    public static ArrayList<IndexData> getAllIndexes(int clientId) throws SQLException
     {
         try {
-            ArrayList<String> indexesList= new ArrayList<>();
+            ArrayList<IndexData> indexesList= new ArrayList<>();
 
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT i.value AS 'Value'\n" +
-                                                             "FROM Index_Table i, Address a\n" +
-                                                             "WHERE i.address_id = a.address_id\n" +
-                                                             "AND a.client_id = " + clientId);
-
+            ResultSet resultSet = statement.executeQuery("SELECT i1.value AS 'Value', i1.send_date AS 'SendDate', i2.send_date AS 'PreviousDate', a.address_name AS 'AddressName'\n" +
+                                                             "FROM Index_Table i1, Index_Table i2, Address a\n" +
+                                                             "WHERE i1.address_id = a.address_id\n" +
+                                                             "AND a.client_id = " + clientId + "\n" +
+                                                             "AND i1.previous_index_id = i2.index_id");   //get indexes where previous index IS NOT NULL
             while(resultSet.next())
             {
-                String value = resultSet.getString("Value");
-                indexesList.add(value);
+                int value = resultSet.getInt("Value");
+                String sendDate = resultSet.getString("SendDate");
+                String previousDate = resultSet.getString("PreviousDate");
+                String addressName = resultSet.getString("AddressName");
+                indexesList.add(new IndexData(value, sendDate, previousDate, addressName));
             }
+
+            resultSet = statement.executeQuery("SELECT i.value AS 'Value', i.send_date AS 'SendDate', a.address_name AS 'AddressName'\n" +
+                                                   "FROM Index_Table i, Address a\n" +
+                                                   "WHERE i.address_id = a.address_id\n" +
+                                                   "AND a.client_id = " + clientId + "\n" +
+                                                   "AND i.previous_index_id IS NULL");   //get indexes where previous index IS NULL
+            while(resultSet.next())
+            {
+                int value = resultSet.getInt("Value");
+                String sendDate = resultSet.getString("SendDate");
+                String previousDate = "nullDate";
+                String addressName = resultSet.getString("AddressName");
+                indexesList.add(new IndexData(value, sendDate, previousDate, addressName));
+            }
+
+            connection.close();
+            statement.close();
+            resultSet.close();
 
             return indexesList;
         }

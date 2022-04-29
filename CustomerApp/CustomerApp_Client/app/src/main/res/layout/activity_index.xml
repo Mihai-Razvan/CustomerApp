@@ -78,6 +78,7 @@
         android:background="@drawable/test_border_1"
         android:paddingVertical="10dp"
         android:text="Old index:"
+        android:textColor="#0C0C0C"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/act_index_send_category_spinner" />
@@ -96,7 +97,31 @@
             android:layout_margin="10dp"
             android:hint="New index:"
             android:textAlignment="viewStart" />
+
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/act_index_send_category_send_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_weight="1"
+        android:text="Send index"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+    <TextView
+        android:id="@+id/act_index_send_category_status_TW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/act_index_send_category_send_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabasePOST {
 
-    public static void postLocation(int clientId, String address)
+    public static void postAddress(int clientId, String address)
     {
         String dbConnectionStatus;
         try {
@@ -19,6 +19,10 @@ public class DatabasePOST {
             statement.execute("INSERT INTO Address\n" +
                     "VALUES (" + addressId + ", " + clientId + ", '" + address + "')");
 
+            connection.close();
+            statement.close();
+            resultSet.close();
+
             dbConnectionStatus = "Address added successfully to database";
         }
         catch (SQLException e) {
@@ -28,6 +32,8 @@ public class DatabasePOST {
 
         System.out.println(dbConnectionStatus);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok
     {
@@ -53,13 +59,17 @@ public class DatabasePOST {
             else
             {
                 String hashedPassword = HttpAuthenticationMethods.hashPassword(password);  //throw NoSuchAlgorithmException can come from here
-                ResultSet resultSet2 = statement.executeQuery("SELECT COUNT(*) as 'NumOfClients'\n" +
-                        "FROM Client");
-                int newClientId = resultSet2.getInt("NumOfClients") + 1;
+                ResultSet resultSet2 = statement.executeQuery("SELECT COUNT(*)\n" +
+                                                                  "FROM Client");
+                int newClientId = resultSet2.getInt(1) + 1;
 
 
                 statement.execute("INSERT INTO Client\n" +
                         "VALUES (" + newClientId + ", '" + username + "', '" + hashedPassword + "', '" + email + "')");
+
+                connection.close();
+                statement.close();
+                resultSet.close();
 
                 responseCode = newClientId;
                 dbConnectionStatus = "Successfully added/tried to add user to database";
@@ -73,5 +83,56 @@ public class DatabasePOST {
 
         System.out.println(dbConnectionStatus);
         return responseCode;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void  postNewIndex(int clientId, int indexValue, String addressName) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT MAX(i.index_id)\n" +          //get previous index_id from this address
+                                                             "FROM Index_Table i, Address a\n" +
+                                                             "WHERE i.address_id = a.address_id\n" +
+                                                             "AND a.client_id = " + clientId + "\n" +
+                                                             "AND a.address_name = '" + addressName + "'");
+
+            int previousIndexId = resultSet.getInt(1);
+
+            resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfIndexes'\n" +                   //gets total number of indexes in the table
+                    "FROM Index_Table");
+
+            int newIndexId = resultSet.getInt("NumOfIndexes") + 1;
+
+            resultSet = statement.executeQuery("SELECT address_id AS 'AddressId'\n" +                    //gets address_id for the given address_name and clientId
+                    "FROM Address\n" +
+                    "WHERE client_id = " + clientId + "\n" +
+                    "AND address_name = '" + addressName + "'");
+
+            int addressId = resultSet.getInt("AddressId");
+
+            if(previousIndexId != 0)      //there is a previous index so the previous_index_id for this won't be 0
+            {
+
+                statement.execute("INSERT INTO Index_Table\n" +
+                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", '" + GlobalManager.getDate() + "', " + previousIndexId + ")");
+            }
+            else        //this is the first index on this address, so the previous_index_id will be null
+            {
+                statement.execute("INSERT INTO Index_Table (index_id, address_id, value, send_date)\n" +
+                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", '" + GlobalManager.getDate() + "')");
+            }
+
+            connection.close();
+            statement.close();
+            resultSet.close();
+
+            System.out.println("SUCCESSFULLY ADDED INDEX TO DATABASE");
+        }
+        catch (SQLException e) {
+            throw e;
+        }
     }
 }

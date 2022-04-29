@@ -5,7 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/BillsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/BillsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/Index.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/IndexData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/IndexActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/IndexActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_index.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_index.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabasePOST.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabasePOST.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/GlobalManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/GlobalManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAccount$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAccount$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextAccount.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpContextIndex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpIndexMethods.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/HttpIndexMethods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/GlobalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/GlobalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpIndexMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpIndexMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../database.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../database.sqbpro" beforeDir="false" afterPath="$PROJECT_DIR$/../../database.sqbpro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

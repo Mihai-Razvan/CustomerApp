@@ -25,6 +25,7 @@ public class HttpContextIndex implements HttpContextBasics{
     public void createContexts() {
         context_index_addresses();
         context_index_indexes();
+        context_index_new();
     }
 
     private void context_index_addresses()
@@ -69,11 +70,43 @@ public class HttpContextIndex implements HttpContextBasics{
 
                 try {
                     int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
-                    ArrayList<String> indexesList = DatabaseGET.getAllIndexes(clientId);   //could throw SQLException
+                    ArrayList<IndexData> indexesList = DatabaseGET.getAllIndexes(clientId);   //could throw SQLException
                     responseMessage = HttpIndexMethods.indexListToJson(indexesList);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_index_new()
+    {
+        server.createContext("/index/new", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                System.out.println("REQUEST RECEIVED ON /index/new");
+
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage = "";
+
+                try {
+                    int clientId = HttpIndexMethods.extractClientIdFromJson(requestLine);
+                    int indexValue = HttpIndexMethods.extractNewIndexFromJson(requestLine);
+                    String addressName = HttpIndexMethods.extractAddressNameFromJson(requestLine);
+                    DatabasePOST.postNewIndex(clientId, indexValue, addressName);       //could throw SQLException
+                    responseMessage = "SUCCESS";
+                }
+                catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    responseMessage = "FAILED";
                 }
 
                 exchange.sendResponseHeaders(200, responseMessage.length());
