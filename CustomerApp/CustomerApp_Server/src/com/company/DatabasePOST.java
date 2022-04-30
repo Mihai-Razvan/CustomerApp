@@ -20,8 +20,6 @@ public class DatabasePOST {
                     "VALUES (" + addressId + ", " + clientId + ", '" + address + "')");
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             dbConnectionStatus = "Address added successfully to database";
         }
@@ -68,8 +66,6 @@ public class DatabasePOST {
                         "VALUES (" + newClientId + ", '" + username + "', '" + hashedPassword + "', '" + email + "')");
 
                 connection.close();
-                statement.close();
-                resultSet.close();
 
                 responseCode = newClientId;
                 dbConnectionStatus = "Successfully added/tried to add user to database";
@@ -101,10 +97,10 @@ public class DatabasePOST {
 
             int previousIndexId = resultSet.getInt(1);
 
-            resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfIndexes'\n" +                   //gets total number of indexes in the table
+            resultSet = statement.executeQuery("SELECT COUNT(*)\n" +                   //gets total number of indexes in the table
                     "FROM Index_Table");
 
-            int newIndexId = resultSet.getInt("NumOfIndexes") + 1;
+            int newIndexId = resultSet.getInt(1) + 1;
 
             resultSet = statement.executeQuery("SELECT address_id AS 'AddressId'\n" +                    //gets address_id for the given address_name and clientId
                     "FROM Address\n" +
@@ -115,19 +111,22 @@ public class DatabasePOST {
 
             if(previousIndexId != 0)      //there is a previous index so the previous_index_id for this won't be 0
             {
+                resultSet = statement.executeQuery("SELECT value AS 'PreviousValue'\n" +
+                                                       "FROM Index_Table\n" +
+                                                       "WHERE index_id = " + previousIndexId);
+                
+                int consumption = indexValue - resultSet.getInt("PreviousValue");
 
                 statement.execute("INSERT INTO Index_Table\n" +
-                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", '" + GlobalManager.getDate() + "', " + previousIndexId + ")");
+                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", " + consumption + ", '" + GlobalManager.getDate() + "', " + previousIndexId + ")");
             }
             else        //this is the first index on this address, so the previous_index_id will be null
             {
-                statement.execute("INSERT INTO Index_Table (index_id, address_id, value, send_date)\n" +
-                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", '" + GlobalManager.getDate() + "')");
+                statement.execute("INSERT INTO Index_Table (index_id, address_id, value, consumption, send_date)\n" +
+                        "VALUES (" + newIndexId + ", " + addressId + ", " + indexValue + ", " + indexValue + ", '" + GlobalManager.getDate() + "')");
             }
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             System.out.println("SUCCESSFULLY ADDED INDEX TO DATABASE");
         }

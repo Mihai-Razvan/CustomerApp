@@ -36,8 +36,6 @@ public class DatabaseGET {
             }
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             dbConnectionStatus = "Bills extracted successfully from database";
         }
@@ -76,8 +74,6 @@ public class DatabaseGET {
             }
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             dbConnectionStatus = "Client log in check successfully executed";
         }
@@ -111,8 +107,6 @@ public class DatabaseGET {
             }
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             return addressesList;
         }
@@ -159,8 +153,6 @@ public class DatabaseGET {
             }
 
             connection.close();
-            statement.close();
-            resultSet.close();
 
             return indexesList;
         }

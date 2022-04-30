@@ -117,16 +117,22 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     private IndexData getPreviousIndex()       //searches into the usedIndexes to find the one with the latest sendDate
     {
         int numOfUsedIndexes = usedIndexesList.size();
+
         if(numOfUsedIndexes == 0)     //there is no used index, so there is no index on this address, so the last index is 0
             return new IndexData(-1, null, null, null);  //-1 means there is no previous index on this address
 
+        //an user can send a new index with the value equal to the last index value. Also he can send multiple indexes the same day
+        //so we need to order by value and sendDate also
         String previousDate = usedIndexesList.get(0).getSendDate();
+        int previousValue = usedIndexesList.get(0).getValue();
         IndexData previousIndex = usedIndexesList.get(0);
 
         for(int i = 1; i < numOfUsedIndexes; i++)
-            if(LocalDate.parse(usedIndexesList.get(i).getSendDate()).isAfter(LocalDate.parse(previousDate)))
+            if(usedIndexesList.get(i).getValue() > previousValue ||
+                    (usedIndexesList.get(i).getValue() == previousValue && LocalDate.parse(usedIndexesList.get(i).getSendDate()).isAfter(LocalDate.parse(previousDate))))
             {
                 previousDate = usedIndexesList.get(i).getSendDate();
+                previousValue = usedIndexesList.get(i).getValue();
                 previousIndex = usedIndexesList.get(i);
             }
 
@@ -183,9 +189,29 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private void sendIndex()
     {
-        int newIndexValue = Integer.parseInt(act_index_send_category_NewIndex_ET.getText().toString().trim());
+        int newIndexValue;
+        try {
+            newIndexValue = Integer.parseInt(act_index_send_category_NewIndex_ET.getText().toString().trim());
+            act_index_send_category_NewIndex_ET.getText().clear();
+            if(newIndexValue < 0)
+            {
+                act_index_send_category_status_TW.setText("New index can't be lower than 0");
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            act_index_send_category_status_TW.setText("New index should contain only digits");
+            act_index_send_category_NewIndex_ET.getText().clear();
+            return;
+        }
+
+        if(newIndexValue < getPreviousIndex().getValue())
+        {
+            act_index_send_category_status_TW.setText("New index value can't be lower than last index's value");
+            return;
+        }
+
         String addressName = act_index_send_category_spinner.getSelectedItem().toString().trim();
-        act_index_send_category_NewIndex_ET.getText().clear();
 
         HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/new", newIndexValue, addressName);
         Thread connectionThread = new Thread(httpRequestsIndex);
