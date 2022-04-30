@@ -1,6 +1,5 @@
 package com.example.customerapp_client;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,31 +10,37 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.customerapp_client.databinding.ActivityIndexBinding;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import kotlin.ranges.IntRange;
+import java.util.Collections;
 
 
 public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private Button act_index_send_category_button;
     private Button act_index_history_category_button;
+    private ConstraintLayout act_index_send_category_layout;
+    private ConstraintLayout act_index_history_category_layout;
 
-    private Spinner act_index_send_category_spinner;
+    private Spinner act_index_send_spinner;
     private TextView act_index_send_category_OldIndex_TW;
     private EditText act_index_send_category_NewIndex_ET;
     private Button act_index_send_category_send_button;
     private TextView act_index_send_category_status_TW;
 
-    ArrayList<String> sendCategoryAddressesList;
+    private RecyclerView act_index_history_category_recycleView;
+    private IndexesAdapter indexesAdapter;
+
+    ArrayList<String> addressesList;
     ArrayList<IndexData> indexesList;
-    ArrayList<IndexData> usedIndexesList;     //the indexes which have the same address ass the selected address
+    ArrayList<IndexData> usedIndexesList;     //the indexes which have the same address ass the selected address, also this list is used by the adapter in history
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +48,64 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         ActivityIndexBinding binding = ActivityIndexBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        sendCategoryAddressesList = new ArrayList<>();
+        addressesList = new ArrayList<>();
         indexesList = new ArrayList<>();
         usedIndexesList = new ArrayList<>();
         getIndexes();
         getActivityElements();
         setListeners();
-        setSendCategoryDropdown();
+        setAddressesDropdown();
+        setIndexesAdapter();
+
+        act_index_history_category_layout.setVisibility(View.INVISIBLE);
+        act_index_send_category_layout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void getActivityElements() {
         act_index_send_category_button = findViewById(R.id.act_index_send_category_button);
         act_index_history_category_button = findViewById(R.id.act_index_history_category_button);
-        act_index_send_category_spinner = findViewById(R.id.act_index_send_category_spinner);
+        act_index_send_category_layout = findViewById(R.id.act_index_send_category_layout);
+        act_index_history_category_layout = findViewById(R.id.act_index_history_category_layout);
+
+        act_index_send_category_status_TW = findViewById(R.id.act_index_send_category_status_TW);
+        act_index_send_spinner = findViewById(R.id.act_index_spinner);
         act_index_send_category_OldIndex_TW = findViewById(R.id.act_index_send_category_OldIndex_TW);
         act_index_send_category_NewIndex_ET = findViewById(R.id.act_index_send_category_NewIndex_ET);
         act_index_send_category_send_button = findViewById(R.id.act_index_send_category_send_button);
         act_index_send_category_status_TW = findViewById(R.id.act_index_send_category_status_TW);
+        act_index_history_category_recycleView = findViewById(R.id.act_index_history_category_recycleView);
     }
 
     @Override
     public void setListeners() {
         act_index_send_category_send_button_onClick();
-        act_index_send_category_spinner_onItemSelected();
+        act_index_send_spinner_onItemSelected();
+        act_index_send_category_button_onClick();
+        act_index_history_category_button_onClick();
+    }
+
+    private void act_index_send_category_button_onClick()
+    {
+        act_index_send_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act_index_history_category_layout.setVisibility(View.INVISIBLE);
+                act_index_send_category_layout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void act_index_history_category_button_onClick()
+    {
+        act_index_history_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act_index_send_category_layout.setVisibility(View.INVISIBLE);
+                act_index_send_category_status_TW.setText("");
+                act_index_history_category_layout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void act_index_send_category_send_button_onClick()
@@ -79,16 +118,19 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         });
     }
 
-    private void act_index_send_category_spinner_onItemSelected()      //old index will be change with the address
+    private void act_index_send_spinner_onItemSelected()      //old index will be change with the address
     {
-        act_index_send_category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {   //this is called on the initialisation too
+        act_index_send_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {   //this is called on the initialisation too
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //i is the position of the selected item in the adapter, so the position in the sendCategoryAddressList
                setUsedIndexesList();
+               orderUsedIndexesList();
+               indexesAdapter.notifyDataSetChanged();
                String oldIndexString;
                int oldIndexValue = getPreviousIndex().getValue();
-               if(oldIndexValue == -1)
+               String  sendDate = getPreviousIndex().getSendDate();
+               if(sendDate.equals("nullDate"))
                    oldIndexString = "Old index: Nonexistent";
                else
                oldIndexString = "Old index: " + oldIndexValue;
@@ -102,16 +144,39 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         });
     }
 
+    private void setIndexesAdapter()
+    {
+        indexesAdapter = new IndexesAdapter(usedIndexesList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        act_index_history_category_recycleView.setLayoutManager(layoutManager);
+        act_index_history_category_recycleView.setItemAnimator(new DefaultItemAnimator());
+        act_index_history_category_recycleView.setAdapter(indexesAdapter);
+    }
 
     private void setUsedIndexesList()         //set the used indexes (the ones that got the same address as the selected address)
     {
-        String selectedAddress = act_index_send_category_spinner.getSelectedItem().toString().trim();
+        String selectedAddress = act_index_send_spinner.getSelectedItem().toString().trim();
         int numOfIndexes = indexesList.size();
         usedIndexesList.clear();
 
         for(int i = 0; i < numOfIndexes; i++)
             if(indexesList.get(i).getAddressName().equals(selectedAddress))
                 usedIndexesList.add(indexesList.get(i));
+
+        orderUsedIndexesList();
+    }
+
+    private void orderUsedIndexesList()  //we need this method so the indexes in history will be ordered
+    {
+        //now we will order this list, the last index will be the first element usedIndexesList(0)
+
+        int numOfUsedIndexes = usedIndexesList.size();
+        for(int i = 0; i < numOfUsedIndexes - 1; i++)
+            for(int j = i + 1; j < numOfUsedIndexes; j++)
+                if(usedIndexesList.get(j).getValue() > usedIndexesList.get(i).getValue() ||
+                        (usedIndexesList.get(j).getValue() == usedIndexesList.get(i).getValue()) &&
+                                LocalDate.parse(usedIndexesList.get(j).getSendDate()).isAfter(LocalDate.parse(usedIndexesList.get(i).getSendDate())))
+                    Collections.swap(usedIndexesList, i, j);
     }
 
     private IndexData getPreviousIndex()       //searches into the usedIndexes to find the one with the latest sendDate
@@ -119,29 +184,17 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         int numOfUsedIndexes = usedIndexesList.size();
 
         if(numOfUsedIndexes == 0)     //there is no used index, so there is no index on this address, so the last index is 0
-            return new IndexData(-1, null, null, null);  //-1 means there is no previous index on this address
+            return new IndexData(0, 0, "nullDate", "nullDate", "nullAddress");
+        //we tried to put value - 1 if there is no previous index but it will break some part of the code so if we need to know if
+        //there is any previousIndex we check sendDate for the previous and see if it is "nullDate"
 
-        //an user can send a new index with the value equal to the last index value. Also he can send multiple indexes the same day
-        //so we need to order by value and sendDate also
-        String previousDate = usedIndexesList.get(0).getSendDate();
-        int previousValue = usedIndexesList.get(0).getValue();
-        IndexData previousIndex = usedIndexesList.get(0);
-
-        for(int i = 1; i < numOfUsedIndexes; i++)
-            if(usedIndexesList.get(i).getValue() > previousValue ||
-                    (usedIndexesList.get(i).getValue() == previousValue && LocalDate.parse(usedIndexesList.get(i).getSendDate()).isAfter(LocalDate.parse(previousDate))))
-            {
-                previousDate = usedIndexesList.get(i).getSendDate();
-                previousValue = usedIndexesList.get(i).getValue();
-                previousIndex = usedIndexesList.get(i);
-            }
-
-        return  previousIndex;
+        return usedIndexesList.get(0);   //the lsi tis ordered
     }
 
-    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void setSendCategoryDropdown()   //the addresses spinner in the send category
+    private void setAddressesDropdown()   //the addresses spinner in the send category
     {
         HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/addresses");
         Thread connectionThread = new Thread(httpRequestsIndex);
@@ -153,9 +206,9 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
             if(status.equals("Successful"))
             {
-                sendCategoryAddressesList.addAll(httpRequestsIndex.getAddressesList());
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.address_dropdown_item, sendCategoryAddressesList);
-                act_index_send_category_spinner.setAdapter(adapter);
+                addressesList.addAll(httpRequestsIndex.getAddressesList());
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.address_dropdown_item, addressesList);
+                act_index_send_spinner.setAdapter(adapter);
             }
             else
                 System.out.println("COULDN'T ADD ADDRESS");
@@ -211,7 +264,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             return;
         }
 
-        String addressName = act_index_send_category_spinner.getSelectedItem().toString().trim();
+        String addressName = act_index_send_spinner .getSelectedItem().toString().trim();
 
         HttpRequestsIndex httpRequestsIndex = new HttpRequestsIndex("/index/new", newIndexValue, addressName);
         Thread connectionThread = new Thread(httpRequestsIndex);
@@ -223,9 +276,12 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
             if(status.equals("Successful"))
             {
-                IndexData newIndex = new IndexData(newIndexValue, LocalDate.now().toString(), getPreviousIndex().getSendDate(), addressName);
+                IndexData newIndex = new IndexData(newIndexValue, newIndexValue - getPreviousIndex().getValue(),
+                        LocalDate.now().toString(), getPreviousIndex().getSendDate(), addressName);
                 indexesList.add(newIndex);
                 usedIndexesList.add(newIndex);
+                orderUsedIndexesList();
+                indexesAdapter.notifyDataSetChanged();  //we cant use notifyItemInserted because we will reorder the list so most item will have another index
                 String oldIndexString = "Old index: " + newIndexValue;
                 act_index_send_category_OldIndex_TW.setText(oldIndexString);  //the new index becomes the latest index, so old index value is taken from the new index
                 act_index_send_category_status_TW.setText("Successfully added index");

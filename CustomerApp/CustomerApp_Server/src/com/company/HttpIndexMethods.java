@@ -51,11 +51,12 @@ public class HttpIndexMethods {
         for(int i = 0; i < indexesList.size(); i++)
         {
             String valueField = "'value': " + indexesList.get(i).getValue();
+            String consumptionField = "'consumption': " + indexesList.get(i).getConsumption();
             String sendDateField = "'sendDate': " + indexesList.get(i).getSendDate();
             String previousDateField = "'previousDate': " + indexesList.get(i).getPreviousDate();
             String addressNameField = "'addressName': " + indexesList.get(i).getAddressName();
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + valueField + ", " + sendDateField + ", " + previousDateField + ", " + addressNameField + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + valueField + ", " + consumptionField + ", " + sendDateField + ", " + previousDateField + ", " + addressNameField + "}";
         }
 
         jsonResponse += "}";

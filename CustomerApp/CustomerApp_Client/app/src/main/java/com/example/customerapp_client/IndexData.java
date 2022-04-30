@@ -3,13 +3,15 @@ package com.example.customerapp_client;
 public class IndexData {
 
     private final int value;
+    private final int consumption;
     private final String sendDate;
     private final String previousDate;
     private final String addressName;
 
-    public IndexData(int value, String sendDate, String previousDate, String addressName)
+    public IndexData(int value, int consumption, String sendDate, String previousDate, String addressName)
     {
         this.value = value;
+        this.consumption = consumption;
         this.sendDate = sendDate;
         this.previousDate = previousDate;
         this.addressName = addressName;
@@ -19,9 +21,9 @@ public class IndexData {
         return value;
     }
 
-    public String getSendDate() {
-        return sendDate;
-    }
+    public int getConsumption() {return consumption;}
+
+    public String getSendDate() { return sendDate; }
 
     public String getPreviousDate() {
         return previousDate;

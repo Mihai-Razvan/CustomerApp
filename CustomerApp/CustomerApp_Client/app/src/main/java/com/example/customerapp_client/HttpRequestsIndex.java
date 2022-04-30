@@ -199,10 +199,11 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
             String key = "id" + Integer.toString(i);
             JsonObject jsonBill = jsonObject.getAsJsonObject(key);
             int value = jsonBill.get("value").getAsInt();
+            int consumption = jsonBill.get("consumption").getAsInt();
             String sendDate = jsonBill.get("sendDate").getAsString();
             String previousDate = jsonBill.get("previousDate").getAsString();
             String addressName = jsonBill.get("addressName").getAsString();
-            IndexData indexData = new IndexData(value, sendDate, previousDate, addressName);
+            IndexData indexData = new IndexData(value, consumption, sendDate, previousDate, addressName);
 
             indexesList.add(indexData);
         }

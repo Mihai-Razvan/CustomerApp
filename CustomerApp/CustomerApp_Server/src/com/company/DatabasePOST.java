@@ -114,7 +114,7 @@ public class DatabasePOST {
                 resultSet = statement.executeQuery("SELECT value AS 'PreviousValue'\n" +
                                                        "FROM Index_Table\n" +
                                                        "WHERE index_id = " + previousIndexId);
-                
+
                 int consumption = indexValue - resultSet.getInt("PreviousValue");
 
                 statement.execute("INSERT INTO Index_Table\n" +
