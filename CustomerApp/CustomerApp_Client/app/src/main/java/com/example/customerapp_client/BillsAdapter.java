@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.MyViewHolder> {
 
-    private final ArrayList<Bill> billsList;
+    private final ArrayList<BillData> billsList;
 
-    public BillsAdapter(ArrayList<Bill> billsList)
+    public BillsAdapter(ArrayList<BillData> billsList)
     {
         this.billsList = billsList;
     }
@@ -45,16 +45,16 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull BillsAdapter.MyViewHolder holder, int position) {
-        String name = billsList.get(position).getDisplayName();
+        String name = "Name: " + billsList.get(position).getName();
         holder.card_name.setText(name);
 
-        String total = billsList.get(position).getDisplayTotal();
+        String total = "Total: " + billsList.get(position).getTotal();
         holder.card_total.setText(total);
 
-        String status = billsList.get(position).getDisplayStatus();
+        String status = "Status: " + billsList.get(position).getStatus();
         holder.card_status.setText(status);
 
-        String dueDate = billsList.get(position).getDisplayDueDate();
+        String dueDate = "Pay date: " + billsList.get(position).getPayDate();
         holder.card_dueDate.setText(dueDate);
     }
 

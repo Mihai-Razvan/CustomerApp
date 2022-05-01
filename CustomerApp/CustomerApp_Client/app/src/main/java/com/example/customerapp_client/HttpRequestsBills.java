@@ -15,8 +15,8 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private final String path;
     private String connectionStatus;
-    private Bill bill;
-    private ArrayList<Bill> billList;
+    private BillData bill;
+    private ArrayList<BillData> billList;
 
     public HttpRequestsBills(String path) {
         this.path = path;
@@ -64,6 +64,7 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
             parseBillsListJson(responseLine);
 
             connectionStatus = "Successful";
+            System.out.println(responseLine);
         }
         catch (IOException e) {
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
@@ -93,9 +94,10 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
             String total = jsonBill.get("total").getAsString();
             String status = jsonBill.get("status").getAsString();
             String address = jsonBill.get("address").getAsString();
-            String dueDate = jsonBill.get("dueDate").getAsString();
+            String releaseDate = jsonBill.get("releaseDate").getAsString();
+            String payDate = jsonBill.get("payDate").getAsString();
 
-            bill = new Bill(name, total, status, address, dueDate);
+            bill = new BillData(name, total, status, address, releaseDate, payDate);
             billList.add(bill);
         }
     }
@@ -104,12 +106,12 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
         return connectionStatus;
     }
 
-    public Bill getBill()
+    public BillData getBill()
     {
         return bill;
     }
 
-    public ArrayList<Bill> getBillList()
+    public ArrayList<BillData> getBillList()
     {
         return billList;
     }

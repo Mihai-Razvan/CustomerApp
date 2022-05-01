@@ -8,7 +8,7 @@ public class DatabaseGET {
 
     /////////////////////////////////////////////////////////////BILLS GET///////////////////////////////////////////////////////////////////////////
 
-    public static ArrayList<BillData> getAllBills(int clientId)  //return a list of billdata objects
+    public static ArrayList<BillData> getAllBills(int clientId)  //return a list of billData objects
     {
         String dbConnectionStatus;
         ArrayList<BillData> billDataList = new ArrayList<>();
@@ -16,22 +16,26 @@ public class DatabaseGET {
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', b.total AS 'Total', b.status AS 'Status', a.address_name AS 'AddressName'," +
-                                                            " b.due_date AS 'DueDate'\n" +
-                                                             "FROM Client_Info ci, Bill b, Address a\n" +
-                                                             "WHERE ci.client_id = b.client_id\n" +
-                                                             "AND a.address_id = b.address_id\n" +
-                                                             "AND b.client_id = " + clientId);   //1 is used for testing purpose, it will be changed to user's id after login system
+            ResultSet resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', b.total AS 'Total', b.release_date AS 'ReleaseDate', b.pay_date AS 'PayDate', " +
+                                                             "b.status AS 'Status', a.address_name AS 'AddressName'\n" +
+                                                             "FROM Client c, Bill b, Index_Table i, Address a, Client_Info ci\n" +
+                                                             "WHERE c.client_id = " + clientId + "\n" +
+                                                             "AND c.client_id = a.client_id\n" +
+                                                             "AND a.address_id = i.address_id\n" +
+                                                             "AND i.index_id = b.index_id\n" +
+                                                             "AND c.client_id = ci.client_id");
 
+            System.out.println(resultSet.getString("FirstName"));
             while (resultSet.next())
             {
                 String firstName = resultSet.getString("FirstName");
                 int total = resultSet.getInt("Total");
                 String status = resultSet.getString("Status");
                 String addressName = resultSet.getString("AddressName");
-                String dueDate = resultSet.getString("DueDate");
+                String releaseDate = resultSet.getString("ReleaseDate");
+                String payDate = resultSet.getString("PayDate");
 
-                BillData billData = new BillData(firstName, total, status, addressName, dueDate);
+                BillData billData = new BillData(firstName, total, status, addressName, releaseDate, payDate);
                 billDataList.add(billData);
             }
 

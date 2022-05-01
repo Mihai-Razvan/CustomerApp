@@ -6,10 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        DatabaseUpdatesOnTime databaseUpdatesOnTime = new DatabaseUpdatesOnTime();
-//        Thread connectionThread_1 = new Thread(databaseUpdatesOnTime);
-//        connectionThread_1.start();
+        BillTableManager billTableManager = new BillTableManager();
+        Thread billTableManagerThread = new Thread(billTableManager);
+        billTableManagerThread.start();
 
-        Test.date();
+
+        //Test.date();
     }
 }

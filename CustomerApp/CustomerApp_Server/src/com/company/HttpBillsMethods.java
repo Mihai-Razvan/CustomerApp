@@ -19,9 +19,10 @@ public class HttpBillsMethods {
             String totalField = "'total': " + billDataList.get(i).getTotal();
             String statusField = "'status': " + billDataList.get(i).getStatus();
             String addressField = "'address': " + billDataList.get(i).getAddressName();
-            String dueDateField = "'dueDate': " + billDataList.get(i).getDueDate();
+            String releaseDateField = "'releaseDate': " + billDataList.get(i).getReleaseDate();
+            String payDateField = "'payDate': " + billDataList.get(i).getPayDate();
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "," + totalField + "," + statusField + "," + addressField + "," + dueDateField + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "," + totalField + "," + statusField + "," + addressField + "," + releaseDateField + "," + payDateField + "}";
         }
 
         jsonResponse += "}";

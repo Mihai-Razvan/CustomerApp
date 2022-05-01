@@ -24,8 +24,8 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
     private RecyclerView act_bills_recyclerView;
     private Spinner act_bills_locations_spinner;
 
-    private ArrayList<Bill> allBillsList;      //the list which contains all bills, no matter the address
-    private ArrayList<Bill> usedBillsList;     //the list which used for the adapter, which contains only the bills matching the selected address
+    private ArrayList<BillData> allBillsList;      //the list which contains all bills, no matter the address
+    private ArrayList<BillData> usedBillsList;     //the list which used for the adapter, which contains only the bills matching the selected address
     private BillsAdapter billsAdapter;
     private ArrayList<String> addressList;
 

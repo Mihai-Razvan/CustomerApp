@@ -1,0 +1,58 @@
+SELECT MAX(index_id)
+FROM Index_Table
+WHERE address_id = 1        //ultimul index pt o adresa data
+
+SELECT MAX(b.bill_id)
+FROM Bill b, Index_Table i  
+WHERE b.index_id = i.index_id
+AND i.address_id = 1           //selecteaza ultima factura emisa pt o adresa data
+
+
+SELECT i.value
+FROM Bill b, Index_Table i
+WHERE b.index_id = i.index_id
+AND b.bill_id = (SELECT MAX(b.bill_id)
+                 FROM Bill b, Index_Table i  
+                 WHERE b.index_id = i.index_id
+                 AND i.address_id = 1)                 
+
+//selecteaza valoare indexului pe care s-a facut ultima factura
+Nu putem lua valoare prenultimului index pt a calcula factura actuala pt ca se pot adauga mai multe indexuri intre 2 facturi
+Ca sa calculam factura actual trebuie sa luam value de la index_id corespondent ultimei facturi emise inainte de asta noua
+
+SELECT value
+FROM Index_Table
+WHERE index_id = (SELECT MAX(index_id)
+                          FROM Index_Table
+                          WHERE address_id = 1)
+
+//Selectarea valorii ultimului index (cel pt care se face acum factura)
+
+
+
+INSERT INTO Bill
+VALUES ((SELECT COUNT(*)
+         FROM Bill) + 1, 
+		 
+		(SELECT MAX(index_id)
+         FROM Index_Table
+         WHERE address_id = 4),
+		
+   5 * ((SELECT value
+         FROM Index_Table
+         WHERE index_id = (SELECT MAX(index_id)
+                           FROM Index_Table
+                           WHERE address_id = 4)) - (SELECT IIF((SELECT MAX(b.bill_id) 
+                                                                 FROM Bill b, Index_Table i  
+                                                                 WHERE b.index_id = i.index_id
+                                                                 AND i.address_id = 4), (SELECT i.value
+                                                                                         FROM Bill b, Index_Table i
+                                                                                         WHERE b.index_id = i.index_id
+                                                                                         AND b.bill_id = (SELECT MAX(b.bill_id)
+                                                                                                          FROM Bill b, Index_Table i  
+                                                                                                          WHERE b.index_id = i.index_id
+                                                                                                          AND i.address_id = 4)), 0))), '2022-09-01', '2022-10-01', 'On Hold')       
+
+//creeaza un nou bill
+
+

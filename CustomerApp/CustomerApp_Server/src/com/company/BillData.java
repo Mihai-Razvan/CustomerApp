@@ -4,20 +4,22 @@ public class BillData {  //class contains info about a bill, so info from table 
 
     //from the Bill table
     private final int total;
-    private final String dueDate;
+    private final String releaseDate;
+    private final String payDate;
     private final String status;
 
     //bill related data from other tabels such as Client_Info
     private final String firstName;
     private final String addressName;
 
-    public BillData(String firstName, int total, String status, String addressName, String dueDate)
+    public BillData(String firstName, int total, String status, String addressName, String releaseDate, String payDate)
     {
         this.firstName = firstName;
         this.total = total;
         this.status = status;
         this.addressName = addressName;
-        this.dueDate = dueDate;
+        this.releaseDate = releaseDate;
+        this.payDate = payDate;
     }
 
 
@@ -37,6 +39,8 @@ public class BillData {  //class contains info about a bill, so info from table 
         return addressName;
     }
 
-    public String getDueDate() {return dueDate;}
+    public String getReleaseDate() {return releaseDate;}
+
+    public String getPayDate() {return payDate;}
 
 }
