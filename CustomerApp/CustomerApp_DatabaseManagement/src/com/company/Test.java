@@ -35,15 +35,8 @@ public class Test {
 
         LocalDate date = LocalDate.parse("2022-04-29");
 
-        System.out.println(now.isAfter(date));
+        System.out.println(date.getMonth().toString());
 
-        try {
-            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
-            Statement statement = connection.createStatement();
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
 
     }
 }

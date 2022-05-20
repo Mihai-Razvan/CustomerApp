@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class IndexesAdapter  extends RecyclerView.Adapter<IndexesAdapter.MyViewHolder> {
+public class IndexesAdapter extends RecyclerView.Adapter<IndexesAdapter.MyViewHolder> {
 
     private final ArrayList<IndexData> indexesList;
 

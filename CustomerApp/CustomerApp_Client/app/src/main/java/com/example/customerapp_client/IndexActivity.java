@@ -26,8 +26,10 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private Button act_index_send_category_button;
     private Button act_index_history_category_button;
+    private Button act_index_compare_category_button;
     private ConstraintLayout act_index_send_category_layout;
     private ConstraintLayout act_index_history_category_layout;
+    private ConstraintLayout act_index_compare_category_layout;
 
     private Spinner act_index_send_spinner;
     private TextView act_index_send_category_OldIndex_TW;
@@ -37,6 +39,9 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private RecyclerView act_index_history_category_recycleView;
     private IndexesAdapter indexesAdapter;
+
+    private RecyclerView act_index_compare_category_recycleView;
+    private IndexesDifferenceAdapter indexesDifferenceAdapter;
 
     ArrayList<String> addressesList;
     ArrayList<IndexData> indexesList;
@@ -56,17 +61,21 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         setListeners();
         setAddressesDropdown();
         setIndexesAdapter();
+        setIndexesDifferenceAdapter();
 
         act_index_history_category_layout.setVisibility(View.INVISIBLE);
         act_index_send_category_layout.setVisibility(View.VISIBLE);
+        act_index_compare_category_layout.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void getActivityElements() {
         act_index_send_category_button = findViewById(R.id.act_index_send_category_button);
         act_index_history_category_button = findViewById(R.id.act_index_history_category_button);
+        act_index_compare_category_button = findViewById((R.id.act_index_compare_category_button));
         act_index_send_category_layout = findViewById(R.id.act_index_send_category_layout);
         act_index_history_category_layout = findViewById(R.id.act_index_history_category_layout);
+        act_index_compare_category_layout = findViewById(R.id.act_index_compare_category_layout);
 
         act_index_send_category_status_TW = findViewById(R.id.act_index_send_category_status_TW);
         act_index_send_spinner = findViewById(R.id.act_index_spinner);
@@ -75,6 +84,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         act_index_send_category_send_button = findViewById(R.id.act_index_send_category_send_button);
         act_index_send_category_status_TW = findViewById(R.id.act_index_send_category_status_TW);
         act_index_history_category_recycleView = findViewById(R.id.act_index_history_category_recycleView);
+        act_index_compare_category_recycleView = findViewById(R.id.act_index_compare_category_recycleView);
     }
 
     @Override
@@ -83,6 +93,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         act_index_send_spinner_onItemSelected();
         act_index_send_category_button_onClick();
         act_index_history_category_button_onClick();
+        act_index_compare_category_button_onClick();
     }
 
     private void act_index_send_category_button_onClick()
@@ -91,6 +102,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             @Override
             public void onClick(View view) {
                 act_index_history_category_layout.setVisibility(View.INVISIBLE);
+                act_index_compare_category_layout.setVisibility(View.INVISIBLE);
                 act_index_send_category_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -103,7 +115,21 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             public void onClick(View view) {
                 act_index_send_category_layout.setVisibility(View.INVISIBLE);
                 act_index_send_category_status_TW.setText("");
+                act_index_compare_category_layout.setVisibility(View.INVISIBLE);
                 act_index_history_category_layout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void act_index_compare_category_button_onClick()
+    {
+        act_index_compare_category_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act_index_send_category_layout.setVisibility(View.INVISIBLE);
+                act_index_send_category_status_TW.setText("");
+                act_index_history_category_layout.setVisibility(View.INVISIBLE);
+                act_index_compare_category_layout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -127,6 +153,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                setUsedIndexesList();
                orderUsedIndexesList();
                indexesAdapter.notifyDataSetChanged();
+               indexesDifferenceAdapter.notifyDataSetChanged();
                String oldIndexString;
                int oldIndexValue = getPreviousIndex().getValue();
                String  sendDate = getPreviousIndex().getSendDate();
@@ -151,6 +178,15 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         act_index_history_category_recycleView.setLayoutManager(layoutManager);
         act_index_history_category_recycleView.setItemAnimator(new DefaultItemAnimator());
         act_index_history_category_recycleView.setAdapter(indexesAdapter);
+    }
+
+    private void setIndexesDifferenceAdapter()
+    {
+        indexesDifferenceAdapter = new IndexesDifferenceAdapter(usedIndexesList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        act_index_compare_category_recycleView.setLayoutManager(layoutManager);
+        act_index_compare_category_recycleView.setItemAnimator(new DefaultItemAnimator());
+        act_index_compare_category_recycleView.setAdapter(indexesDifferenceAdapter);
     }
 
     private void setUsedIndexesList()         //set the used indexes (the ones that got the same address as the selected address)
@@ -282,6 +318,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                 usedIndexesList.add(newIndex);
                 orderUsedIndexesList();
                 indexesAdapter.notifyDataSetChanged();  //we cant use notifyItemInserted because we will reorder the list so most item will have another index
+                indexesDifferenceAdapter.notifyDataSetChanged();
                 String oldIndexString = "Old index: " + newIndexValue;
                 act_index_send_category_OldIndex_TW.setText(oldIndexString);  //the new index becomes the latest index, so old index value is taken from the new index
                 act_index_send_category_status_TW.setText("Successfully added index");
