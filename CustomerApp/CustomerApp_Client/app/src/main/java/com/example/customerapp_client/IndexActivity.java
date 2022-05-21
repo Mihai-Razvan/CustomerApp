@@ -46,6 +46,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     ArrayList<String> addressesList;
     ArrayList<IndexData> indexesList;
     ArrayList<IndexData> usedIndexesList;     //the indexes which have the same address ass the selected address, also this list is used by the adapter in history
+    ArrayList<IndexData> indexesDifferenceList;   //pseudo-indexes created for compare list
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         addressesList = new ArrayList<>();
         indexesList = new ArrayList<>();
         usedIndexesList = new ArrayList<>();
+        indexesDifferenceList = new ArrayList<>();
         getIndexes();
         getActivityElements();
         setListeners();
@@ -152,6 +154,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                 //i is the position of the selected item in the adapter, so the position in the sendCategoryAddressList
                setUsedIndexesList();
                orderUsedIndexesList();
+               setIndexesDifferenceList();
                indexesAdapter.notifyDataSetChanged();
                indexesDifferenceAdapter.notifyDataSetChanged();
                String oldIndexString;
@@ -182,7 +185,8 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private void setIndexesDifferenceAdapter()
     {
-        indexesDifferenceAdapter = new IndexesDifferenceAdapter(usedIndexesList);
+        setIndexesDifferenceList();
+        indexesDifferenceAdapter = new IndexesDifferenceAdapter(indexesDifferenceList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         act_index_compare_category_recycleView.setLayoutManager(layoutManager);
         act_index_compare_category_recycleView.setItemAnimator(new DefaultItemAnimator());
@@ -317,6 +321,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                 indexesList.add(newIndex);
                 usedIndexesList.add(newIndex);
                 orderUsedIndexesList();
+                setIndexesDifferenceList();
                 indexesAdapter.notifyDataSetChanged();  //we cant use notifyItemInserted because we will reorder the list so most item will have another index
                 indexesDifferenceAdapter.notifyDataSetChanged();
                 String oldIndexString = "Old index: " + newIndexValue;
@@ -329,6 +334,36 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         catch (InterruptedException e) {
             act_index_send_category_status_TW.setText("Couldn't add index");
             System.out.println("COULDN'T ADD INDEX");
+        }
+    }
+
+    private void setIndexesDifferenceList()
+    {
+        LocalDate lastDate;
+
+        if(usedIndexesList.size() != 0) {
+            IndexData lastIndexInMonth = usedIndexesList.get(0);
+            lastDate = LocalDate.parse(lastIndexInMonth.getSendDate());
+            int lastMonth = lastDate.getMonthValue();
+
+
+            for (int i = 0; i <= usedIndexesList.size() - 1; i++) {
+                LocalDate actualDate = LocalDate.parse(usedIndexesList.get(i).getSendDate());
+                int actualMonth = actualDate.getMonthValue();
+
+                if (actualMonth != lastMonth) {
+                    IndexData indexData = usedIndexesList.get(i);
+                    IndexData newIndexData = new IndexData(lastIndexInMonth.getValue(), lastIndexInMonth.getValue() - indexData.getValue(),
+                            lastIndexInMonth.getSendDate(), indexData.getSendDate(), lastIndexInMonth.getAddressName());
+
+                    indexesDifferenceList.add(newIndexData);
+                    lastIndexInMonth = indexData;
+                    lastDate = LocalDate.parse(lastIndexInMonth.getSendDate());
+                    lastMonth = lastDate.getMonthValue();
+                }
+            }
+
+            indexesDifferenceList.add(lastIndexInMonth);
         }
     }
 }
