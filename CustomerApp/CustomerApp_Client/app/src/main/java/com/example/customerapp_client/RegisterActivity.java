@@ -89,8 +89,7 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
                             act_register_status_TW.setText("Internal server error! Please try again!");
                             break;
                         default:
-                            GlobalManager.setClientId(registerResponseCode);
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            registerSuccess(registerResponseCode);
                     }
                 }
                 catch (InterruptedException e) {
@@ -98,5 +97,11 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
                 }
             }
         });
+    }
+
+    private void registerSuccess(int clientId)     //happens when register is successful
+    {
+        GlobalManager.setClientId(clientId);
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));  //after you register you need to log in
     }
 }

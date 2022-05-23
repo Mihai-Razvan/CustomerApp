@@ -1,5 +1,6 @@
 package com.example.customerapp_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -22,6 +23,7 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
 
     private TextInputEditText act_account_location_TI_edit;
     private Button act_account_send_button;
+    private Button act_account_logOut_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,14 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
     public void getActivityElements() {
         act_account_location_TI_edit = findViewById(R.id.act_account_location_TI_edit);
         act_account_send_button = findViewById(R.id.act_account_send_button);
+        act_account_logOut_button = findViewById(R.id.act_account_logOut_button);
     }
 
     @Override
     public void setListeners()
     {
         act_account_send_button_onClick();
+        act_account_logOut_button_onClick();
     }
 
     private void act_account_send_button_onClick()
@@ -57,6 +61,19 @@ public class AccountActivity extends AppCompatActivity implements ActivityBasics
                 HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
+            }
+        });
+    }
+
+    private void act_account_logOut_button_onClick()
+    {
+        act_account_logOut_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalManager.saveEmailOrUsername(AccountActivity.this, null);
+                GlobalManager.savePassword(AccountActivity.this, null);
+
+                startActivity(new Intent(AccountActivity.this, LoginActivity.class));
             }
         });
     }

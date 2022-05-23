@@ -23,6 +23,7 @@
             android:paddingVertical="15dp"
             android:text="2022"
             android:textAlignment="textStart"
+            android:textColor="#939292"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -34,6 +35,7 @@
             android:paddingVertical="15dp"
             android:text="March"
             android:textAlignment="textStart"
+            android:textColor="#939292"
             android:textSize="16sp"
             android:textStyle="bold" />
 
