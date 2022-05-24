@@ -12,10 +12,31 @@ public class HttpAccountMethods {
         return jsonObject.get("clientId").getAsInt();
     }
 
-    public static String extractAddressFromJson(String jsonString)
+    public static String extractCityFromJson(String jsonString)
     {
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
 
-        return jsonObject.get("address").getAsString();
+        return jsonObject.get("city").getAsString();
+    }
+
+    public static String extractStreetFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("street").getAsString();
+    }
+
+    public static String extractNumberFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("number").getAsString();
+    }
+
+    public static String extractDetailsFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("details").getAsString();
     }
 }

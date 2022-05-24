@@ -21,13 +21,13 @@ public class HttpContextAccount implements HttpContextBasics {
     @Override
     public void createContexts()
     {
-        context_addresses_locations_new();
+        context_addresses_address_new();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
 
 
-    private void context_addresses_locations_new()
+    private void context_addresses_address_new()
     {
         server.createContext("/account/addresses/new", new HttpHandler() {
             @Override
@@ -37,9 +37,12 @@ public class HttpContextAccount implements HttpContextBasics {
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String requestLine = request.readLine();
                 int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
-                String address = HttpAccountMethods.extractAddressFromJson(requestLine);
+                String city = HttpAccountMethods.extractCityFromJson(requestLine);
+                String street = HttpAccountMethods.extractStreetFromJson(requestLine);
+                String number = HttpAccountMethods.extractNumberFromJson(requestLine);
+                String details = HttpAccountMethods.extractDetailsFromJson(requestLine);
 
-                DatabasePOST.postAddress(clientId, address);
+                DatabasePOST.postAddress(clientId, city, street, number, details);
             }
         });
     }

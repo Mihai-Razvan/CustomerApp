@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabasePOST {
 
-    public static void postAddress(int clientId, String address)
+    public static void postAddress(int clientId, String city, String street, String number, String details)
     {
         String dbConnectionStatus;
         try {
@@ -17,7 +17,7 @@ public class DatabasePOST {
             int addressId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
 
             statement.execute("INSERT INTO Address\n" +
-                    "VALUES (" + addressId + ", " + clientId + ", '" + address + "')");
+                    "VALUES (" + addressId + ", " + clientId + ", '" + city + "', '" + street + "', '" + number + "', '" + details + "')");
 
             connection.close();
 

@@ -12,11 +12,17 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private final String path;
     private String connectionStatus;
 
-    private String address;     //used for /account/locations/new requests
+    private String city;     //used for /account/locations/new requests
+    private String street;
+    private String number;
+    private String details;
 
-    public HttpRequestsAccount(String path, String address) {      //used for /account/locations/new requests
+    public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/locations/new requests
         this.path = path;
-        this.address = address;
+        this.city = city;
+        this.street = street;
+        this.number = number;
+        this.details = details;
         this.connectionStatus = "Failed";
     }
 
@@ -27,7 +33,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     @Override
     public void choosePath() {
-        if (path.equals("/account/locations/new")) {
+        if (path.equals("/account/addresses/new")) {
             path_addresses_new();
         }
     }
@@ -37,7 +43,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private void path_addresses_new() {
         try {
-            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/addresses/new");            //http://10.0.2.2:8080/account/locations/new
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/addresses/new");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; utf-8");
@@ -72,7 +78,10 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private String parseNewLocationRequestToJson()
     {
         return "{'clientId': " + GlobalManager.getClientId() +
-              ", 'address': " + address + "}";
+              ", 'city': " + city +
+              ", 'street': " + street +
+              ", 'number': " + number +
+              ", 'details': " + details + "}";
     }
 
 }

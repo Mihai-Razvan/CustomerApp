@@ -1,6 +1,7 @@
 package com.example.customerapp_client;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,14 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 public class FragmentAccountAddAddress extends Fragment implements ActivityBasics {
 
-    private TextInputEditText act_account_addAddressesF_location_TI_edit;
-    private Button act_account_addAddressesF_send_button;
+    private Button act_account_addAddressesF_add_button;
     private Button act_account_addAddressesF_logOut_button;
+    private EditText act_account_addAddressesF_city_ET;
+    private EditText act_account_addAddressesF_street_ET;
+    private EditText act_account_addAddressesF_number_ET;
+    private EditText act_account_addAddressesF_details_ET;
 
     private View view;
 
@@ -34,27 +39,39 @@ public class FragmentAccountAddAddress extends Fragment implements ActivityBasic
 
     @Override
     public void getActivityElements() {
-        act_account_addAddressesF_location_TI_edit = view.findViewById(R.id.act_account_addAddressesF_location_TI_edit);
-        act_account_addAddressesF_send_button = view.findViewById(R.id.act_account_addAddressesF_send_button);
+        act_account_addAddressesF_add_button = view.findViewById(R.id.act_account_addAddressesF_add_button);
         act_account_addAddressesF_logOut_button = view.findViewById(R.id.act_account_addAddressesF_logOut_button);
+        act_account_addAddressesF_city_ET = view.findViewById(R.id.act_account_addAddressesF_city_ET);
+        act_account_addAddressesF_street_ET = view.findViewById(R.id.act_account_addAddressesF_street_ET);
+        act_account_addAddressesF_number_ET = view.findViewById(R.id.act_account_addAddressesF_number_ET);
+        act_account_addAddressesF_details_ET = view.findViewById(R.id.act_account_addAddressesF_details_ET);
     }
 
     @Override
     public void setListeners()
     {
-        act_account_addAddressesF_send_button_onClick();
+        act_account_addAddressesF_add_button_onClick();
         act_account_addAddressesF_logOut_button_onClick();
     }
 
-    private void act_account_addAddressesF_send_button_onClick()
+    private void act_account_addAddressesF_add_button_onClick()
     {
-        act_account_addAddressesF_send_button.setOnClickListener(new View.OnClickListener() {
+        act_account_addAddressesF_add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String location = act_account_addAddressesF_location_TI_edit.getText().toString().trim();
-                act_account_addAddressesF_location_TI_edit.getText().clear();
+                String city = act_account_addAddressesF_city_ET.getText().toString().trim();
+                act_account_addAddressesF_city_ET.getText().clear();
 
-                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/locations/new", location);
+                String street = act_account_addAddressesF_street_ET.getText().toString().trim();
+                act_account_addAddressesF_street_ET.getText().clear();
+
+                String number = act_account_addAddressesF_number_ET.getText().toString().trim();
+                act_account_addAddressesF_number_ET.getText().clear();
+
+                String details = act_account_addAddressesF_details_ET.getText().toString().trim();
+                act_account_addAddressesF_details_ET.getText().clear();
+
+                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/addresses/new", city, street, number, details);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
             }
