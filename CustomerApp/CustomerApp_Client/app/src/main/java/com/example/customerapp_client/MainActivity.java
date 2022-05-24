@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_bills_button_onClick();
         act_main_account_button_onClick();
         act_main_login_button_onClick();
+        act_main_index_button_onClick();
         act_main_contact_button_onClick();
     }
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_test_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("TEST BUTTON PRESSED");
+                System.out.println("TEST ACTIVITY");
             }
         });
     }
@@ -105,25 +106,29 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_contact_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // startActivity(new Intent(MainActivity.this, ContactActivity.class));
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + "075-303-0215"));
-
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-                {
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
-
-                }
-                else
-                {
-                    try {
-                        startActivity(callIntent);
-                    }
-                    catch(SecurityException e) {
-                        System.out.println("COULDN'T MAKE PHONE CALL: " + e.getMessage());
-                    }
-                }
+                call();
             }
         });
+    }
+
+    private void call()    //makes a phone call for the contact category
+    {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + Constants.getPhoneNumber()));
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+
+        }
+        else
+        {
+            try {
+                startActivity(callIntent);
+            }
+            catch(SecurityException e) {
+                System.out.println("COULDN'T MAKE PHONE CALL: " + e.getMessage());
+            }
+        }
     }
 }

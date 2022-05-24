@@ -4,6 +4,7 @@ public class Constants {
 
     static String emailOrUsername = "KEY_EMAIL_OR_USERNAME";
     static String password = "KEY_PASSWORD";
+    static String phoneNumber = "074-853-8489";
 
 
     public static void setEmailOrUsername(String emailOrUsername) {
@@ -21,4 +22,6 @@ public class Constants {
     public static String getPassword() {
         return password;
     }
+
+    public static String getPhoneNumber(){return phoneNumber;}
 }

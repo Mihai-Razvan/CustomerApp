@@ -17,11 +17,6 @@
         android:theme="@style/Theme.CustomerApp_Client"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ContactActivity"
-            android:exported="false"
-            android:label="@string/title_activity_contact"
-            android:theme="@style/Theme.CustomerApp_Client.NoActionBar" />
-        <activity
             android:name=".IndexActivity"
             android:exported="false"
             android:label="@string/title_activity_index"

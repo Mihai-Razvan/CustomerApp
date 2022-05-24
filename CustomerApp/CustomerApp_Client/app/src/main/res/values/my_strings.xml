@@ -5,4 +5,10 @@
     <color name="testColor3">#03DFFC</color>
     <color name="testColor4">#FFB3F3FB</color>
 
+    <string name="account_contactInformation_description">Keep your name, email and personal information updated</string>
+    <string name="account_changePassword_description">Change the in app password</string>
+    <string name="account_addresses_description">Add or delete addresses associated with the app</string>
+    <string name="account_cards_description">Add or delete bank cards associated with the app</string>
+    <string name="account_notifications_description">Select the notifications you want to receive</string>
+    <string name="account_closeAccount_description">Very dangerous action! Closing your account is not recommended</string>
 </resources>
