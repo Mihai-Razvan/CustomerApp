@@ -117,12 +117,12 @@
                     app:srcCompat="@color/testColor3" />
 
                 <ImageButton
-                    android:id="@+id/act_main_linear_button_6"
+                    android:id="@+id/act_main_contact_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/action_settings"
-                    app:srcCompat="@drawable/ic_launcher_foreground" />
+                    app:srcCompat="@android:drawable/ic_menu_call" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -22,5 +22,6 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_index">IndexActivity</string>
+    <string name="title_activity_contact">ContactActivity</string>
 
 </resources>
