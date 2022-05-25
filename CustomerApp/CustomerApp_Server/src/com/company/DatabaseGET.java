@@ -93,16 +93,16 @@ public class DatabaseGET {
 
     /////////////////////////////////////////////////////////////INDEX GET///////////////////////////////////////////////////////////////////////////
 
-    public static ArrayList<AddressData> getAllAddresses(int clientId)  throws SQLException
+    public static ArrayList<String> getAllAddresses(int clientId)  throws SQLException
     {
         try {
-            ArrayList<AddressData> addressesList = new ArrayList<>();
+            ArrayList<String> addressesList = new ArrayList<>();
 
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT city AS 'City'\n" +
-                                                             "street AS 'Street'\n" +
-                                                             "number AS 'Number'\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT city AS 'City',\n" +
+                                                             "street AS 'Street',\n" +
+                                                             "number AS 'Number',\n" +
                                                              "details AS 'Details'\n" +
                                                              "FROM Address\n" +
                                                              "WHERE client_id = " + clientId);
@@ -113,7 +113,9 @@ public class DatabaseGET {
                 String street = resultSet.getString("Street");
                 String number = resultSet.getString("Number");
                 String details = resultSet.getString("Details");
-                addressesList.add(new AddressData(city, street, number, details));
+
+                String fullAddress = city + ", " + street + ", " + number + ", " + details;
+                addressesList.add(fullAddress);
             }
 
             connection.close();
@@ -135,7 +137,7 @@ public class DatabaseGET {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery("SELECT i1.value AS 'Value', i1.consumption AS 'Consumption', i1.send_date AS 'SendDate', i2.send_date AS 'PreviousDate', " +
-                                                             "a.address_name AS 'AddressName'\n" +
+                                                             "a.city AS 'City', a.street AS 'Street', a.number AS 'Number', a.details AS 'Details'\n" +
                                                              "FROM Index_Table i1, Index_Table i2, Address a\n" +
                                                              "WHERE i1.address_id = a.address_id\n" +
                                                              "AND a.client_id = " + clientId + "\n" +
@@ -146,11 +148,17 @@ public class DatabaseGET {
                 int consumption = resultSet.getInt("Consumption");
                 String sendDate = resultSet.getString("SendDate");
                 String previousDate = resultSet.getString("PreviousDate");
-                String addressName = resultSet.getString("AddressName");
-                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, addressName));
+                String city = resultSet.getString("City");
+                String street = resultSet.getString("Street");
+                String number = resultSet.getString("Number");
+                String details = resultSet.getString("Details");
+
+                String fullAddress = city + ", " + street + ", " + number + ", " + details;      //full address as a string
+                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, fullAddress));
             }
 
-            resultSet = statement.executeQuery("SELECT i.value AS 'Value', i.consumption AS 'Consumption', i.send_date AS 'SendDate', a.address_name AS 'AddressName'\n" +
+            resultSet = statement.executeQuery("SELECT i.value AS 'Value', i.consumption AS 'Consumption', i.send_date AS 'SendDate',\n" +
+                                                   "a.city AS 'City', a.street AS 'Street', a.number AS 'Number', a.details AS 'Details'\n" +
                                                    "FROM Index_Table i, Address a\n" +
                                                    "WHERE i.address_id = a.address_id\n" +
                                                    "AND a.client_id = " + clientId + "\n" +
@@ -161,8 +169,13 @@ public class DatabaseGET {
                 int consumption = resultSet.getInt("Consumption");
                 String sendDate = resultSet.getString("SendDate");
                 String previousDate = "nullDate";
-                String addressName = resultSet.getString("AddressName");
-                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, addressName));
+                String city = resultSet.getString("City");
+                String street = resultSet.getString("Street");
+                String number = resultSet.getString("Number");
+                String details = resultSet.getString("Details");
+
+                String fullAddress = city + ", " + street + ", " + number + ", " + details;
+                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, fullAddress));
             }
 
             connection.close();

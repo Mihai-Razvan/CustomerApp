@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".FragmentAccountAddresses">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/address_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></include>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/act_account_addressesF_recycleView"
@@ -14,7 +21,7 @@
         app:layout_constraintBottom_toTopOf="@+id/act_account_addressesF_addAddress_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
     </androidx.recyclerview.widget.RecyclerView>
 

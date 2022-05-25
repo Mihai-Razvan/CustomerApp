@@ -27,9 +27,9 @@ public class IndexesDifferenceAdapter extends RecyclerView.Adapter<IndexesDiffer
 
         public MyViewHolder(final View view) {
             super(view);
-            card_year = view.findViewById(R.id.address_city_TW);
-            card_month = view.findViewById(R.id.address_street_TW);
-            card_difference = view.findViewById(R.id.address_number_TW);
+            card_year = view.findViewById(R.id.address_card_city_TW);
+            card_month = view.findViewById(R.id.address_card_street_TW);
+            card_difference = view.findViewById(R.id.address_card_number_TW);
         }
     }
 

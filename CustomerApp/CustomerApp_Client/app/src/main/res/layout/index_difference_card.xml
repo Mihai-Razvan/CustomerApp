@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/address_city_TW"
+            android:id="@+id/address_card_city_TW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/address_street_TW"
+            android:id="@+id/address_card_street_TW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -40,7 +40,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/address_number_TW"
+            android:id="@+id/address_card_number_TW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"

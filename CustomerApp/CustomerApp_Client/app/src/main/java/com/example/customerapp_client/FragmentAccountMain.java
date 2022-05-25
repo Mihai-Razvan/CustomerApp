@@ -1,12 +1,15 @@
 package com.example.customerapp_client;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -17,10 +20,14 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
 
     View view;
 
+    int colorOnTouch;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.fragment_account_main, container, false);
+
+        colorOnTouch =  ContextCompat.getColor(getContext(), R.color.testColor5);
+
         getActivityElements();
         setListeners();
 
@@ -35,10 +42,10 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
     @Override
     public void setListeners()
     {
-        act_account_mainF_addresses_layout_onClick();
+        act_account_mainF_addresses_layout_listeners();
     }
 
-    private void act_account_mainF_addresses_layout_onClick()
+    private void act_account_mainF_addresses_layout_listeners()
     {
         act_account_mainF_addresses_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +53,18 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
                 setAddressesFragment();
             }
         });
+
+//        act_account_mainF_addresses_layout.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == android.view.MotionEvent.ACTION_DOWN)
+//                    act_account_mainF_addresses_layout.setBackgroundColor(colorOnTouch);
+//                else if (motionEvent.getAction() == MotionEvent.ACTION_UP)
+//                    act_account_mainF_addresses_layout.setBackgroundResource(R.drawable.test_border_2);
+//                return true;
+//            }
+//        });
+
     }
 
     private void setAddressesFragment()

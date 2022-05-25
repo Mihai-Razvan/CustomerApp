@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/contactInfo"
+            android:id="@+id/act_account_mainF_contactInfo_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/changePassword"
+            android:id="@+id/act_account_mainF_changePassword_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -102,7 +102,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/cards"
+            android:id="@+id/act_account_mainF_cards_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -132,7 +132,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/notifications"
+            android:id="@+id/act_account_mainF_notifications_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -162,7 +162,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/closeAccount"
+            android:id="@+id/act_account_mainF_closeAccount_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"

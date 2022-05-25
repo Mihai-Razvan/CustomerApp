@@ -6,24 +6,15 @@ public class IndexData {
     private final int consumption;
     private final String sendDate;
     private final String previousDate;
-    private final String addressAsString;
+    private final String fullAddress;
 
-    public IndexData(int value, int consumption, String sendDate, String previousDate, AddressData addressData)
+    public IndexData(int value, int consumption, String sendDate, String previousDate, String fullAddress)
     {
         this.value = value;
         this.consumption = consumption;
         this.sendDate = sendDate;
         this.previousDate = previousDate;
-        this.addressAsString = addressToString(addressData);
-    }
-
-    public IndexData(int value, int consumption, String sendDate, String previousDate, String addressAsString)
-    {
-        this.value = value;
-        this.consumption = consumption;
-        this.sendDate = sendDate;
-        this.previousDate = previousDate;
-        this.addressAsString = addressAsString;
+        this.fullAddress = fullAddress;
     }
 
     public int getValue() {
@@ -38,12 +29,6 @@ public class IndexData {
         return previousDate;
     }
 
-    public String getAddressAsString() {
-        return addressAsString;
-    }
+    public String getFullAddress(){return fullAddress;}
 
-    private String addressToString(AddressData addressData)
-    {
-        return addressData.getCity() + ", " + addressData.getStreet() + ", " + addressData.getNumber() + ", " + addressData.getDetails() + ", ";
-    }
 }

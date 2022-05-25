@@ -17,8 +17,8 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     private final String path;
     private String status;
     int newIndexValue;
-    String addressName;      //address for the new index     !!!!!!!1 TO BE CHANGED
-    private ArrayList<AddressData> addressesList;
+    String fullAddress;      //address for the new index     !!!!!!!1 TO BE CHANGED
+    private ArrayList<String> addressesList;
     private ArrayList<IndexData> indexesList;
     IndexData newIndexData;
 
@@ -30,11 +30,11 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
         this.indexesList = new ArrayList<>();
     }
 
-    public HttpRequestsIndex(String path, int newIndexValue, String addressName)
+    public HttpRequestsIndex(String path, int newIndexValue, String fullAddress)
     {
         this.path = path;
         this.newIndexValue = newIndexValue;
-        this.addressName = addressName;
+        this.fullAddress = fullAddress;
     }
 
     @Override
@@ -169,25 +169,23 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     {
         return "{'clientId': " + GlobalManager.getClientId() +
               ", 'newIndex': " + newIndexValue +
-              ", 'addressName': " + addressName + "}";
+              ", 'fullAddress': '" + fullAddress + "'}";   //we put the value between '' because they can contain spaces and this would cause problems
     }
 
     private void parseAddressesListJson(String input)
     {
+        System.out.println(input);
         JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
         addressesList.clear();
         int numOfAddresses = jsonObject.get("numOfAddresses").getAsInt();
 
-        for(int i = 0; i < numOfAddresses; i++)  //bills get their id indexed from 0 in json
+        for(int i = 0; i < numOfAddresses; i++)  //addresses get their id indexed from 0 in json
         {
             String key = "id" + Integer.toString(i);
             JsonObject jsonBill = jsonObject.getAsJsonObject(key);
-            String city = jsonBill.get("city").getAsString();
-            String street = jsonBill.get("street").getAsString();
-            String number = jsonBill.get("number").getAsString();
-            String details = jsonBill.get("details").getAsString();
+            String fullAddress = jsonBill.get("fullAddress").getAsString();
 
-            addressesList.add(new AddressData(city, street, number, details));
+            addressesList.add(fullAddress);
         }
     }
 
@@ -205,14 +203,15 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
             int consumption = jsonBill.get("consumption").getAsInt();
             String sendDate = jsonBill.get("sendDate").getAsString();
             String previousDate = jsonBill.get("previousDate").getAsString();
-            String addressName = jsonBill.get("addressName").getAsString();
-            IndexData indexData = new IndexData(value, consumption, sendDate, previousDate, addressName);
+            String fullAddress = jsonBill.get("fullAddress").getAsString();
+
+            IndexData indexData = new IndexData(value, consumption, sendDate, previousDate, fullAddress);
 
             indexesList.add(indexData);
         }
     }
 
-    public ArrayList<AddressData> getAddressesList() {return addressesList;}
+    public ArrayList<String> getAddressesList() {return addressesList;}
 
     public ArrayList<IndexData> getIndexesList() {return indexesList;}
 

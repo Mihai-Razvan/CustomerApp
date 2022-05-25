@@ -43,8 +43,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     private RecyclerView act_index_compare_category_recycleView;
     private IndexesDifferenceAdapter indexesDifferenceAdapter;
 
-    ArrayList<AddressData> addressesList;
-    ArrayList<String> stringAddressesList;   //the addresses turned into strings
+    ArrayList<String> addressesList;
     ArrayList<IndexData> indexesList;
     ArrayList<IndexData> usedIndexesList;     //the indexes which have the same address ass the selected address, also this list is used by the adapter in history
     ArrayList<IndexData> indexesDifferenceList;   //pseudo-indexes created for compare list
@@ -154,6 +153,8 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //i is the position of the selected item in the adapter, so the position in the sendCategoryAddressList
                setUsedIndexesList();
+               for(int j = 0 ; j < usedIndexesList.size(); j++)
+                   System.out.println(usedIndexesList.get(j).getFullAddress());
                orderUsedIndexesList();
                setIndexesDifferenceList();
                indexesAdapter.notifyDataSetChanged();
@@ -201,7 +202,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         usedIndexesList.clear();
 
         for(int i = 0; i < numOfIndexes; i++)
-            if(indexesList.get(i).getAddressAsString().equals(selectedAddress))
+            if(indexesList.get(i).getFullAddress().equals(selectedAddress))
                 usedIndexesList.add(indexesList.get(i));
 
         orderUsedIndexesList();
@@ -248,11 +249,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             if(status.equals("Successful"))
             {
                 addressesList.addAll(httpRequestsIndex.getAddressesList());
-                System.out.println("ADDRESES NUMBER:");
-                for(int i = 0; i < addressesList.size(); i++)
-                    System.out.println(addressesList.get(i).getCity());
-                
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.address_dropdown_item, stringAddressesList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.address_dropdown_item, addressesList);
                 act_index_send_spinner.setAdapter(adapter);
             }
             else
@@ -281,7 +278,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                 throw new InterruptedException();
         }
         catch (InterruptedException e) {
-            System.out.println("COULDN'T SHOW OLD INDEX");
+            e.printStackTrace();
         }
     }
 
@@ -345,21 +342,33 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     private void setIndexesDifferenceList()
     {
         LocalDate lastDate;
+        indexesDifferenceList.clear();
 
         if(usedIndexesList.size() != 0) {
             IndexData lastIndexInMonth = usedIndexesList.get(0);
             lastDate = LocalDate.parse(lastIndexInMonth.getSendDate());
             int lastMonth = lastDate.getMonthValue();
 
+            int lastYear = lastDate.getYear();  // these next rows are just to test if there is only one month in all the indexes
+            IndexData lastIndexInList = usedIndexesList.get(usedIndexesList.size() - 1);
+            LocalDate lastDateLastInList = LocalDate.parse(lastIndexInList.getSendDate());
+            int lastMonthLastInList = lastDateLastInList.getMonthValue();
+            int lastYearLastInList = lastDateLastInList.getYear();
+            if(lastYear == lastYearLastInList && lastMonth == lastMonthLastInList)
+            {
+                indexesDifferenceList.add(lastIndexInList);
+                return;
+            }
 
-            for (int i = 0; i <= usedIndexesList.size() - 1; i++) {
+            int usedIndexesListSize = usedIndexesList.size();
+            for (int i = 0; i < usedIndexesListSize; i++) {
                 LocalDate actualDate = LocalDate.parse(usedIndexesList.get(i).getSendDate());
                 int actualMonth = actualDate.getMonthValue();
 
                 if (actualMonth != lastMonth) {
                     IndexData indexData = usedIndexesList.get(i);
                     IndexData newIndexData = new IndexData(lastIndexInMonth.getValue(), lastIndexInMonth.getValue() - indexData.getValue(),
-                            lastIndexInMonth.getSendDate(), indexData.getSendDate(), lastIndexInMonth.getAddressAsString());
+                            lastIndexInMonth.getSendDate(), indexData.getSendDate(), lastIndexInMonth.getFullAddress());
 
                     indexesDifferenceList.add(newIndexData);
                     lastIndexInMonth = indexData;
@@ -369,16 +378,6 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
             }
 
             indexesDifferenceList.add(lastIndexInMonth);
-        }
-    }
-
-    private void addressesListToStringList()    //turn the addressList into a string list
-    {
-        int listSize = addressesList.size();
-        for(int i = 0; i < listSize; i++)
-        {
-            String stringAddress = addressesList.get(i).getCity() + ", " + addressesList.get(i).getStreet() + ", " + addressesList.get(i).getNumber() + ", " + addressesList.get(i).getDetails() + ", ";
-            stringAddressesList.add(stringAddress);
         }
     }
 }

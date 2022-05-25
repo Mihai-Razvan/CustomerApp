@@ -2,6 +2,7 @@ package com.company;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabasePOST {
 
@@ -83,17 +84,22 @@ public class DatabasePOST {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void  postNewIndex(int clientId, int indexValue, String addressName) throws SQLException
+    public static void  postNewIndex(int clientId, int indexValue, String fullAddress) throws SQLException
     {
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
+            ArrayList<String> fullAddressSplit = HttpIndexMethods.splitFullAddress(fullAddress);   //split in city, street, number, details
+
             ResultSet resultSet = statement.executeQuery("SELECT MAX(i.index_id)\n" +          //get previous index_id from this address
                                                              "FROM Index_Table i, Address a\n" +
                                                              "WHERE i.address_id = a.address_id\n" +
                                                              "AND a.client_id = " + clientId + "\n" +
-                                                             "AND a.address_name = '" + addressName + "'");
+                                                             "AND a.city = '" + fullAddressSplit.get(0) + "'\n" +
+                                                             "AND a.street = '" + fullAddressSplit.get(1) + "'\n" +
+                                                             "AND a.number = '" + fullAddressSplit.get(2) + "'\n" +
+                                                             "AND a.details = '" + fullAddressSplit.get(3) + "'");
 
             int previousIndexId = resultSet.getInt(1);
 
@@ -102,10 +108,13 @@ public class DatabasePOST {
 
             int newIndexId = resultSet.getInt(1) + 1;
 
-            resultSet = statement.executeQuery("SELECT address_id AS 'AddressId'\n" +                    //gets address_id for the given address_name and clientId
+            resultSet = statement.executeQuery("SELECT address_id AS 'AddressId'\n" +                    //gets address_id for the given address and clientId
                     "FROM Address\n" +
                     "WHERE client_id = " + clientId + "\n" +
-                    "AND address_name = '" + addressName + "'");
+                    "AND city = '" + fullAddressSplit.get(0) + "'\n" +
+                    "AND street = '" + fullAddressSplit.get(1) + "'\n" +
+                    "AND number = '" + fullAddressSplit.get(2) + "'\n" +
+                    "AND details = '" + fullAddressSplit.get(3) + "'");
 
             int addressId = resultSet.getInt("AddressId");
 

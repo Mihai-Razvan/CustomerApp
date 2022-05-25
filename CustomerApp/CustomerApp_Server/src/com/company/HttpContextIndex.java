@@ -41,7 +41,7 @@ public class HttpContextIndex implements HttpContextBasics{
 
                 try {
                     int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
-                    ArrayList<AddressData> addressesList = DatabaseGET.getAllAddresses(clientId);   //could throw SQLException
+                    ArrayList<String> addressesList = DatabaseGET.getAllAddresses(clientId);   //could throw SQLException
                     responseMessage = HttpIndexMethods.addressListToJson(addressesList);
                 }
                 catch (SQLException e) {
@@ -100,12 +100,12 @@ public class HttpContextIndex implements HttpContextBasics{
                 try {
                     int clientId = HttpIndexMethods.extractClientIdFromJson(requestLine);
                     int indexValue = HttpIndexMethods.extractNewIndexFromJson(requestLine);
-                    String addressName = HttpIndexMethods.extractAddressNameFromJson(requestLine);
+                    String addressName = HttpIndexMethods.extractFullAddressFromJson(requestLine);
                     DatabasePOST.postNewIndex(clientId, indexValue, addressName);       //could throw SQLException
                     responseMessage = "SUCCESS";
                 }
                 catch (SQLException e) {
-                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                     responseMessage = "FAILED";
                 }
 
