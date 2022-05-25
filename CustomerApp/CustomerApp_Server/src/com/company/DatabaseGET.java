@@ -93,21 +93,27 @@ public class DatabaseGET {
 
     /////////////////////////////////////////////////////////////INDEX GET///////////////////////////////////////////////////////////////////////////
 
-    public static ArrayList<String> getAllAddresses(int clientId)  throws SQLException
+    public static ArrayList<AddressData> getAllAddresses(int clientId)  throws SQLException
     {
         try {
-            ArrayList<String> addressesList = new ArrayList<>();
+            ArrayList<AddressData> addressesList = new ArrayList<>();
 
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT address_name AS 'AddressName'\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT city AS 'City'\n" +
+                                                             "street AS 'Street'\n" +
+                                                             "number AS 'Number'\n" +
+                                                             "details AS 'Details'\n" +
                                                              "FROM Address\n" +
                                                              "WHERE client_id = " + clientId);
 
             while(resultSet.next())
             {
-                String addressName = resultSet.getString("AddressName");
-                addressesList.add(addressName);
+                String city = resultSet.getString("City");
+                String street = resultSet.getString("Street");
+                String number = resultSet.getString("Number");
+                String details = resultSet.getString("Details");
+                addressesList.add(new AddressData(city, street, number, details));
             }
 
             connection.close();

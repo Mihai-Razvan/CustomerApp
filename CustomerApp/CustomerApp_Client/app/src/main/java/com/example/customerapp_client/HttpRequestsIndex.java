@@ -17,8 +17,8 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     private final String path;
     private String status;
     int newIndexValue;
-    String addressName;      //address for the new index
-    private ArrayList<String> addressesList;
+    String addressName;      //address for the new index     !!!!!!!1 TO BE CHANGED
+    private ArrayList<AddressData> addressesList;
     private ArrayList<IndexData> indexesList;
     IndexData newIndexData;
 
@@ -182,9 +182,12 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
         {
             String key = "id" + Integer.toString(i);
             JsonObject jsonBill = jsonObject.getAsJsonObject(key);
-            String addressName = jsonBill.get("name").getAsString();
+            String city = jsonBill.get("city").getAsString();
+            String street = jsonBill.get("street").getAsString();
+            String number = jsonBill.get("number").getAsString();
+            String details = jsonBill.get("details").getAsString();
 
-            addressesList.add(addressName);
+            addressesList.add(new AddressData(city, street, number, details));
         }
     }
 
@@ -209,7 +212,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
         }
     }
 
-    public ArrayList<String> getAddressesList() {return addressesList;}
+    public ArrayList<AddressData> getAddressesList() {return addressesList;}
 
     public ArrayList<IndexData> getIndexesList() {return indexesList;}
 

@@ -28,15 +28,18 @@ public class HttpIndexMethods {
         return jsonObject.get("addressName").getAsString();
     }
 
-    public static String addressListToJson(ArrayList<String> addressesList)
+    public static String addressListToJson(ArrayList<AddressData> addressesList)
     {
         String jsonResponse = "{'numOfAddresses': " + Integer.toString(addressesList.size());
 
         for(int i = 0; i < addressesList.size(); i++)
         {
-            String nameField = "'name': " + addressesList.get(i);
+            String cityField = "'city': " + addressesList.get(i).getCity();
+            String streetField = "'street': " + addressesList.get(i).getStreet();
+            String numberField = "'number': " + addressesList.get(i).getNumber();
+            String detailsField = "'city': " + addressesList.get(i).getDetails();
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + cityField + ", " + streetField + ", " + numberField + ", " + detailsField + ", " + "}";
         }
 
         jsonResponse += "}";
