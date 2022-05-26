@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 
 import com.example.customerapp_client.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements ActivityBasics {
+public class ActivityMain extends AppCompatActivity implements ActivityBasics {
 
     private ImageButton act_main_test_button;
     private ImageButton act_main_bills_button;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_bills_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, BillsActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityBills.class));
             }
         });
     }
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_account_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AccountActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityAccount.class));
             }
         });
     }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityLogin.class));
             }
         });
     }
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         act_main_index_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, IndexActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityIndex.class));
             }
         });
     }
@@ -116,9 +116,9 @@ public class MainActivity extends AppCompatActivity implements ActivityBasics {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + Constants.getPhoneNumber()));
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(ActivityMain.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+            ActivityCompat.requestPermissions(ActivityMain.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
 
         }
         else

@@ -15,8 +15,8 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private final String path;
     private String connectionStatus;
-    private BillData bill;
-    private ArrayList<BillData> billList;
+    private DataBill bill;
+    private ArrayList<DataBill> billList;
 
     public HttpRequestsBills(String path) {
         this.path = path;
@@ -97,7 +97,7 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
             String releaseDate = jsonBill.get("releaseDate").getAsString();
             String payDate = jsonBill.get("payDate").getAsString();
 
-            bill = new BillData(name, total, status, address, releaseDate, payDate);
+            bill = new DataBill(name, total, status, address, releaseDate, payDate);
             billList.add(bill);
         }
     }
@@ -106,12 +106,12 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
         return connectionStatus;
     }
 
-    public BillData getBill()
+    public DataBill getBill()
     {
         return bill;
     }
 
-    public ArrayList<BillData> getBillList()
+    public ArrayList<DataBill> getBillList()
     {
         return billList;
     }

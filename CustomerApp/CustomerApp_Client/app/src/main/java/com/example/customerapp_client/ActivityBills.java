@@ -18,15 +18,15 @@ import com.example.customerapp_client.databinding.ActivityBillsBinding;
 
 import java.util.ArrayList;
 
-public class BillsActivity extends AppCompatActivity implements ActivityBasics {
+public class ActivityBills extends AppCompatActivity implements ActivityBasics {
 
     private Button act_bills_add_button;
     private RecyclerView act_bills_recyclerView;
     private Spinner act_bills_locations_spinner;
 
-    private ArrayList<BillData> allBillsList;      //the list which contains all bills, no matter the address
-    private ArrayList<BillData> usedBillsList;     //the list which used for the adapter, which contains only the bills matching the selected address
-    private BillsAdapter billsAdapter;
+    private ArrayList<DataBill> allBillsList;      //the list which contains all bills, no matter the address
+    private ArrayList<DataBill> usedBillsList;     //the list which used for the adapter, which contains only the bills matching the selected address
+    private AdapterBills billsAdapter;
     private ArrayList<String> addressList;
 
     @Override
@@ -115,7 +115,7 @@ public class BillsActivity extends AppCompatActivity implements ActivityBasics {
 
     private void setBillsAdapter()
     {
-        billsAdapter = new BillsAdapter(usedBillsList);
+        billsAdapter = new AdapterBills(usedBillsList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         act_bills_recyclerView.setLayoutManager(layoutManager);
         act_bills_recyclerView.setItemAnimator(new DefaultItemAnimator());

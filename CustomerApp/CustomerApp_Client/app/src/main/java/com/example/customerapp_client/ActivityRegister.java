@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.customerapp_client.databinding.ActivityRegisterBinding;
 
-public class RegisterActivity extends AppCompatActivity implements ActivityBasics {
+public class ActivityRegister extends AppCompatActivity implements ActivityBasics {
 
     private EditText act_register_email_editText;
     private EditText act_register_username_editText;
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
         act_register_backToLogIn_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                startActivity(new Intent(ActivityRegister.this, ActivityLogin.class));
             }
         });
     }
@@ -102,6 +102,6 @@ public class RegisterActivity extends AppCompatActivity implements ActivityBasic
     private void registerSuccess(int clientId)     //happens when register is successful
     {
         GlobalManager.setClientId(clientId);
-        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));  //after you register you need to log in
+        startActivity(new Intent(ActivityRegister.this, ActivityLogin.class));  //after you register you need to log in
     }
 }

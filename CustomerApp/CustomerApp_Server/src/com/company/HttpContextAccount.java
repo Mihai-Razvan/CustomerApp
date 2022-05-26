@@ -41,11 +41,11 @@ public class HttpContextAccount implements HttpContextBasics {
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String requestLine = request.readLine();
 
-                int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
-                String city = HttpAccountMethods.extractCityFromJson(requestLine);
-                String street = HttpAccountMethods.extractStreetFromJson(requestLine);
-                String number = HttpAccountMethods.extractNumberFromJson(requestLine);
-                String details = HttpAccountMethods.extractDetailsFromJson(requestLine);
+                int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                String city = MethodsAccount.extractCityFromJson(requestLine);
+                String street = MethodsAccount.extractStreetFromJson(requestLine);
+                String number = MethodsAccount.extractNumberFromJson(requestLine);
+                String details = MethodsAccount.extractDetailsFromJson(requestLine);
 
                 DatabasePOST.postAddress(clientId, city, street, number, details);
             }
@@ -64,9 +64,9 @@ public class HttpContextAccount implements HttpContextBasics {
                 String responseMessage = "";
 
                 try {
-                    int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
                     ArrayList<String> addressesList = DatabaseGET.getAllAddresses(clientId);   //could throw SQLException
-                    responseMessage = HttpIndexMethods.addressListToJson(addressesList);
+                    responseMessage = MethodsIndex.addressListToJson(addressesList);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());

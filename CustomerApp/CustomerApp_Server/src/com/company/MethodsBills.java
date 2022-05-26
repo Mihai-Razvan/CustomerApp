@@ -3,13 +3,11 @@ package com.company;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class HttpBillsMethods {
+public class MethodsBills {
 
-    public static String billListToJson(ArrayList<BillData> billDataList)
+    public static String billListToJson(ArrayList<DataBill> billDataList)
     {
         String jsonResponse = "{'numOfBills': " + Integer.toString(billDataList.size());
 

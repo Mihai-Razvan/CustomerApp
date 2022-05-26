@@ -12,4 +12,7 @@
     <string name="account_cards_description">Add or delete bank cards associated with the app</string>
     <string name="account_notifications_description">Select the notifications you want to receive</string>
     <string name="account_closeAccount_description">Very dangerous action! Closing your account is not recommended</string>
+
+    <string name="account_deleteAddress">Delete</string>
+    <string name="account_deleteAddress_warning_message">Are you sure you want to delete address </string>
 </resources>

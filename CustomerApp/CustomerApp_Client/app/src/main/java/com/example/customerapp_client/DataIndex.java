@@ -1,6 +1,6 @@
 package com.example.customerapp_client;
 
-public class IndexData {
+public class DataIndex {
 
     private final int value;
     private final int consumption;
@@ -8,7 +8,7 @@ public class IndexData {
     private final String previousDate;
     private final String fullAddress;
 
-    public IndexData(int value, int consumption, String sendDate, String previousDate, String fullAddress)
+    public DataIndex(int value, int consumption, String sendDate, String previousDate, String fullAddress)
     {
         this.value = value;
         this.consumption = consumption;

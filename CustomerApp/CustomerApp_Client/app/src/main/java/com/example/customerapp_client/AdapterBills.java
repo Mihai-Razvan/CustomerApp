@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.MyViewHolder> {
+public class AdapterBills extends RecyclerView.Adapter<AdapterBills.MyViewHolder> {
 
-    private final ArrayList<BillData> billsList;
+    private final ArrayList<DataBill> billsList;
 
-    public BillsAdapter(ArrayList<BillData> billsList)
+    public AdapterBills(ArrayList<DataBill> billsList)
     {
         this.billsList = billsList;
     }
@@ -38,13 +38,13 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.MyViewHolder
 
     @NonNull
     @Override
-    public BillsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View bill_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_card, parent, false);
+    public AdapterBills.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View bill_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_bill, parent, false);
         return new MyViewHolder(bill_card_view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BillsAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterBills.MyViewHolder holder, int position) {
         String name = "Name: " + billsList.get(position).getName();
         holder.card_name.setText(name);
 

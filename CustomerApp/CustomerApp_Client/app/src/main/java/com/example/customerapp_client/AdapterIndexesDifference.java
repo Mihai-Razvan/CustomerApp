@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class IndexesDifferenceAdapter extends RecyclerView.Adapter<IndexesDifferenceAdapter.MyViewHolder> {
+public class AdapterIndexesDifference extends RecyclerView.Adapter<AdapterIndexesDifference.MyViewHolder> {
 
-    private final ArrayList<IndexData> indexesList;
+    private final ArrayList<DataIndex> indexesList;
 
-    public IndexesDifferenceAdapter(ArrayList<IndexData> indexesList) {
+    public AdapterIndexesDifference(ArrayList<DataIndex> indexesList) {
         this.indexesList = indexesList;
     }
 
@@ -35,13 +35,13 @@ public class IndexesDifferenceAdapter extends RecyclerView.Adapter<IndexesDiffer
 
     @NonNull
     @Override
-    public IndexesDifferenceAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View index_difference_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.index_difference_card, parent, false);
-        return new IndexesDifferenceAdapter.MyViewHolder(index_difference_card_view);
+    public AdapterIndexesDifference.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View index_difference_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_index_difference, parent, false);
+        return new AdapterIndexesDifference.MyViewHolder(index_difference_card_view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IndexesDifferenceAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterIndexesDifference.MyViewHolder holder, int position) {
         LocalDate date = LocalDate.parse(indexesList.get(position).getSendDate());
 
         holder.card_year.setText(Integer.toString(date.getYear()));

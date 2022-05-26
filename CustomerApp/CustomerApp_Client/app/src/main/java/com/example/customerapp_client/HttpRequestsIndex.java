@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
 
@@ -19,8 +18,8 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
     int newIndexValue;
     String fullAddress;      //address for the new index     !!!!!!!1 TO BE CHANGED
     private ArrayList<String> addressesList;
-    private ArrayList<IndexData> indexesList;
-    IndexData newIndexData;
+    private ArrayList<DataIndex> indexesList;
+    DataIndex newIndexData;
 
 
     public HttpRequestsIndex(String path)
@@ -205,7 +204,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
             String previousDate = jsonBill.get("previousDate").getAsString();
             String fullAddress = jsonBill.get("fullAddress").getAsString();
 
-            IndexData indexData = new IndexData(value, consumption, sendDate, previousDate, fullAddress);
+            DataIndex indexData = new DataIndex(value, consumption, sendDate, previousDate, fullAddress);
 
             indexesList.add(indexData);
         }
@@ -213,7 +212,7 @@ public class HttpRequestsIndex implements Runnable, HttpRequestBasics{
 
     public ArrayList<String> getAddressesList() {return addressesList;}
 
-    public ArrayList<IndexData> getIndexesList() {return indexesList;}
+    public ArrayList<DataIndex> getIndexesList() {return indexesList;}
 
     public String getStatus() {return status;}
 }

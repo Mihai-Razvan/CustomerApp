@@ -5,9 +5,8 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class HttpIndexMethods {
+public class MethodsIndex {
 
     public static int extractClientIdFromJson(String jsonString)
     {
@@ -46,7 +45,7 @@ public class HttpIndexMethods {
         return jsonResponse;
     }
 
-    public static String indexListToJson(ArrayList<IndexData> indexesList)
+    public static String indexListToJson(ArrayList<DataIndex> indexesList)
     {
         String jsonResponse = "{'numOfIndexes': " + Integer.toString(indexesList.size());
 

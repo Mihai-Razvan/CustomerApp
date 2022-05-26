@@ -8,10 +8,16 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/address_card"
+        layout="@layout/card_addresses_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></include>
+        app:layout_constraintTop_toTopOf="@id/act_account_addressesF_recycleView"></include>
+
+    <include
+        layout="@layout/card_delete_address_warning"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"></include>
 
 
     <androidx.recyclerview.widget.RecyclerView

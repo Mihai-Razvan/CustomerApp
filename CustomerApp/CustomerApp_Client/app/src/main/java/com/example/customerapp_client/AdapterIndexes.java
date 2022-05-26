@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class IndexesAdapter extends RecyclerView.Adapter<IndexesAdapter.MyViewHolder> {
+public class AdapterIndexes extends RecyclerView.Adapter<AdapterIndexes.MyViewHolder> {
 
-    private final ArrayList<IndexData> indexesList;
+    private final ArrayList<DataIndex> indexesList;
 
-    public IndexesAdapter(ArrayList<IndexData> indexesList)
+    public AdapterIndexes(ArrayList<DataIndex> indexesList)
     {
         this.indexesList = indexesList;
     }
@@ -40,13 +40,13 @@ public class IndexesAdapter extends RecyclerView.Adapter<IndexesAdapter.MyViewHo
 
     @NonNull
     @Override
-    public IndexesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View index_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.index_card, parent, false);
-        return new IndexesAdapter.MyViewHolder(index_card_view);
+    public AdapterIndexes.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View index_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_index, parent, false);
+        return new AdapterIndexes.MyViewHolder(index_card_view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IndexesAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterIndexes.MyViewHolder holder, int position) {
         String sendDate = indexesList.get(position).getSendDate();
         sendDate = sendDate.replace("-",  ".");
         holder.card_sendDate.setText(sendDate);

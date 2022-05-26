@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.customerapp_client.databinding.ActivityLoginBinding;
 
 
-public class LoginActivity extends AppCompatActivity implements ActivityBasics {
+public class ActivityLogin extends AppCompatActivity implements ActivityBasics {
 
     private ConstraintLayout act_login_main_container;
     private EditText act_login_email_or_username_editText;
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
         act_login_toRegister_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                startActivity(new Intent(ActivityLogin.this, ActivityRegister.class));
             }
         });
     }
@@ -112,20 +112,20 @@ public class LoginActivity extends AppCompatActivity implements ActivityBasics {
     private void logInSuccess(int clientId, String emailOrUsername, String password)     //happens when log in is successful
     {
         GlobalManager.setClientId(clientId);
-        GlobalManager.saveEmailOrUsername(LoginActivity.this, emailOrUsername);
-        GlobalManager.savePassword(LoginActivity.this, password);
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        GlobalManager.saveEmailOrUsername(ActivityLogin.this, emailOrUsername);
+        GlobalManager.savePassword(ActivityLogin.this, password);
+        startActivity(new Intent(ActivityLogin.this, ActivityMain.class));
     }
 
     private boolean checkLoggedIn()  //return true if savedEmailOrUsername an savedPassword are not null, so the user is logged in
     {
-        return GlobalManager.getSavedEmailOrUsername(LoginActivity.this) != null && GlobalManager.getSavedPassword(LoginActivity.this) != null;
+        return GlobalManager.getSavedEmailOrUsername(ActivityLogin.this) != null && GlobalManager.getSavedPassword(ActivityLogin.this) != null;
     }
 
     private void userLoggedIn() //if user is logged in (has its username and pass in savedpreferences this happens
     {
-        String emailOrUsername = GlobalManager.getSavedEmailOrUsername(LoginActivity.this);
-        String password = GlobalManager.getSavedPassword(LoginActivity.this);
+        String emailOrUsername = GlobalManager.getSavedEmailOrUsername(ActivityLogin.this);
+        String password = GlobalManager.getSavedPassword(ActivityLogin.this);
 
         HttpRequestsAuthentication httpRequestsAuthentication = new HttpRequestsAuthentication("/authentication/login", emailOrUsername, password);
         Thread connectionThread = new Thread(httpRequestsAuthentication);

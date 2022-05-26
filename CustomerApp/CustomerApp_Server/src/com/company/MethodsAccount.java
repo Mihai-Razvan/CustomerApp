@@ -3,7 +3,7 @@ package com.company;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class HttpAccountMethods {
+public class MethodsAccount {
 
     public static int extractClientIdFromJson(String jsonString)
     {

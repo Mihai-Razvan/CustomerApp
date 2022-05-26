@@ -57,7 +57,7 @@ public class DatabasePOST {
             }
             else
             {
-                String hashedPassword = HttpAuthenticationMethods.hashPassword(password);  //throw NoSuchAlgorithmException can come from here
+                String hashedPassword = MethodsAuthentication.hashPassword(password);  //throw NoSuchAlgorithmException can come from here
                 ResultSet resultSet2 = statement.executeQuery("SELECT COUNT(*)\n" +
                                                                   "FROM Client");
                 int newClientId = resultSet2.getInt(1) + 1;
@@ -90,7 +90,7 @@ public class DatabasePOST {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ArrayList<String> fullAddressSplit = HttpIndexMethods.splitFullAddress(fullAddress);   //split in city, street, number, details
+            ArrayList<String> fullAddressSplit = MethodsIndex.splitFullAddress(fullAddress);   //split in city, street, number, details
 
             ResultSet resultSet = statement.executeQuery("SELECT MAX(i.index_id)\n" +          //get previous index_id from this address
                                                              "FROM Index_Table i, Address a\n" +

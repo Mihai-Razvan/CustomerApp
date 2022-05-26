@@ -1,6 +1,6 @@
 package com.example.customerapp_client;
 
-public class BillData {
+public class DataBill {
 
     private String name;
     private String total;
@@ -14,7 +14,7 @@ public class BillData {
     private String displayStatus;
     private String displayDueDate;
 
-    public BillData(String name, String total, String status, String address, String releaseDate, String payDate) {
+    public DataBill(String name, String total, String status, String address, String releaseDate, String payDate) {
         this.name = name;
         this.total = total;
         this.status = status;

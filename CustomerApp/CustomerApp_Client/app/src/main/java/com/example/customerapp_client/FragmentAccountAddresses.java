@@ -1,13 +1,10 @@
 package com.example.customerapp_client;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,8 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -26,7 +21,7 @@ public class FragmentAccountAddresses extends Fragment implements ActivityBasics
     Button act_account_addressesF_addAddress_button;
 
     private View view;
-    private AddressesAdapter addressesAdapter;
+    private AdapterAddresses addressesAdapter;
     private ArrayList<String> addressesList;  //these are in fullAddress form
 
 
@@ -90,7 +85,7 @@ public class FragmentAccountAddresses extends Fragment implements ActivityBasics
 
     private void setAddressesAdapter()
     {
-        addressesAdapter = new AddressesAdapter(addressesList);
+        addressesAdapter = new AdapterAddresses(addressesList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         act_account_addressesF_recycleView.setLayoutManager(layoutManager);
         act_account_addressesF_recycleView.setItemAnimator(new DefaultItemAnimator());

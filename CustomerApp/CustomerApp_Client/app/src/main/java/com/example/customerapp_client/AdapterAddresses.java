@@ -3,6 +3,7 @@ package com.example.customerapp_client;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AddressesAdapter extends  RecyclerView.Adapter<AddressesAdapter.MyViewHolder>{
+public class AdapterAddresses extends  RecyclerView.Adapter<AdapterAddresses.MyViewHolder>{
 
     private final ArrayList<String> addressesList;
 
-    public AddressesAdapter(ArrayList<String> addressesList)
+    public AdapterAddresses(ArrayList<String> addressesList)
     {
         this.addressesList = addressesList;
     }
@@ -27,6 +28,7 @@ public class AddressesAdapter extends  RecyclerView.Adapter<AddressesAdapter.MyV
         private final TextView card_street;
         private final TextView card_number;
         private final TextView card_details;
+        private final ImageButton card_delete_button;
 
         public MyViewHolder(final View view) {
             super(view);
@@ -34,18 +36,26 @@ public class AddressesAdapter extends  RecyclerView.Adapter<AddressesAdapter.MyV
             card_street = view.findViewById(R.id.address_card_street_TW);
             card_number = view.findViewById(R.id.address_card_number_TW);
             card_details = view.findViewById(R.id.address_card_details_TW);
+            card_delete_button = view.findViewById(R.id.address_card_delete_button);
+
+            card_delete_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("sadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+                }
+            });
         }
     }
 
     @NonNull
     @Override
-    public AddressesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View address_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.address_card, parent, false);
-        return new AddressesAdapter.MyViewHolder(address_card_view);
+    public AdapterAddresses.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View address_card_view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_address, parent, false);
+        return new AdapterAddresses.MyViewHolder(address_card_view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddressesAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterAddresses.MyViewHolder holder, int position) {
 
         ArrayList<String> fullAddressSplit = splitFullAddress(addressesList.get(position));
 

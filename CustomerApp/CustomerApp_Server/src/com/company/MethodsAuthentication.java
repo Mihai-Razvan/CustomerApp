@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class HttpAuthenticationMethods {
+public class MethodsAuthentication {
 
     public static String extractLoginEmailOrUsernameFromJson(String jsonString)  //used to extract emailOrUsername from the json send by client which contains emailOrUsername and password
     {

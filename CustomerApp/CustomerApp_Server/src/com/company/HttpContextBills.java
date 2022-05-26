@@ -8,9 +8,6 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class HttpContextBills implements HttpContextBasics {
 
@@ -41,8 +38,8 @@ public class HttpContextBills implements HttpContextBasics {
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String requestLine = request.readLine();
 
-                int clientId = HttpBillsMethods.getClientIdFromJson(requestLine);
-                String responseMessage = HttpBillsMethods.billListToJson(DatabaseGET.getAllBills(clientId));
+                int clientId = MethodsBills.getClientIdFromJson(requestLine);
+                String responseMessage = MethodsBills.billListToJson(DatabaseGET.getAllBills(clientId));
 
                 exchange.sendResponseHeaders(200, responseMessage.length());
                 DataOutputStream response = new DataOutputStream(exchange.getResponseBody());

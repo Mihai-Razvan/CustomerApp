@@ -8,10 +8,10 @@ public class DatabaseGET {
 
     /////////////////////////////////////////////////////////////BILLS GET///////////////////////////////////////////////////////////////////////////
 
-    public static ArrayList<BillData> getAllBills(int clientId)  //return a list of billData objects
+    public static ArrayList<DataBill> getAllBills(int clientId)  //return a list of billData objects
     {
         String dbConnectionStatus;
-        ArrayList<BillData> billDataList = new ArrayList<>();
+        ArrayList<DataBill> billDataList = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
@@ -35,7 +35,7 @@ public class DatabaseGET {
                 String releaseDate = resultSet.getString("ReleaseDate");
                 String payDate = resultSet.getString("PayDate");
 
-                BillData billData = new BillData(firstName, total, status, addressName, releaseDate, payDate);
+                DataBill billData = new DataBill(firstName, total, status, addressName, releaseDate, payDate);
                 billDataList.add(billData);
             }
 
@@ -70,7 +70,7 @@ public class DatabaseGET {
                 responseCode = -3;
             else
             {
-                String hashedPassword = HttpAuthenticationMethods.hashPassword(password);
+                String hashedPassword = MethodsAuthentication.hashPassword(password);
                 if(!hashedPassword.equals(resultSet.getString("password")))  //client exists but the password is wrong
                     responseCode = -2;
                 else
@@ -128,10 +128,10 @@ public class DatabaseGET {
         }
     }
 
-    public static ArrayList<IndexData> getAllIndexes(int clientId) throws SQLException
+    public static ArrayList<DataIndex> getAllIndexes(int clientId) throws SQLException
     {
         try {
-            ArrayList<IndexData> indexesList= new ArrayList<>();
+            ArrayList<DataIndex> indexesList= new ArrayList<>();
 
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
@@ -154,7 +154,7 @@ public class DatabaseGET {
                 String details = resultSet.getString("Details");
 
                 String fullAddress = city + ", " + street + ", " + number + ", " + details;      //full address as a string
-                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, fullAddress));
+                indexesList.add(new DataIndex(value, consumption, sendDate, previousDate, fullAddress));
             }
 
             resultSet = statement.executeQuery("SELECT i.value AS 'Value', i.consumption AS 'Consumption', i.send_date AS 'SendDate',\n" +
@@ -175,7 +175,7 @@ public class DatabaseGET {
                 String details = resultSet.getString("Details");
 
                 String fullAddress = city + ", " + street + ", " + number + ", " + details;
-                indexesList.add(new IndexData(value, consumption, sendDate, previousDate, fullAddress));
+                indexesList.add(new DataIndex(value, consumption, sendDate, previousDate, fullAddress));
             }
 
             connection.close();

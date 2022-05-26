@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
+public class ActivityIndex extends AppCompatActivity  implements ActivityBasics{
 
     private Button act_index_send_category_button;
     private Button act_index_history_category_button;
@@ -38,15 +38,15 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     private TextView act_index_send_category_status_TW;
 
     private RecyclerView act_index_history_category_recycleView;
-    private IndexesAdapter indexesAdapter;
+    private AdapterIndexes indexesAdapter;
 
     private RecyclerView act_index_compare_category_recycleView;
-    private IndexesDifferenceAdapter indexesDifferenceAdapter;
+    private AdapterIndexesDifference indexesDifferenceAdapter;
 
     ArrayList<String> addressesList;
-    ArrayList<IndexData> indexesList;
-    ArrayList<IndexData> usedIndexesList;     //the indexes which have the same address ass the selected address, also this list is used by the adapter in history
-    ArrayList<IndexData> indexesDifferenceList;   //pseudo-indexes created for compare list
+    ArrayList<DataIndex> indexesList;
+    ArrayList<DataIndex> usedIndexesList;     //the indexes which have the same address ass the selected address, also this list is used by the adapter in history
+    ArrayList<DataIndex> indexesDifferenceList;   //pseudo-indexes created for compare list
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +178,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
     private void setIndexesAdapter()
     {
-        indexesAdapter = new IndexesAdapter(usedIndexesList);
+        indexesAdapter = new AdapterIndexes(usedIndexesList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         act_index_history_category_recycleView.setLayoutManager(layoutManager);
         act_index_history_category_recycleView.setItemAnimator(new DefaultItemAnimator());
@@ -188,7 +188,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
     private void setIndexesDifferenceAdapter()
     {
         setIndexesDifferenceList();
-        indexesDifferenceAdapter = new IndexesDifferenceAdapter(indexesDifferenceList);
+        indexesDifferenceAdapter = new AdapterIndexesDifference(indexesDifferenceList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         act_index_compare_category_recycleView.setLayoutManager(layoutManager);
         act_index_compare_category_recycleView.setItemAnimator(new DefaultItemAnimator());
@@ -221,12 +221,12 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                     Collections.swap(usedIndexesList, i, j);
     }
 
-    private IndexData getPreviousIndex()       //searches into the usedIndexes to find the one with the latest sendDate
+    private DataIndex getPreviousIndex()       //searches into the usedIndexes to find the one with the latest sendDate
     {
         int numOfUsedIndexes = usedIndexesList.size();
 
         if(numOfUsedIndexes == 0)     //there is no used index, so there is no index on this address, so the last index is 0
-            return new IndexData(0, 0, "nullDate", "nullDate", "nullAddress");
+            return new DataIndex(0, 0, "nullDate", "nullDate", "nullAddress");
         //we tried to put value - 1 if there is no previous index but it will break some part of the code so if we need to know if
         //there is any previousIndex we check sendDate for the previous and see if it is "nullDate"
 
@@ -318,7 +318,7 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
 
             if(status.equals("Successful"))
             {
-                IndexData newIndex = new IndexData(newIndexValue, newIndexValue - getPreviousIndex().getValue(),
+                DataIndex newIndex = new DataIndex(newIndexValue, newIndexValue - getPreviousIndex().getValue(),
                         LocalDate.now().toString(), getPreviousIndex().getSendDate(), addressName);
                 indexesList.add(newIndex);
                 usedIndexesList.add(newIndex);
@@ -345,12 +345,12 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
         indexesDifferenceList.clear();
 
         if(usedIndexesList.size() != 0) {
-            IndexData lastIndexInMonth = usedIndexesList.get(0);
+            DataIndex lastIndexInMonth = usedIndexesList.get(0);
             lastDate = LocalDate.parse(lastIndexInMonth.getSendDate());
             int lastMonth = lastDate.getMonthValue();
 
             int lastYear = lastDate.getYear();  // these next rows are just to test if there is only one month in all the indexes
-            IndexData lastIndexInList = usedIndexesList.get(usedIndexesList.size() - 1);
+            DataIndex lastIndexInList = usedIndexesList.get(usedIndexesList.size() - 1);
             LocalDate lastDateLastInList = LocalDate.parse(lastIndexInList.getSendDate());
             int lastMonthLastInList = lastDateLastInList.getMonthValue();
             int lastYearLastInList = lastDateLastInList.getYear();
@@ -366,8 +366,8 @@ public class IndexActivity extends AppCompatActivity  implements ActivityBasics{
                 int actualMonth = actualDate.getMonthValue();
 
                 if (actualMonth != lastMonth) {
-                    IndexData indexData = usedIndexesList.get(i);
-                    IndexData newIndexData = new IndexData(lastIndexInMonth.getValue(), lastIndexInMonth.getValue() - indexData.getValue(),
+                    DataIndex indexData = usedIndexesList.get(i);
+                    DataIndex newIndexData = new DataIndex(lastIndexInMonth.getValue(), lastIndexInMonth.getValue() - indexData.getValue(),
                             lastIndexInMonth.getSendDate(), indexData.getSendDate(), lastIndexInMonth.getFullAddress());
 
                     indexesDifferenceList.add(newIndexData);

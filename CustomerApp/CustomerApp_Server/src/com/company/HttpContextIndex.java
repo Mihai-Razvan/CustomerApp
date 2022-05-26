@@ -40,9 +40,9 @@ public class HttpContextIndex implements HttpContextBasics{
                 String responseMessage = "";
 
                 try {
-                    int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
                     ArrayList<String> addressesList = DatabaseGET.getAllAddresses(clientId);   //could throw SQLException
-                    responseMessage = HttpIndexMethods.addressListToJson(addressesList);
+                    responseMessage = MethodsIndex.addressListToJson(addressesList);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -69,9 +69,9 @@ public class HttpContextIndex implements HttpContextBasics{
                 String responseMessage = "";
 
                 try {
-                    int clientId = HttpAccountMethods.extractClientIdFromJson(requestLine);
-                    ArrayList<IndexData> indexesList = DatabaseGET.getAllIndexes(clientId);   //could throw SQLException
-                    responseMessage = HttpIndexMethods.indexListToJson(indexesList);
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                    ArrayList<DataIndex> indexesList = DatabaseGET.getAllIndexes(clientId);   //could throw SQLException
+                    responseMessage = MethodsIndex.indexListToJson(indexesList);
                 }
                 catch (SQLException e) {
                     System.out.println(e.getMessage());
@@ -98,9 +98,9 @@ public class HttpContextIndex implements HttpContextBasics{
                 String responseMessage = "";
 
                 try {
-                    int clientId = HttpIndexMethods.extractClientIdFromJson(requestLine);
-                    int indexValue = HttpIndexMethods.extractNewIndexFromJson(requestLine);
-                    String addressName = HttpIndexMethods.extractFullAddressFromJson(requestLine);
+                    int clientId = MethodsIndex.extractClientIdFromJson(requestLine);
+                    int indexValue = MethodsIndex.extractNewIndexFromJson(requestLine);
+                    String addressName = MethodsIndex.extractFullAddressFromJson(requestLine);
                     DatabasePOST.postNewIndex(clientId, indexValue, addressName);       //could throw SQLException
                     responseMessage = "SUCCESS";
                 }

@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.customerapp_client.databinding.ActivityAccountBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class AccountActivity extends AppCompatActivity implements ActivityBasics {
+public class ActivityAccount extends AppCompatActivity implements ActivityBasics {
 
 
     @Override
