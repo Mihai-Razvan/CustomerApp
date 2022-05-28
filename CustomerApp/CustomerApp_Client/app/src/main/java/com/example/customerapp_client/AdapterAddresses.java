@@ -21,8 +21,6 @@ public class AdapterAddresses extends  RecyclerView.Adapter<AdapterAddresses.MyV
         this.addressesList = addressesList;
     }
 
-
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private final TextView card_city;
         private final TextView card_street;
@@ -37,13 +35,6 @@ public class AdapterAddresses extends  RecyclerView.Adapter<AdapterAddresses.MyV
             card_number = view.findViewById(R.id.address_card_number_TW);
             card_details = view.findViewById(R.id.address_card_details_TW);
             card_delete_button = view.findViewById(R.id.address_card_delete_button);
-
-            card_delete_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("sadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-                }
-            });
         }
     }
 
@@ -63,6 +54,38 @@ public class AdapterAddresses extends  RecyclerView.Adapter<AdapterAddresses.MyV
         holder.card_street.setText(fullAddressSplit.get(1));
         holder.card_number.setText(fullAddressSplit.get(2));
         holder.card_details.setText(fullAddressSplit.get(3));
+
+        holder.card_delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = fullAddressSplit.get(0);
+                String street = fullAddressSplit.get(1);
+                String number = fullAddressSplit.get(2);
+                String details = fullAddressSplit.get(3);
+
+                HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/addresses/delete", city, street, number, details);
+                Thread connectionThread = new Thread(httpRequestsAccount);
+                connectionThread.start();
+
+                try {
+                    connectionThread.join();
+                    String status = httpRequestsAccount.getStatus();
+
+                    if(status.equals("Success"))
+                    {
+                        addressesList.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        System.out.println("SUCCESSFULLY DELETED ADDRESS");
+                    }
+                    else
+                        System.out.println("COULDN'T DELETE ADDRESS");
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.out.println("COULDN'T DELETE ADDRESS");
+                }
+            }
+        });
     }
 
     @Override

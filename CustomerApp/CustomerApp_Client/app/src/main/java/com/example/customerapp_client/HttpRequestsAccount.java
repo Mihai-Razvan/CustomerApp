@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private final String path;
-    private String connectionStatus;
+    private String status;
 
     private String city;     //used for /account/locations/new requests
     private String street;
@@ -23,18 +23,18 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private ArrayList<String> addressesList;    //they are in fullAddress form
 
-    public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests
+    public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests, or delete
         this.path = path;
         this.city = city;
         this.street = street;
         this.number = number;
         this.details = details;
-        this.connectionStatus = "Failed";
+        this.status = "Failed";
     }
 
     public HttpRequestsAccount(String path) {      //used for /account/addresses requests
         this.path = path;
-        this.connectionStatus = "Failed";
+        this.status = "Failed";
         addressesList = new ArrayList<>();
     }
 
@@ -49,6 +49,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             path_addresses_new();
         else if (path.equals("/account/addresses"))
             path_addresses();
+        else if (path.equals("/account/addresses/delete"))
+            path_addresses_delete();
     }
 
 
@@ -65,13 +67,13 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             connection.setConnectTimeout(2000);
 
             DataOutputStream request = new DataOutputStream(connection.getOutputStream());
-            String message = parseNewAddressRequestToJson();
+            String message = parseAddressToJson();
             request.writeBytes(message);
             request.flush();
             request.close();
 
             BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream())); //this line has to be kept to complet the http request-response cycle
-            connectionStatus = "Successful";
+            status = "Successful";
 
             System.out.println("SUCCESSFULLY ADDED ADDRESS TO DATABASE");
         }
@@ -100,7 +102,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream())); //this line has to be kept to complet the http request-response cycle
             String responseLine = response.readLine();
             parseAddressesListJson(responseLine);
-            connectionStatus = "Successful";
+            status = "Successful";
 
             System.out.println("SUCCESSFULLY RETRIEVED ADDRESSES");
         }
@@ -111,18 +113,43 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     }
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    private void path_addresses_delete() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/addresses/delete");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
 
-    public String getConnectionStatus() {
-        return connectionStatus;
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseAddressToJson();      //the address to be deleted
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+            status = responseLine;     //it may be "Success" or "Failed"
+
+            System.out.println("SUCCESSFULLY RETRIEVED ADDRESSES");
+        }
+        catch (IOException e) {
+            status = "Failed";
+            System.out.println("COULDN'T RETRIEVE ADDRESSES: " + e.getMessage());
+        }
+
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     private String parseAddressesRequestToJson()
     {
         return "{'clientId': " + GlobalManager.getClientId() + "}";
     }
 
-    private String parseNewAddressRequestToJson()
+    private String parseAddressToJson()
     {
         return "{'clientId': " + GlobalManager.getClientId() +
               ", 'city': '" + city + "'" +      //we put the values between '' because they can contain spaces and this would cause problems
@@ -134,6 +161,9 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private void parseAddressesListJson(String input)
     {
         System.out.println(input);
+        if(input == null)
+            return;
+
         JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
         addressesList.clear();
         int numOfAddresses = jsonObject.get("numOfAddresses").getAsInt();
@@ -154,6 +184,6 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     public String getStatus()
     {
-        return connectionStatus;
+        return status;
     }
 }

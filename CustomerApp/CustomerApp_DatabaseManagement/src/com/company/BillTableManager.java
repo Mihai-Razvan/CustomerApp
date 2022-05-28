@@ -35,8 +35,8 @@ public class BillTableManager implements Runnable {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT address_id AS 'AddressId'\n" +
-                                                             "FROM Index_Table");  //we get the address_id for the addresses which got indexes, so the addresses which got or can get bills
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT address_id AS 'AddressId'\n" +  //we get the address_id for the addresses which got indexes, so the addresses which got or can get bills
+                                                             "FROM Index_Table");
 
             while(resultSet.next())
             {

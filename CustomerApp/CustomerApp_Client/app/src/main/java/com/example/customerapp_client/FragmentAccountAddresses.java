@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -48,11 +49,6 @@ public class FragmentAccountAddresses extends Fragment implements ActivityBasics
     @Override
     public void setListeners()
     {
-        act_account_addressesF_addAddress_button_onClick();
-    }
-
-    private void act_account_addressesF_addAddress_button_onClick()
-    {
         act_account_addressesF_addAddress_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,8 +88,6 @@ public class FragmentAccountAddresses extends Fragment implements ActivityBasics
         act_account_addressesF_recycleView.setAdapter(addressesAdapter);
     }
 
-
-
     /////////////////////////////////////////////////////////////////
 
     private void setAddAddressFragment()
@@ -103,4 +97,5 @@ public class FragmentAccountAddresses extends Fragment implements ActivityBasics
         fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddAddress());
         fragmentTransaction.commit();
     }
+
 }

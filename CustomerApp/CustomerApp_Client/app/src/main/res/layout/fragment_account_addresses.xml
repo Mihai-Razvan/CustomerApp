@@ -7,27 +7,25 @@
     tools:context=".FragmentAccountAddresses">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/header"
         layout="@layout/card_addresses_header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/act_account_addressesF_recycleView"></include>
-
-    <include
-        layout="@layout/card_delete_address_warning"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"></include>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/act_account_addressesF_recycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/act_account_addressesF_addAddress_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
 
     </androidx.recyclerview.widget.RecyclerView>
 

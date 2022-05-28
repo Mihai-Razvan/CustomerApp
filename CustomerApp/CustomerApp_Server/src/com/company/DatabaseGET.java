@@ -105,7 +105,8 @@ public class DatabaseGET {
                                                              "number AS 'Number',\n" +
                                                              "details AS 'Details'\n" +
                                                              "FROM Address\n" +
-                                                             "WHERE client_id = " + clientId);
+                                                             "WHERE client_id = " + clientId + "\n" +
+                                                             "AND status = 'Active'");
 
             while(resultSet.next())
             {

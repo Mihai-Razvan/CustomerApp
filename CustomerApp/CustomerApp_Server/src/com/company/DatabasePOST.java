@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DatabasePOST {
 
-    public static void postAddress(int clientId, String city, String street, String number, String details)
+    public static void postAddress(int clientId, String city, String street, String number, String details)  //TO DO: check if address exists and if yes don't add
     {
         String dbConnectionStatus;
         try {
@@ -18,7 +18,7 @@ public class DatabasePOST {
             int addressId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
 
             statement.execute("INSERT INTO Address\n" +
-                    "VALUES (" + addressId + ", " + clientId + ", '" + city + "', '" + street + "', '" + number + "', '" + details + "')");
+                    "VALUES (" + addressId + ", " + clientId + ", '" + city + "', '" + street + "', '" + number + "', '" + details + "', 'Active')");
 
             connection.close();
 
@@ -30,6 +30,29 @@ public class DatabasePOST {
         }
 
         System.out.println(dbConnectionStatus);
+    }
+
+    public static String deleteAddress(int clientId, String city, String street, String number, String details) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            statement.execute("UPDATE Address\n" +                      //we don't check for the address_id because a client can't have more addresses with the same data
+                                  "SET status = 'Deleted'\n" +
+                                  "WHERE client_id = " + clientId + "\n" +
+                                  "AND city = '" + city + "'\n" +
+                                  "AND street = '" + street + "'\n" +
+                                  "AND number = '" + number + "'\n" +
+                                  "AND details = '" + details + "'\n");
+
+            connection.close();
+        }
+        catch (SQLException e) {
+            throw e;       //if it throws it won't return success but an exception that will be caught
+        }
+
+        return "Success";     //if it doesn't throw it returns "Success"
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
