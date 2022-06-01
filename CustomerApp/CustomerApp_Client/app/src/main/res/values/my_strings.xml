@@ -5,6 +5,7 @@
     <color name="testColor3">#03DFFC</color>
     <color name="testColor4">#FFB3F3FB</color>
     <color name="testColor5">#E3E3E3</color>
+    <color name="testColor6">#616161</color>
 
     <string name="account_contactInformation_description">Keep your name, email and personal information updated</string>
     <string name="account_changePassword_description">Change the in app password</string>
@@ -14,5 +15,5 @@
     <string name="account_closeAccount_description">Very dangerous action! Closing your account is not recommended</string>
 
     <string name="account_deleteAddress">Delete</string>
-    <string name="account_deleteAddress_warning_message">Are you sure you want to delete address </string>
+    <string name="account_deleteAccount_warning_message">Are you sure you want to <br/> delete your account?</string>
 </resources>

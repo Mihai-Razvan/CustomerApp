@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DatabasePOST {
 
-    public static void postAddress(int clientId, String city, String street, String number, String details)  //TO DO: send status to front end
+    public static void postAddress(int clientId, String city, String street, String number, String details)
     {
         String dbConnectionStatus;
         try {
