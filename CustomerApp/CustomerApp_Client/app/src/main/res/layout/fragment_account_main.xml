@@ -132,7 +132,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/act_account_mainF_notifications_layout"
+            android:id="@+id/act_account_mainF_notifSettings_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -162,7 +162,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/act_account_mainF_closeAccount_layout"
+            android:id="@+id/act_account_mainF_deleteAccount_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/test_border_2"
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="2dp"
-                android:text="Close account (not done)"
+                android:text="Close account (to do warning)"
                 android:textColor="#FF0000"
                 android:textSize="18sp"
                 android:textStyle="bold" />

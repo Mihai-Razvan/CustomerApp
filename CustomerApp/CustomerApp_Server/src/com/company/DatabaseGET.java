@@ -63,8 +63,9 @@ public class DatabaseGET {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Client\n" +
-                                                             "WHERE LOWER(username) = LOWER('" + emailOrUsername + "')\n" +
-                                                             "OR LOWER(email) = LOWER('" + emailOrUsername + "')");
+                                                             "WHERE (LOWER(username) = LOWER('" + emailOrUsername + "')\n" +
+                                                                    "OR LOWER(email) = LOWER('" + emailOrUsername + "'))\n" +
+                                                             "AND status = 'Active'");        //if the account was deleted the response will be that the user doesn't exist
 
             if(!resultSet.next())   //means that the query didn't return anything, so there was no client found with the specified emailOrUsername
                 responseCode = -3;

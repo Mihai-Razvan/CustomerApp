@@ -6,14 +6,29 @@ import java.util.ArrayList;
 
 public class DatabasePOST {
 
-    public static void postAddress(int clientId, String city, String street, String number, String details)  //TO DO: check if address exists and if yes don't add
+    public static void postAddress(int clientId, String city, String street, String number, String details)  //TO DO: send status to front end
     {
         String dbConnectionStatus;
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
-                                                             "FROM Address");
+
+            ResultSet resultSet = statement.executeQuery("SELECT * \n" +
+                                                             "FROM Address\n" +
+                                                             "WHERE city = '" + city + "'\n" +
+                                                             "AND street = '" + street + "'\n" +
+                                                             "AND number = '" + number + "'\n" +
+                                                             "AND details = '" + details + "'\n" +
+                                                             "AND status = 'Active'");         //if the address was deleted (or its user deleted its account) then you can add a new address with the same info
+
+            if(resultSet.next())      //address already exist
+            {
+                System.out.println("Address already exist");
+                return;
+            }
+
+            resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
+                                                   "FROM Address");
 
             int addressId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
 
@@ -55,6 +70,29 @@ public class DatabasePOST {
         return "Success";     //if it doesn't throw it returns "Success"
     }
 
+    public static String deleteAccount(int clientId) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            statement.execute("UPDATE Client\n" +
+                                  "SET status = 'Deleted'\n" +
+                                  "WHERE client_id = " + clientId);
+
+            statement.execute("UPDATE Address\n" +
+                                  "SET status = 'Deleted'\n" +
+                                  "WHERE client_id = " + clientId);
+
+            connection.close();
+        }
+        catch (SQLException e) {
+            throw e;       //if it throws it won't return success but an exception that will be caught
+        }
+
+        return "Success";     //if it doesn't throw it returns "Success"
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok
@@ -68,7 +106,8 @@ public class DatabasePOST {
             ResultSet resultSet = statement.executeQuery("SELECT email AS 'Email', username AS 'Username'\n" +    //check if user is already registered
                                                              "FROM Client\n" +
                                                              "WHERE email = '" + email + "'\n" +
-                                                             "OR username = '" + username + "'");
+                                                             "OR username = '" + username + "'");  //if an user already exists but his account was deleted you CAN'T create a new account with
+                                                                                                  //the same username or email
 
             if(resultSet.next())  //user already exists
             {
@@ -85,9 +124,11 @@ public class DatabasePOST {
                                                                   "FROM Client");
                 int newClientId = resultSet2.getInt(1) + 1;
 
+                statement.execute("INSERT INTO Client_Info\n" +
+                        "VALUES (" + newClientId + ", null, null, null)");        //adding the client_info for this client
 
                 statement.execute("INSERT INTO Client\n" +
-                        "VALUES (" + newClientId + ", '" + username + "', '" + hashedPassword + "', '" + email + "')");
+                        "VALUES (" + newClientId + ", " + newClientId + ", '" + username + "', '" + hashedPassword + "', '" + email + "', 'Active')");  //adding client
 
                 connection.close();
 

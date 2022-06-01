@@ -104,6 +104,7 @@ public class ActivityLogin extends AppCompatActivity implements ActivityBasics {
         act_login_toRegister_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                act_logIn_status_TW.setText("");
                 startActivity(new Intent(ActivityLogin.this, ActivityRegister.class));
             }
         });

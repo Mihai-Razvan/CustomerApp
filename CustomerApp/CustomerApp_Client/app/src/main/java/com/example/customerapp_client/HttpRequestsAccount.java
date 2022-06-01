@@ -51,6 +51,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             path_addresses();
         else if (path.equals("/account/addresses/delete"))
             path_addresses_delete();
+        else if (path.equals("/account/delete"))
+            path_delete();
     }
 
 
@@ -94,7 +96,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             connection.setConnectTimeout(2000);
 
             DataOutputStream request = new DataOutputStream(connection.getOutputStream());
-            String message = parseAddressesRequestToJson();
+            String message = parseClientIdToJson();
             request.writeBytes(message);
             request.flush();
             request.close();
@@ -142,9 +144,36 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     }
 
+    private void path_delete() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/delete");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseClientIdToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+            status = responseLine;     //it may be "Success" or "Failed"
+        }
+        catch (IOException e) {
+            status = "Failed";
+            System.out.println("COULDN'T DELETE ACCOUNT: " + e.getMessage());
+        }
+
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////
 
-    private String parseAddressesRequestToJson()
+    private String parseClientIdToJson()
     {
         return "{'clientId': " + GlobalManager.getClientId() + "}";
     }
