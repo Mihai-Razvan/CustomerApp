@@ -21,6 +21,9 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private String number;
     private String details;
 
+    private String currentPassword;   //used for /account/password/change
+    private String newPassword;
+
     private ArrayList<String> addressesList;    //they are in fullAddress form
 
     public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests, or delete
@@ -38,6 +41,13 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         addressesList = new ArrayList<>();
     }
 
+    public HttpRequestsAccount(String path, String currentPassword, String newPassword) {      //used for /account/password/change
+        this.path = path;
+        this.status = "Failed";
+        this.currentPassword = currentPassword;
+        this.newPassword = newPassword;
+    }
+
     @Override
     public void run() {
         choosePath();
@@ -53,6 +63,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             path_addresses_delete();
         else if (path.equals("/account/delete"))
             path_delete();
+        else if (path.equals("/account/password/change"))
+            path_password_change();
     }
 
 
@@ -171,6 +183,33 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     }
 
+    private void path_password_change() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/password/change");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseNewPasswordToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+            status = responseLine;     //it may be "-2 if failed, -1 if currentPassword is wrong and 1 for success"
+        }
+        catch (IOException e) {
+            status = "Failed";
+            System.out.println("COULDN'T DELETE ACCOUNT: " + e.getMessage());
+        }
+
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     private String parseClientIdToJson()
@@ -185,6 +224,13 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
               ", 'street': '" + street + "'" +
               ", 'number': '" + number + "'" +
               ", 'details': '" + details + "'}";
+    }
+
+    private String parseNewPasswordToJson()
+    {
+        return "{'clientId': " + GlobalManager.getClientId() +
+              ", 'currentPassword': " + currentPassword +
+              ", 'newPassword': " + newPassword + "}";
     }
 
     private void parseAddressesListJson(String input)

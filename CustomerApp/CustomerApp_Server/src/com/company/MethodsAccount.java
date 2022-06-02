@@ -39,4 +39,18 @@ public class MethodsAccount {
 
         return jsonObject.get("details").getAsString();
     }
+
+    public static String extractCurrentPasswordFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("currentPassword").getAsString();
+    }
+
+    public static String extractNewPasswordFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("newPassword").getAsString();
+    }
 }

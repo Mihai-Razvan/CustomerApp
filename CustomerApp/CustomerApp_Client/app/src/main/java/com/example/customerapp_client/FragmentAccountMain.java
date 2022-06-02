@@ -72,6 +72,7 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         act_account_mainF_warningNo_layout_onClick();
         act_account_mainF_addresses_layout_onClick();
         act_account_mainF_deleteAccount_layout_onClick();
+        act_account_mainF_changePassword_layout_onClick();
     }
 
     private void act_account_mainF_warningYes_layout_onClick()
@@ -114,6 +115,16 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         });
     }
 
+    private void act_account_mainF_changePassword_layout_onClick() {
+
+        act_account_mainF_changePassword_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPasswordFragment();
+            }
+        });
+    }
+
     private void deleteAccount()
     {
         HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/delete");
@@ -137,11 +148,21 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         }
     }
 
+    //////////////////////////////////////////////////////////
+
     private void setAddressesFragment()
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddresses());
+        fragmentTransaction.commit();
+    }
+
+    private void setPasswordFragment()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountPassword());
         fragmentTransaction.commit();
     }
 }

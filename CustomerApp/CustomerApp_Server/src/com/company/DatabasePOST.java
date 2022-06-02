@@ -93,6 +93,45 @@ public class DatabasePOST {
         return "Success";     //if it doesn't throw it returns "Success"
     }
 
+    public static String changePassword(int clientId, String currentPassword, String newPassword) throws SQLException, NoSuchAlgorithmException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            String hashedPassword = MethodsAuthentication.hashPassword(currentPassword);  //throw NoSuchAlgorithmException can come from here
+
+            ResultSet resultSet = statement.executeQuery("SELECT *\n" +
+                                                             "FROM Client\n" +
+                                                             "WHERE password = '" + hashedPassword + "'");
+
+            if(resultSet.next())   //the currentPassword send by user is correct
+            {
+                hashedPassword = MethodsAuthentication.hashPassword(newPassword);
+
+                statement.execute("UPDATE Client\n" +
+                                      "SET password = '" + hashedPassword + "'\n" +
+                                      "WHERE client_id = " + clientId);
+
+                statement.execute("UPDATE Address\n" +
+                        "SET status = 'Deleted'\n" +
+                        "WHERE client_id = " + clientId);
+            }
+            else
+            {
+                connection.close();
+                return "Wrong password";
+            }
+
+            connection.close();
+        }
+        catch (SQLException | NoSuchAlgorithmException e) {
+            throw e;       //if it throws it won't return success but an exception that will be caught
+        }
+
+        return "Success";    //if it doesn't throw it returns "Success"
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok

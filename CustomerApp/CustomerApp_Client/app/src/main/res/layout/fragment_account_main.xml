@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="2dp"
-                android:text="Change password (not done)"
+                android:text="Change password "
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="2dp"
-                android:text="Close account (to do warning)"
+                android:text="Close account "
                 android:textColor="#FF0000"
                 android:textSize="18sp"
                 android:textStyle="bold" />

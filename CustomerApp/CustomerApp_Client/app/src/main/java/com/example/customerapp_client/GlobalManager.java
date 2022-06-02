@@ -14,7 +14,7 @@ public class GlobalManager {
 
     public static String httpNGROKAddress()
     {
-        return "http://dcce-2a02-2f0c-5a09-aa00-5870-2c65-325b-b63f.ngrok.io";
+        return "http://a674-2a02-2f0c-5a09-aa00-2973-816a-31ee-c44d.ngrok.io";
     }
 
     public static void setClientId(int clientId) {
