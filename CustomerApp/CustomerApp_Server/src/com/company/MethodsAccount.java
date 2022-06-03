@@ -3,6 +3,8 @@ package com.company;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
+
 public class MethodsAccount {
 
     public static int extractClientIdFromJson(String jsonString)
@@ -52,5 +54,47 @@ public class MethodsAccount {
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
 
         return jsonObject.get("newPassword").getAsString();
+    }
+
+    public static String extractFirstNameFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("firstName").getAsString();
+    }
+
+    public static String extractLastNameFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("lastName").getAsString();
+    }
+
+    public static String extractEmailFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("email").getAsString();
+    }
+
+    public static String extractPhoneFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("phone").getAsString();
+    }
+
+    public static String clientInfoToJson(DataClientInfo dataClientInfo)
+    {
+        String jsonResponse = "";
+
+        String firstNameField = "'firstName': '" + dataClientInfo.getFirstName() + "'";
+        String lastNameField = "'lastName': '" + dataClientInfo.getLastName() + "'";
+        String email = "'email': '" + dataClientInfo.getEmail() + "'";
+        String phoneField = "'phone': '" + dataClientInfo.getPhone() + "'";
+
+        jsonResponse += "{" + firstNameField + ", " + lastNameField + ", " + email + ", " + phoneField + "}";
+
+        return jsonResponse;
     }
 }

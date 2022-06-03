@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentAccountPassword">
+    tools:context=".FragmentAccountContactInfo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/textView19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Current password"
+            android:text="First name"
             android:textColor="#939292"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -27,16 +27,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/act_account_passwordF_actualPass_ET"
+                android:id="@+id/act_account_contactInfoF_firstName_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/test_border_6"
-                android:hint="Current password..."
-                android:inputType="textPassword"
+                android:hint="First name..."
                 android:textAlignment="textStart"
                 android:textColor="#000000" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -45,7 +44,7 @@
             android:id="@+id/textView20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New password"
+            android:text="Last name"
             android:textColor="#939292"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -53,16 +52,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/act_account_passwordF_newPass_ET"
+                android:id="@+id/act_account_contactInfoF_lastName_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/test_border_6"
-                android:hint="New password..."
-                android:inputType="textPassword"
+                android:hint="Last name..."
                 android:textAlignment="textStart"
                 android:textColor="#000000" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +69,32 @@
             android:id="@+id/textView21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm password"
+            android:text="E-mail address"
+            android:textColor="#939292"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/act_account_contactInfoF_email_ET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/test_border_6"
+                android:hint="E-mail address..."
+                android:textAlignment="textStart"
+                android:textColor="#000000" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone number"
             android:textColor="#939292"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -82,31 +105,31 @@
             android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/act_account_passwordF_newPassConfirm_ET"
+                android:id="@+id/act_account_contactInfoF_phone_ET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/test_border_6"
-                android:hint="Confirm password..."
-                android:inputType="textPassword"
+                android:hint="Phone number..."
                 android:textAlignment="textStart"
                 android:textColor="#000000" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/act_account_passwordF_change_button"
+            android:id="@+id/act_account_contactInfoF_save_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:text="Change password" />
+            android:text="Save changes" />
 
         <TextView
-            android:id="@+id/act_account_passwordF_warning_TW"
+            android:id="@+id/act_account_contactInfoF_warning_TW"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="#FF0000"
             android:textSize="18sp"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 

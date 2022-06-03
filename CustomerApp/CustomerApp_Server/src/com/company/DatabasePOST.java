@@ -132,6 +132,44 @@ public class DatabasePOST {
         return "Success";    //if it doesn't throw it returns "Success"
     }
 
+    public static String changeContactInfo(int clientId, String firstName, String lastName, String email, String phone) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT *\n" +    //we do this so you won't be able to set a new email that is already used by another user
+                                                             "FROM Client\n" +
+                                                             "WHERE email = '" + email + "'\n" +
+                                                             "AND client_id != " + clientId);
+
+            if(!resultSet.next())
+            {
+                statement.execute("UPDATE Client\n" +
+                        "SET email = '" + email + "'\n" +
+                        "WHERE client_id = " + clientId);
+
+                statement.execute("UPDATE Client_Info\n" +
+                        "SET first_name = '" + firstName + "', last_name = '" + lastName + "', phone_number = '" + phone + "'\n" +
+                        "WHERE client_info_id = (SELECT client_info_id\n" +
+                        "FROM Client\n" +
+                        "WHERE client_id = " + clientId + ")");
+            }
+            else
+            {
+                connection.close();
+                return "Email already used";
+            }
+
+            connection.close();
+        }
+        catch (SQLException e) {
+            throw e;       //if it throws it won't return success but an exception that will be caught
+        }
+
+        return "Success";    //if it doesn't throw it returns "Success"
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok

@@ -14,7 +14,6 @@ import android.widget.EditText;
 public class FragmentAccountAddAddress extends Fragment implements ActivityBasics {
 
     private Button act_account_addAddressesF_add_button;
-    private Button act_account_addAddressesF_logOut_button;
     private EditText act_account_addAddressesF_city_ET;
     private EditText act_account_addAddressesF_street_ET;
     private EditText act_account_addAddressesF_number_ET;
@@ -37,7 +36,6 @@ public class FragmentAccountAddAddress extends Fragment implements ActivityBasic
     @Override
     public void getActivityElements() {
         act_account_addAddressesF_add_button = view.findViewById(R.id.act_account_addAddressesF_add_button);
-        act_account_addAddressesF_logOut_button = view.findViewById(R.id.act_account_addAddressesF_logOut_button);
         act_account_addAddressesF_city_ET = view.findViewById(R.id.act_account_addAddressesF_city_ET);
         act_account_addAddressesF_street_ET = view.findViewById(R.id.act_account_addAddressesF_street_ET);
         act_account_addAddressesF_number_ET = view.findViewById(R.id.act_account_addAddressesF_number_ET);
@@ -48,7 +46,6 @@ public class FragmentAccountAddAddress extends Fragment implements ActivityBasic
     public void setListeners()
     {
         act_account_addAddressesF_add_button_onClick();
-        act_account_addAddressesF_logOut_button_onClick();
     }
 
     private void act_account_addAddressesF_add_button_onClick()
@@ -71,19 +68,6 @@ public class FragmentAccountAddAddress extends Fragment implements ActivityBasic
                 HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/addresses/new", city, street, number, details);
                 Thread connectionThread = new Thread(httpRequestsAccount);
                 connectionThread.start();
-            }
-        });
-    }
-
-    private void act_account_addAddressesF_logOut_button_onClick()
-    {
-        act_account_addAddressesF_logOut_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GlobalManager.saveEmailOrUsername(getActivity(), null);
-                GlobalManager.savePassword(getActivity(), null);
-
-                startActivity(new Intent(getActivity(), ActivityLogin.class));
             }
         });
     }

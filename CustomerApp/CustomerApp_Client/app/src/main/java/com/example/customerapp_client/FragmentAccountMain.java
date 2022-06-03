@@ -31,6 +31,8 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
     Button act_account_mainF_warningYes_layout;
     Button act_account_mainF_warningNo_layout;
 
+    Button act_account_mainF_logOut_button;
+
     View view;
 
     @Override
@@ -58,6 +60,8 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         act_account_mainF_warning_layout = view.findViewById(R.id.act_account_mainF_warning_layout);
         act_account_mainF_warningYes_layout = view.findViewById(R.id.act_account_mainF_warningYes_layout);
         act_account_mainF_warningNo_layout = view.findViewById(R.id.act_account_mainF_warningNo_layout);
+
+        act_account_mainF_logOut_button = view.findViewById(R.id.act_account_mainF_logOut_button);
     }
 
     @Override
@@ -70,9 +74,11 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
     {
         act_account_mainF_warningYes_layout_onClick();
         act_account_mainF_warningNo_layout_onClick();
+        act_account_mainF_contactInfo_layout_onClick();
         act_account_mainF_addresses_layout_onClick();
         act_account_mainF_deleteAccount_layout_onClick();
         act_account_mainF_changePassword_layout_onClick();
+        act_account_mainF_logOut_button_onClick();
     }
 
     private void act_account_mainF_warningYes_layout_onClick()
@@ -125,6 +131,16 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         });
     }
 
+    private void act_account_mainF_contactInfo_layout_onClick()
+    {
+        act_account_mainF_contactInfo_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContactInfoFragment();
+            }
+        });
+    }
+
     private void deleteAccount()
     {
         HttpRequestsAccount httpRequestsAccount = new HttpRequestsAccount("/account/delete");
@@ -148,7 +164,28 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         }
     }
 
+    private void act_account_mainF_logOut_button_onClick()
+    {
+        act_account_mainF_logOut_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalManager.saveEmailOrUsername(getActivity(), null);
+                GlobalManager.savePassword(getActivity(), null);
+
+                startActivity(new Intent(getActivity(), ActivityLogin.class));
+            }
+        });
+    }
+
     //////////////////////////////////////////////////////////
+
+    private void setContactInfoFragment()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountContactInfo());
+        fragmentTransaction.commit();
+    }
 
     private void setAddressesFragment()
     {

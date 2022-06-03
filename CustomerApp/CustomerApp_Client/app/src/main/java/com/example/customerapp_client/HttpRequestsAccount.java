@@ -24,7 +24,13 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private String currentPassword;   //used for /account/password/change
     private String newPassword;
 
-    private ArrayList<String> addressesList;    //they are in fullAddress form
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private DataClientInfo dataClientInfo;
+
+    private final ArrayList<String> addressesList = new ArrayList<>();    //they are in fullAddress form
 
     public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests, or delete
         this.path = path;
@@ -35,10 +41,9 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         this.status = "Failed";
     }
 
-    public HttpRequestsAccount(String path) {      //used for /account/addresses requests
+    public HttpRequestsAccount(String path) {      //used for /account/addresses requests or /account/contact
         this.path = path;
         this.status = "Failed";
-        addressesList = new ArrayList<>();
     }
 
     public HttpRequestsAccount(String path, String currentPassword, String newPassword) {      //used for /account/password/change
@@ -48,6 +53,15 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         this.newPassword = newPassword;
     }
 
+    public HttpRequestsAccount(String path, String firstName, String lastName, String email, String phone, int x) {      //used for /account/contact/change, x is cuz we already have a constructor with same header
+        this.path = path;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.status = "Failed";
+    }
+
     @Override
     public void run() {
         choosePath();
@@ -55,16 +69,30 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     @Override
     public void choosePath() {
-        if (path.equals("/account/addresses/new"))
-            path_addresses_new();
-        else if (path.equals("/account/addresses"))
-            path_addresses();
-        else if (path.equals("/account/addresses/delete"))
-            path_addresses_delete();
-        else if (path.equals("/account/delete"))
-            path_delete();
-        else if (path.equals("/account/password/change"))
-            path_password_change();
+
+        switch (path) {
+            case "/account/addresses/new":
+                path_addresses_new();
+                break;
+            case "/account/addresses":
+                path_addresses();
+                break;
+            case "/account/addresses/delete":
+                path_addresses_delete();
+                break;
+            case "/account/delete":
+                path_delete();
+                break;
+            case "/account/password/change":
+                path_password_change();
+                break;
+            case "/account/contact/change":
+                path_contact_change();
+                break;
+            case "/account/contact":
+                path_contact();
+                break;
+        }
     }
 
 
@@ -204,8 +232,60 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
             status = responseLine;     //it may be "-2 if failed, -1 if currentPassword is wrong and 1 for success"
         }
         catch (IOException e) {
-            status = "Failed";
+            status = "-2";
             System.out.println("COULDN'T DELETE ACCOUNT: " + e.getMessage());
+        }
+
+    }
+
+    private void path_contact_change() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/contact/change");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseContactInfoToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+            status = responseLine;     //it may be -2 if failed, -1 if email already used by other user, 1 if success
+        }
+        catch (IOException e) {
+            status = "-2";
+            System.out.println("COULDN'T CHANGE CONTACT INFO: " + e.getMessage());
+        }
+
+    }
+
+    private void path_contact() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/contact");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseClientIdToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            parseClientInfoJson(response.readLine());
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T GET CONTACT INFO: " + e.getMessage());
         }
 
     }
@@ -233,6 +313,15 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
               ", 'newPassword': " + newPassword + "}";
     }
 
+    private String parseContactInfoToJson()
+    {
+        return "{'clientId': '" + GlobalManager.getClientId() + "'" +
+              ", 'firstName': '" + firstName + "'" +      //we use '' because first name, last name etc can have spaces
+              ", 'lastName': '" + lastName + "'" +
+              ", 'email': '" + email + "'" +
+              ", 'phone': '" + phone + "'}";
+    }
+
     private void parseAddressesListJson(String input)
     {
         System.out.println(input);
@@ -253,6 +342,24 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         }
     }
 
+    private void parseClientInfoJson(String input)
+    {
+        System.out.println(input);
+        if(input == null)
+            return;
+
+        JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
+
+        firstName = jsonObject.get("firstName").getAsString();
+        lastName = jsonObject.get("lastName").getAsString();
+        email = jsonObject.get("email").getAsString();
+        phone = jsonObject.get("phone").getAsString();
+
+        dataClientInfo = new DataClientInfo(firstName, lastName, email, phone);
+
+        status = "Success";
+    }
+
     public ArrayList<String> getAddressesList() {
         return addressesList;
     }
@@ -260,5 +367,10 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     public String getStatus()
     {
         return status;
+    }
+
+    public DataClientInfo getDataClientInfo()
+    {
+        return dataClientInfo;
     }
 }

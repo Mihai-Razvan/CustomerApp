@@ -190,4 +190,40 @@ public class DatabaseGET {
             throw e;
         }
     }
+
+    public static DataClientInfo getClientInfo(int clientId)  throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT email\n" +
+                                                             "FROM Client\n" +
+                                                             "WHERE client_id = " + clientId);
+
+            String email = resultSet.getString(1);
+
+            resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', ci.last_name AS 'LastName', ci.phone_number AS 'Phone'\n" +
+                                                   "FROM Client c, Client_Info ci\n" +
+                                                   "WHERE ci.client_info_id = c.client_info_id\n" +
+                                                   "AND c.client_id = " + clientId);
+
+            String firstName = resultSet.getString("FirstName");
+            String lastName = resultSet.getString("LastName");
+            String phone = resultSet.getString("Phone");
+
+            if(firstName == null)
+                firstName = "";
+            if(lastName == null)
+                lastName = "";
+            if(phone == null)
+                phone = "";
+
+            connection.close();
+            return  new DataClientInfo(firstName, lastName, email, phone);
+        }
+        catch (SQLException e) {
+            System.out.println("COULDN'T EXTRACT CLIENT INFO FROM DATABASE");
+            throw e;
+        }
+    }
 }

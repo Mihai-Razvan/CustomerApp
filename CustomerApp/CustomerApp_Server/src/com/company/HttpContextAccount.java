@@ -29,6 +29,8 @@ public class HttpContextAccount implements HttpContextBasics {
         context_account_addresses_delete();
         context_account_delete();
         context_account_password_change();
+        context_account_contact_change();
+        context_account_contact();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
@@ -62,7 +64,7 @@ public class HttpContextAccount implements HttpContextBasics {
                 System.out.println("REQUEST RECEIVED ON /account/addresses");
                 BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
                 String requestLine = request.readLine();
-                String responseMessage = "";
+                String responseMessage = "";     //if inside try will throw exception then the response won't be a json but an empty String
 
                 try {
                     int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
@@ -169,6 +171,72 @@ public class HttpContextAccount implements HttpContextBasics {
                 } catch (SQLException | NoSuchAlgorithmException e) {
                     System.out.println(e.getMessage());
                     responseMessage = "-2";
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_contact_change() {   //response is -2 for failed, -1 if email used by another user and 1 for success
+        server.createContext("/account/contact/change", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/contact/change");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage = "";
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                    String firstName = MethodsAccount.extractFirstNameFromJson(requestLine);
+                    String lastName = MethodsAccount.extractLastNameFromJson(requestLine);
+                    String email = MethodsAccount.extractEmailFromJson(requestLine);
+                    String phone = MethodsAccount.extractPhoneFromJson(requestLine);
+
+                    String response = DatabasePOST.changeContactInfo(clientId, firstName, lastName, email, phone);
+                    if(response.equals("Success"))
+                        responseMessage = "1";
+                    else
+                        responseMessage = "-1";
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    responseMessage = "1";
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_contact() {
+        server.createContext("/account/contact", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/contact");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage = "";    //if inside try will throw exception then the response won't be a json but an empty String
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+
+                    DataClientInfo dataClientInfo = DatabaseGET.getClientInfo(clientId);    //SQLException could come from here
+                    responseMessage = MethodsAccount.clientInfoToJson(dataClientInfo);
+
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
                 }
 
                 exchange.sendResponseHeaders(200, responseMessage.length());
