@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/place_holder_logo-playstore.png" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/place_holder_logo-playstore.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-hdpi/place_holder_logo_foreground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-mdpi/place_holder_logo_foreground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xhdpi/place_holder_logo_foreground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xxhdpi/place_holder_logo_foreground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xxxhdpi/place_holder_logo_foreground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/values/place_holder_logo_background.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MethodsAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MethodsAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Icons/account_logo.psd" beforeDir="false" afterPath="$PROJECT_DIR$/../../Icons/account_logo.psd" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
