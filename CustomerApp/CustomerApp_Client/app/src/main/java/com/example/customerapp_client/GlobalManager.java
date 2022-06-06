@@ -14,7 +14,7 @@ public class GlobalManager {
 
     public static String httpNGROKAddress()
     {
-        return "http://6765-2a02-2f0c-5a09-aa00-d876-cff0-d34b-9437.ngrok.io";
+        return "http://2bc7-2a02-2f0c-5a09-aa00-5870-2c65-325b-b63f.ngrok.io";
     }
 
     public static void setClientId(int clientId) {
@@ -60,4 +60,5 @@ public class GlobalManager {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString(Constants.getPassword(), null);
     }
+
 }

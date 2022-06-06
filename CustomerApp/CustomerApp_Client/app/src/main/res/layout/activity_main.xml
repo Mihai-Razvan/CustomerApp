@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/act_main_test_button"
+                    android:id="@+id/act_main_index_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
@@ -74,7 +74,7 @@
                     android:background="@color/white"
                     android:padding="0dp"
 
-                    app:srcCompat="@mipmap/place_holder_logo_foreground" />
+                    app:srcCompat="@mipmap/main_index_logo_foreground" />
 
                 <Space
                     android:layout_width="0dp"
@@ -138,7 +138,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/act_main_login_button"
+                    android:id="@+id/act_main_test_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
@@ -146,7 +146,7 @@
                     android:background="@color/white"
                     android:padding="0dp"
 
-                    app:srcCompat="@mipmap/place_holder_logo_foreground"  />
+                    app:srcCompat="@mipmap/place_holder_logo_foreground" />
 
                 <Space
                     android:layout_width="0dp"
@@ -155,7 +155,7 @@
                 </Space>
 
                 <ImageButton
-                    android:id="@+id/act_main_index_button"
+                    android:id="@+id/act_main_deals_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
@@ -163,7 +163,7 @@
                     android:background="@color/white"
                     android:padding="0dp"
 
-                    app:srcCompat="@mipmap/main_index_logo_foreground" />
+                    app:srcCompat="@mipmap/main_deals_logo_foreground"  />
 
                 <Space
                     android:layout_width="0dp"

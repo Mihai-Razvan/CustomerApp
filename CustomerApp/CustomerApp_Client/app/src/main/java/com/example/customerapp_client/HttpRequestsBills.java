@@ -82,6 +82,7 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private void parseBillsListJson(String input)      //the response received from server is a json string that has to be parsed
     {
+        System.out.println(input);
         JsonObject jsonObject = JsonParser.parseString(input).getAsJsonObject();
         billList.clear();
         int numOfBills = jsonObject.get("numOfBills").getAsInt();
@@ -90,14 +91,13 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
         {
             String key = "id" + Integer.toString(i);
             JsonObject jsonBill = jsonObject.getAsJsonObject(key);
-            String name = jsonBill.get("name").getAsString();
             String total = jsonBill.get("total").getAsString();
             String status = jsonBill.get("status").getAsString();
-            String address = jsonBill.get("address").getAsString();
+            String fullAddress = jsonBill.get("fullAddress").getAsString();
             String releaseDate = jsonBill.get("releaseDate").getAsString();
             String payDate = jsonBill.get("payDate").getAsString();
 
-            bill = new DataBill(name, total, status, address, releaseDate, payDate);
+            bill = new DataBill(total, status, fullAddress, releaseDate, payDate);
             billList.add(bill);
         }
     }

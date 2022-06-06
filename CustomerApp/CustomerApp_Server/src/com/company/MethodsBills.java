@@ -13,14 +13,13 @@ public class MethodsBills {
 
         for(int i = 0; i < billDataList.size(); i++)
         {
-            String nameField = "'name': " + billDataList.get(i).getFirstName();
-            String totalField = "'total': " + billDataList.get(i).getTotal();
-            String statusField = "'status': " + billDataList.get(i).getStatus();
-            String addressField = "'address': " + billDataList.get(i).getAddressName();
-            String releaseDateField = "'releaseDate': " + billDataList.get(i).getReleaseDate();
-            String payDateField = "'payDate': " + billDataList.get(i).getPayDate();
+            String totalField = "'total': '" + billDataList.get(i).getTotal() + "'";
+            String statusField = "'status': '" + billDataList.get(i).getStatus() + "'";
+            String fullAddressField = "'fullAddress': '" + billDataList.get(i).getFullAddress() + "'";
+            String releaseDateField = "'releaseDate': '" + billDataList.get(i).getReleaseDate() + "'";
+            String payDateField = "'payDate': '" + billDataList.get(i).getPayDate() + "'";
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + nameField + "," + totalField + "," + statusField + "," + addressField + "," + releaseDateField + "," + payDateField + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + totalField + "," + statusField + "," + fullAddressField + "," + releaseDateField + "," + payDateField + "}";
         }
 
         jsonResponse += "}";

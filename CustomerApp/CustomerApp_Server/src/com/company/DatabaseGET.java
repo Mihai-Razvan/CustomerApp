@@ -16,26 +16,29 @@ public class DatabaseGET {
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT ci.first_name AS 'FirstName', b.total AS 'Total', b.release_date AS 'ReleaseDate', b.pay_date AS 'PayDate', " +
-                                                             "b.status AS 'Status', a.address_name AS 'AddressName'\n" +
-                                                             "FROM Client c, Bill b, Index_Table i, Address a, Client_Info ci\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT b.total AS 'Total', b.release_date AS 'ReleaseDate', b.pay_date AS 'PayDate', " +
+                                                             "b.status AS 'Status', a.city AS 'City', a.street AS 'Street', a.number AS 'Number', a.details AS 'Details'\n" +
+                                                             "FROM Client c, Bill b, Index_Table i, Address a\n" +
                                                              "WHERE c.client_id = " + clientId + "\n" +
                                                              "AND c.client_id = a.client_id\n" +
                                                              "AND a.address_id = i.address_id\n" +
-                                                             "AND i.index_id = b.index_id\n" +
-                                                             "AND c.client_id = ci.client_id");
+                                                             "AND i.index_id = b.index_id");
 
-            System.out.println(resultSet.getString("FirstName"));
             while (resultSet.next())
             {
-                String firstName = resultSet.getString("FirstName");
-                int total = resultSet.getInt("Total");
+                String total = resultSet.getString("Total");
                 String status = resultSet.getString("Status");
-                String addressName = resultSet.getString("AddressName");
                 String releaseDate = resultSet.getString("ReleaseDate");
                 String payDate = resultSet.getString("PayDate");
 
-                DataBill billData = new DataBill(firstName, total, status, addressName, releaseDate, payDate);
+                String city = resultSet.getString("City");
+                String street = resultSet.getString("Street");
+                String number = resultSet.getString("Number");
+                String details = resultSet.getString("Details");
+
+                String fullAddress = city + ", " + street + ", " + number + ", " + details;
+
+                DataBill billData = new DataBill(total, status, fullAddress, releaseDate, payDate);
                 billDataList.add(billData);
             }
 

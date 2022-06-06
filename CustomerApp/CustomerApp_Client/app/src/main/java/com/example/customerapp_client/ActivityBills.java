@@ -87,7 +87,7 @@ public class ActivityBills extends AppCompatActivity implements ActivityBasics {
                     //add bills for newly selected address
                     numOfBills = allBillsList.size();
                     for(int j = 0; j < numOfBills; j++)
-                        if(allBillsList.get(j).getAddress().equals(newAddress))
+                        if(allBillsList.get(j).getFullAddress().equals(newAddress))
                         {
                             usedBillsList.add(allBillsList.get(j));
                             billsAdapter.notifyItemInserted(usedBillsList.size() - 1);
@@ -127,7 +127,7 @@ public class ActivityBills extends AppCompatActivity implements ActivityBasics {
         addressList.add("All");
         for(int i = 0; i < allBillsList.size(); i++)
         {
-            String address = allBillsList.get(i).getAddress();
+            String address = allBillsList.get(i).getFullAddress();
             if(!addressList.contains(address))
                 addressList.add(address);
         }

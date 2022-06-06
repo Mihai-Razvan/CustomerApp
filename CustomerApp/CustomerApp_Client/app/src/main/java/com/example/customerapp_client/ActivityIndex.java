@@ -1,5 +1,7 @@
 package com.example.customerapp_client;
 
+import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -183,6 +185,19 @@ public class ActivityIndex extends AppCompatActivity  implements ActivityBasics{
         act_index_history_category_recycleView.setLayoutManager(layoutManager);
         act_index_history_category_recycleView.setItemAnimator(new DefaultItemAnimator());
         act_index_history_category_recycleView.setAdapter(indexesAdapter);
+
+        if(addressesList.size() == 0)
+        {
+            act_index_send_category_OldIndex_TW.setText("Old index: You don't have any address on this account");
+            act_index_send_category_OldIndex_TW.setTextColor(Color.RED);
+            act_index_send_category_send_button.setVisibility(View.INVISIBLE);
+            act_index_send_category_NewIndex_ET.setVisibility(View.INVISIBLE);
+        }
+        {
+            act_index_send_category_OldIndex_TW.setTextColor(Color.BLACK);
+            act_index_send_category_send_button.setVisibility(View.VISIBLE);
+            act_index_send_category_NewIndex_ET.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setIndexesDifferenceAdapter()

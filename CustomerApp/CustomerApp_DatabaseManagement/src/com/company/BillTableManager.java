@@ -9,7 +9,7 @@ import java.util.TimerTask;
 
 public class BillTableManager implements Runnable {
 
-    private final int billsSendDay = 1;     //the day bills are created (on 1st of every month)
+    private final int billsSendDay = 6;     //the day bills are created (on 1st of every month)
 
     @Override
     public void run() {

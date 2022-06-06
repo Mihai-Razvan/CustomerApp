@@ -22,17 +22,17 @@ public class AdapterBills extends RecyclerView.Adapter<AdapterBills.MyViewHolder
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private final TextView card_name;
+        private final TextView card_releaseDate;
         private final TextView card_total;
         private final TextView card_status;
-        private final TextView card_dueDate;
+        private final TextView card_payDate;
 
         public MyViewHolder(final View view) {
             super(view);
-            card_name = view.findViewById(R.id.bill_card_name_TW);
+            card_releaseDate = view.findViewById(R.id.bill_card_releaseDate_TW);
             card_total = view.findViewById(R.id.bill_card_total_TW);
             card_status = view.findViewById(R.id.bill_card_status_TW);
-            card_dueDate = view.findViewById(R.id.bill_card_dueDate_TW);
+            card_payDate = view.findViewById(R.id.bill_card_payDate_TW);
         }
     }
 
@@ -45,17 +45,19 @@ public class AdapterBills extends RecyclerView.Adapter<AdapterBills.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull AdapterBills.MyViewHolder holder, int position) {
-        String name = "Name: " + billsList.get(position).getName();
-        holder.card_name.setText(name);
+        String releaseDate = "Release date: " + billsList.get(position).getReleaseDate();
+        releaseDate = releaseDate.replace("-",  ".");
+        holder.card_releaseDate.setText(releaseDate);
 
-        String total = "Total: " + billsList.get(position).getTotal();
+        String total = "Total: " + billsList.get(position).getTotal() + " RON";
         holder.card_total.setText(total);
 
-        String status = "Status: " + billsList.get(position).getStatus();
+        String status = billsList.get(position).getStatus();
         holder.card_status.setText(status);
 
-        String dueDate = "Pay date: " + billsList.get(position).getPayDate();
-        holder.card_dueDate.setText(dueDate);
+        String payDate = "Pay date: " + billsList.get(position).getPayDate();
+        payDate = payDate.replace("-",  ".");
+        holder.card_payDate.setText(payDate);
     }
 
     @Override
