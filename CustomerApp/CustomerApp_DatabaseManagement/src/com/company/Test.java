@@ -1,5 +1,7 @@
 package com.company;
 
+
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,7 +38,6 @@ public class Test {
         LocalDate date = LocalDate.parse("2022-04-29");
 
         System.out.println(date.getMonth().toString());
-
-
     }
+
 }

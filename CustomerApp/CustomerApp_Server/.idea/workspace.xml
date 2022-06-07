@@ -5,35 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityBills.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityBills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityIndex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/ActivityMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/AdapterBills.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/AdapterBills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/DataBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/DataBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/GlobalManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/java/com/example/customerapp_client/HttpRequestsBills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/card_bill.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/layout/card_bill.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-anydpi-v26/main_account_logo_round.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-hdpi/main_account_logo_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-mdpi/main_account_logo_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xhdpi/main_account_logo_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xxhdpi/main_account_logo_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/app/src/main/res/mipmap-xxxhdpi/main_account_logo_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/BillTableManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/BillTableManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/BillTableManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/BillTableManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/BillTableManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/BillTableManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DataBill.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DataBill.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/DatabaseGET.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/MethodsBills.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CustomerApp_Server/com/company/MethodsBills.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DataBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DataBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabaseGET.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MethodsBills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MethodsBills.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../database.db" beforeDir="false" afterPath="$PROJECT_DIR$/../../database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomerApp_Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CustomerApp_Server.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +95,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CustomerApp_DatabaseManagement" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../Softs/Intellij-Objects/BankingLibrary.jar" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />

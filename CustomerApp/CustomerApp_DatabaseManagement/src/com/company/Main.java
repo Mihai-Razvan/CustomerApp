@@ -10,7 +10,5 @@ public class Main {
         Thread billTableManagerThread = new Thread(billTableManager);
         billTableManagerThread.start();
 
-
-        //Test.date();
     }
 }
