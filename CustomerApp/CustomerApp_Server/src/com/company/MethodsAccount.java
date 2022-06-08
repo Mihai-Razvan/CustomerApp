@@ -1,5 +1,7 @@
 package com.company;
 
+import com.BankingLibrary.Bank;
+import com.BankingLibrary.Card;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -97,4 +99,26 @@ public class MethodsAccount {
 
         return jsonResponse;
     }
+
+    public static String extractCardNumberFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("cardNumber").getAsString();
+    }
+
+    public static String extractExpirationDateFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("expirationDate").getAsString();
+    }
+
+    public static String extractCVVFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("cvv").getAsString();
+    }
+
 }

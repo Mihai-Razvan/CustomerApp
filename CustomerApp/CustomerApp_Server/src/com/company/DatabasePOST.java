@@ -172,6 +172,27 @@ public class DatabasePOST {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void postCard(int clientId, String cardNumber, String expirationDate, String cvv)  throws SQLException //expirationDate has the MM / YY format
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
+                                                             "FROM Card");
+
+            int cardId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
+
+            statement.execute("INSERT INTO Card\n" +
+                                  "VALUES (" + cardId + ", " + clientId + ", '" + cardNumber + "', '" + expirationDate + "', '" + cvv + "', 'ACTIVE')");
+
+            connection.close();
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
+
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok
     {
         String dbConnectionStatus;

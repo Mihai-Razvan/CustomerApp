@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8478ba3d-4887-4ed6-b7ff-ffab3a5792a6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_Client/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/out/production/CustomerApp_DatabaseManagement/com/company/Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CustomerApp_DatabaseManagement/src/com/company/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomerApp_Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CustomerApp_Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DatabasePOST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/HttpContextAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/MethodsAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MethodsAccount.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +92,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../Softs/Intellij-Objects/BankingLibrary.jar" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Intellij-Projects/BankingLibrary_GitRep/BankingLibrary" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />

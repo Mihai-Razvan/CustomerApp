@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Minus (-) how much dp you gave in the stroke width from left right-->
+    <item>
+        <shape
+            android:shape="rectangle">
+            <stroke android:width="3dp" android:color="#00FF44" />
+            <corners android:radius="7dp"/>
+            <!--This is the main background -->
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

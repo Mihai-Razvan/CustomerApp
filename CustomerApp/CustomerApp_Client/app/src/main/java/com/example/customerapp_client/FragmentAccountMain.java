@@ -76,6 +76,7 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         act_account_mainF_warningNo_layout_onClick();
         act_account_mainF_contactInfo_layout_onClick();
         act_account_mainF_addresses_layout_onClick();
+        act_account_mainF_cards_layout_onClick();
         act_account_mainF_deleteAccount_layout_onClick();
         act_account_mainF_changePassword_layout_onClick();
         act_account_mainF_logOut_button_onClick();
@@ -107,6 +108,16 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
             @Override
             public void onClick(View view) {
                 setAddressesFragment();
+            }
+        });
+    }
+
+    private void act_account_mainF_cards_layout_onClick()
+    {
+        act_account_mainF_cards_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setCardsFragment();
             }
         });
     }
@@ -192,6 +203,14 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddresses());
+        fragmentTransaction.commit();
+    }
+
+    private void setCardsFragment()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddCard());
         fragmentTransaction.commit();
     }
 

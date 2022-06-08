@@ -30,6 +30,10 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private String phone;
     private DataClientInfo dataClientInfo;
 
+    private String cardNumber;      //used for /account/cards/new
+    private String expirationDate;
+    private String cvv;
+
     private final ArrayList<String> addressesList = new ArrayList<>();    //they are in fullAddress form
 
     public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests, or delete
@@ -62,6 +66,14 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         this.status = "Failed";
     }
 
+    public HttpRequestsAccount(String path, String cardNumber, String expirationDate, String cvv) {      //used for /account/cards/new
+        this.path = path;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.cvv = cvv;
+        this.status = "Failed";
+    }
+
     @Override
     public void run() {
         choosePath();
@@ -91,6 +103,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
                 break;
             case "/account/contact":
                 path_contact();
+            case "/account/cards/new":
+                path_cards_new();
                 break;
         }
     }
@@ -290,6 +304,35 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     }
 
+    private void path_cards_new() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/cards/new");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseCardToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream())); //could be -2 if error, -1 if card doesn't exist in mongoDB, 1 if ok
+            status = response.readLine();
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T ADD CARD: " + e.getMessage());
+            status = "-2";
+        }
+
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     private String parseClientIdToJson()
@@ -358,6 +401,14 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         dataClientInfo = new DataClientInfo(firstName, lastName, email, phone);
 
         status = "Success";
+    }
+
+    private String parseCardToJson()
+    {
+        return "{'clientId': '" + GlobalManager.getClientId() + "'" +
+              ", 'cardNumber': '" + cardNumber + "'" +
+              ", 'expirationDate': '" + expirationDate + "'" +
+              ", 'cvv': '" + cvv + "'}";
     }
 
     public ArrayList<String> getAddressesList() {

@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.285" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/act_index_top_buttons.xml" value="0.2995" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/edit_text_shape.xml" value="0.2995" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/ic_launcher_background.xml" value="0.285" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/placeHolder_background.xml" value="0.285" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/test_border_1.xml" value="0.291" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/test_border_5.xml" value="0.3035" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/test_border_6.xml" value="0.3035" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/test_border_7.xml" value="0.3035" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/drawable/test_border_8.xml" value="0.2265" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout-w1240dp/activity_authentification.xml" value="0.23560910307898258" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout-w936dp/activity_authentification.xml" value="0.25614754098360654" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/activity_account.xml" value="0.2953311617806732" />
@@ -39,7 +41,9 @@
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/content_account.xml" value="0.1393110435663627" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/content_test.xml" value="0.2515625" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_add_address.xml" value="0.29583333333333334" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_add_card.xml" value="0.2717391304347826" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_addresses.xml" value="0.33" />
+        <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_cards.xml" value="0.29583333333333334" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_contact_info.xml" value="0.33" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_main.xml" value="0.33" />
         <entry key="..\:/Projects/Android Apps/CustomerApp_GitRep/CustomerApp/CustomerApp_Client/app/src/main/res/layout/fragment_account_password.xml" value="0.33" />

@@ -1,5 +1,8 @@
 package com.company;
 
+import com.BankingLibrary.Bank;
+import com.BankingLibrary.Card;
+import com.mongodb.MongoCommandException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -31,6 +34,7 @@ public class HttpContextAccount implements HttpContextBasics {
         context_account_password_change();
         context_account_contact_change();
         context_account_contact();
+        context_account_cards_new();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
@@ -237,6 +241,44 @@ public class HttpContextAccount implements HttpContextBasics {
 
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_cards_new() {   //returns -2 if internal error, -1 if card doesn't exist in mongoDB, 1 if ok
+        server.createContext("/account/cards/new", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/cards/new");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage;    //if inside try will throw exception then the response won't be a json but an empty String
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                    String cardNumber = MethodsAccount.extractCardNumberFromJson(requestLine);
+                    String expirationDate = MethodsAccount.extractExpirationDateFromJson(requestLine);
+                    String cvv = MethodsAccount.extractCVVFromJson(requestLine);
+
+                    Card card = Bank.getCard(cardNumber, cvv, expirationDate);       //if no card is found it will throw NullPointerException / MongoCommandException
+                    DatabasePOST.postCard(clientId, cardNumber, expirationDate, cvv);   //SQLEXCEPTION could come from here
+                    responseMessage = "1";
+                }
+                catch (SQLException | MongoCommandException e){
+                    e.printStackTrace();
+                    responseMessage = "-2";
+                }
+                catch (NullPointerException e) {
+                    e.printStackTrace();
+                    responseMessage = "-1";
                 }
 
                 exchange.sendResponseHeaders(200, responseMessage.length());
