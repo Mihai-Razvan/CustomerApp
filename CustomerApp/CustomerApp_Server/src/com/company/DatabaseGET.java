@@ -229,4 +229,49 @@ public class DatabaseGET {
             throw e;
         }
     }
+
+    public static ArrayList<String> getCards(int clientId) throws SQLException
+    {
+        ArrayList<String> cardsList = new ArrayList<>();   //in this list we keep the 4 digits of every card
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT card_number AS 'CardNumber'\n" +
+                                                             "FROM Card\n" +
+                                                             "WHERE client_id = " + clientId + "\n" +
+                                                             "AND status = 'Active'");
+
+            while(resultSet.next())
+            {
+                String lastDigits = resultSet.getString("CardNumber").substring(12, 16);
+                cardsList.add(lastDigits);
+            }
+
+            connection.close();
+            return cardsList;
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public static String getBalance(int clientId) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT balance AS 'Balance'\n" +
+                                                             "FROM Wallet\n" +
+                                                             "WHERE wallet_id = " + clientId);
+
+            String balance = resultSet.getString(1);
+            connection.close();
+            return balance;
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
 }

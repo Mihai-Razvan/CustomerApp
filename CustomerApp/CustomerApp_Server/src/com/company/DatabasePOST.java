@@ -172,13 +172,24 @@ public class DatabasePOST {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void postCard(int clientId, String cardNumber, String expirationDate, String cvv)  throws SQLException //expirationDate has the MM / YY format
+    public static String postCard(int clientId, String cardNumber, String expirationDate, String cvv)  throws SQLException //expirationDate has the MM / YY format
     {
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*)\n" +
+                                                             "FROM Card\n" +
+                                                             "WHERE card_number = '" + cardNumber + "'\n" +
+                                                             "AND expiration_date = + '" + expirationDate + "'\n" +
+                                                             "AND cvv = '" + cvv + "'\n" +
+                                                             "AND status = 'Active'\n" +
+                                                             "AND client_id = " + clientId);
+
+            if(resultSet.next())   //card already is in the DB for this user. ! A card could be added multiple times but it needs to be registered on another user so another client_id
+                return "-1";     //card already exists for this user
+
+            resultSet = statement.executeQuery("SELECT COUNT(*) AS 'NumOfRows'\n" +
                                                              "FROM Card");
 
             int cardId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
@@ -187,6 +198,8 @@ public class DatabasePOST {
                                   "VALUES (" + cardId + ", " + clientId + ", '" + cardNumber + "', '" + expirationDate + "', '" + cvv + "', 'ACTIVE')");
 
             connection.close();
+
+            return "1";
         }
         catch (SQLException e) {
             throw e;

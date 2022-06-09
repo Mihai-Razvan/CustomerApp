@@ -210,7 +210,7 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
     {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddCard());
+        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountCards());
         fragmentTransaction.commit();
     }
 

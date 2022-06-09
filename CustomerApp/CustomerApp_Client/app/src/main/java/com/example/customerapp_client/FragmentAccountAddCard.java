@@ -90,11 +90,14 @@ public class FragmentAccountAddCard extends Fragment implements ActivityBasics {
                     String status = httpRequestsAccount.getStatus();
 
                     switch (status) {
-                        case "-2":
+                        case "-3":
                             act_account_addCardF_warning_TW.setText("Internal error!");
                             break;
-                        case "-1":
+                        case "-2":
                             act_account_addCardF_warning_TW.setText("Invalid card!");
+                            break;
+                        case "-1":
+                            act_account_addCardF_warning_TW.setText("Card already added!");
                             break;
                         case "1":
                             act_account_addCardF_warning_TW.setText("Card successfully added!");

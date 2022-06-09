@@ -35,6 +35,8 @@ public class HttpContextAccount implements HttpContextBasics {
         context_account_contact_change();
         context_account_contact();
         context_account_cards_new();
+        context_account_cards();
+        context_account_balance();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
@@ -252,7 +254,7 @@ public class HttpContextAccount implements HttpContextBasics {
         });
     }
 
-    private void context_account_cards_new() {   //returns -2 if internal error, -1 if card doesn't exist in mongoDB, 1 if ok
+    private void context_account_cards_new() {   //returns -3 if internal error, -2 if card doesn't exist in mongoDB, -1 if user already got this card in this app, 1 if ok
         server.createContext("/account/cards/new", new HttpHandler() {
             @Override
             public void handle(HttpExchange exchange) throws IOException {
@@ -268,15 +270,71 @@ public class HttpContextAccount implements HttpContextBasics {
                     String expirationDate = MethodsAccount.extractExpirationDateFromJson(requestLine);
                     String cvv = MethodsAccount.extractCVVFromJson(requestLine);
 
-                    Card card = Bank.getCard(cardNumber, cvv, expirationDate);       //if no card is found it will throw NullPointerException / MongoCommandException
-                    DatabasePOST.postCard(clientId, cardNumber, expirationDate, cvv);   //SQLEXCEPTION could come from here
-                    responseMessage = "1";
+                    Bank.getCard(cardNumber, cvv, expirationDate);       //if no card is found it will throw NullPointerException / MongoCommandException
+                    responseMessage = DatabasePOST.postCard(clientId, cardNumber, expirationDate, cvv);   //SQLEXCEPTION could come from here
                 }
                 catch (SQLException | MongoCommandException e){
                     e.printStackTrace();
-                    responseMessage = "-2";
+                    responseMessage = "-3";
                 }
                 catch (NullPointerException e) {
+                    e.printStackTrace();
+                    responseMessage = "-2";     //card doesn't exist in mongoDB
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_cards() {
+        server.createContext("/account/cards", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/cards");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage = "";    //if inside try will throw exception then the response won't be a json but an empty String
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+
+                    responseMessage = MethodsAccount.cardListToJson(DatabaseGET.getCards(clientId));  //SQLEXCEPTION could come from here
+                }
+                catch (SQLException e){
+                    e.printStackTrace();
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_balance() {
+        server.createContext("/account/balance", new HttpHandler() {      //returns -1 if error or a number >= 0 if ok
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/balance");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage = "";    //if inside try will throw exception then the response won't be a json but an empty String
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+
+                    responseMessage = DatabaseGET.getBalance(clientId);  //SQLEXCEPTION could come from here
+                }
+                catch (SQLException e){
                     e.printStackTrace();
                     responseMessage = "-1";
                 }
