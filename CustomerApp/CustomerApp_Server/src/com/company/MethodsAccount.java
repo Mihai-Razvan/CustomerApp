@@ -121,6 +121,13 @@ public class MethodsAccount {
         return jsonObject.get("cvv").getAsString();
     }
 
+    public static String extractAmountFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("amount").getAsString();
+    }
+
     public static String cardListToJson(ArrayList<String> cardsList)
     {
         String jsonResponse = "{'numOfCards': " + Integer.toString(cardsList.size());

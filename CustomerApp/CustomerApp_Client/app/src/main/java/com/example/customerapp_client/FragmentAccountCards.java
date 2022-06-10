@@ -21,12 +21,13 @@ import java.util.ArrayList;
 public class FragmentAccountCards extends Fragment implements ActivityBasics{
 
     RadioGroup act_account_cardsF_radioGroup;
-    Button act_account_cardsF_addMethod_button;
+    Button act_account_cardsF_addCard_button;
+    Button act_account_cardsF_addFunds_button;
     TextView act_account_cardsF_balance_TW;
 
     View view;
     ArrayList<String> cardsList;   //it contains the last 4 digits for every card number
-    int balance;
+    float balance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,22 +48,34 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
     public void getActivityElements()
     {
         act_account_cardsF_radioGroup = view.findViewById(R.id.act_account_cardsF_radioGroup);
-        act_account_cardsF_addMethod_button = view.findViewById(R.id.act_account_cardsF_addMethod_button);
+        act_account_cardsF_addCard_button = view.findViewById(R.id.act_account_cardsF_addCard_button);
         act_account_cardsF_balance_TW = view.findViewById(R.id.act_account_cardsF_balance_TW);
+        act_account_cardsF_addFunds_button = view.findViewById(R.id.act_account_cardsF_addFunds_button);
     }
 
     @Override
     public void setListeners()
     {
-        act_account_cardsF_addMethod_button_onClick();
+        act_account_cardsF_addCard_button_onClick();
+        act_account_cardsF_addFunds_button_onClick();
     }
 
-    private void act_account_cardsF_addMethod_button_onClick()
+    private void act_account_cardsF_addCard_button_onClick()
     {
-        act_account_cardsF_addMethod_button.setOnClickListener(new View.OnClickListener() {
+        act_account_cardsF_addCard_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setAddCardFragment();
+            }
+        });
+    }
+
+    private void act_account_cardsF_addFunds_button_onClick()
+    {
+        act_account_cardsF_addFunds_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setAddFundsFragment();
             }
         });
     }
@@ -104,7 +117,7 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
 
         try {
             connectionThread.join();
-            balance = Integer.parseInt(httpRequestsAccount.getBalance());
+            balance = Float.parseFloat(httpRequestsAccount.getBalance());
         }
         catch (InterruptedException e) {
             e.printStackTrace();
@@ -113,6 +126,8 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
 
         if(balance == -1)
             act_account_cardsF_balance_TW.setText("ERROR");
+        else if(balance == Math.round(balance))  //if the balance is an int it will be displayed as an int
+                act_account_cardsF_balance_TW.setText("RON " + Math.round(balance));
         else
             act_account_cardsF_balance_TW.setText("RON " + balance);
     }
@@ -122,6 +137,14 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddCard());
+        fragmentTransaction.commit();
+    }
+
+    private void setAddFundsFragment()
+    {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.act_account_frameLayout, new FragmentAccountAddFunds());
         fragmentTransaction.commit();
     }
 }

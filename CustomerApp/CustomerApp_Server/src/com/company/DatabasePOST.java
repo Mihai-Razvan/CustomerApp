@@ -206,6 +206,20 @@ public class DatabasePOST {
         }
     }
 
+    public static void addFunds(int clientId, float amount) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            statement.execute("UPDATE Wallet\n" +
+                                  "SET balance = balance + " + amount);
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
+
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok
     {
         String dbConnectionStatus;

@@ -36,6 +36,8 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
     private String balance;    //used for /account/balance
 
+    private String amount;    //used for /account/balance/add
+
     private final ArrayList<String> addressesList = new ArrayList<>();    //they are in fullAddress form
     private final ArrayList<String> cardsList = new ArrayList<>();  //it contains the last 4 digits for every card number
 
@@ -77,6 +79,15 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         this.status = "Failed";
     }
 
+    public HttpRequestsAccount(String path, String cardNumber, String expirationDate, String cvv, float amount) {      //used for /account/balance/add
+        this.path = path;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
+        this.cvv = cvv;
+        this.amount = Float.toString(amount);
+        this.status = "Failed";
+    }
+
     @Override
     public void run() {
         choosePath();
@@ -114,6 +125,9 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
                 break;
             case "/account/balance":
                 path_balance();
+                break;
+            case "/account/balance/add":
+                path_balance_add();
                 break;
         }
     }
@@ -388,6 +402,32 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         }
     }
 
+    private void path_balance_add() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/balance/add");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseAddFundsToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            // -3 if internal error, -2 if card doesn't exist in mongoDB, -1 if not enought funds in this app, 1 if ok
+            status = response.readLine();
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T ADD FUNDS: " + e.getMessage());
+            status = "-3";
+        }
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -486,6 +526,15 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
 
             cardsList.add(cardNumber);
         }
+    }
+
+    private String parseAddFundsToJson()
+    {
+        return "{'clientId': '" + GlobalManager.getClientId() + "'" +
+                ", 'cardNumber': '" + cardNumber + "'" +
+                ", 'expirationDate': '" + expirationDate + "'" +
+                ", 'cvv': '" + cvv + "'" +
+                ", 'amount': '" + amount + "'}";
     }
 
     public ArrayList<String> getAddressesList() {

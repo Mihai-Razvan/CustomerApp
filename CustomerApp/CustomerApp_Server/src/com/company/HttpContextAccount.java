@@ -37,6 +37,7 @@ public class HttpContextAccount implements HttpContextBasics {
         context_account_cards_new();
         context_account_cards();
         context_account_balance();
+        context_account_balance_add();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
@@ -337,6 +338,52 @@ public class HttpContextAccount implements HttpContextBasics {
                 catch (SQLException e){
                     e.printStackTrace();
                     responseMessage = "-1";
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_balance_add() {   //returns -3 if internal error, -2 if card doesn't exist in mongoDB, -1 if not enought funds, 1 if ok
+        server.createContext("/account/balance/add", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/balance/add");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage;    //if inside try will throw exception then the response won't be a json but an empty String
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                    String cardNumber = MethodsAccount.extractCardNumberFromJson(requestLine);
+                    String expirationDate = MethodsAccount.extractExpirationDateFromJson(requestLine);
+                    String cvv = MethodsAccount.extractCVVFromJson(requestLine);
+                    float amount = Float.parseFloat(MethodsAccount.extractAmountFromJson(requestLine));
+
+                    float sold = Bank.getSold(cardNumber, cvv, expirationDate);       //if no card is found it will throw NullPointerException / MongoCommandException
+
+                    if(sold < amount)
+                        responseMessage = "-1";
+                    else
+                    {
+                        DatabasePOST.addFunds(clientId, amount);   //SQLEXCEPTION could come from here
+                        Bank.reduceSold(cardNumber, cvv, expirationDate, amount);
+                        responseMessage = "1";
+                    }
+                }
+                catch (SQLException | MongoCommandException e){
+                    e.printStackTrace();
+                    responseMessage = "-3";
+                }
+                catch (NullPointerException e) {
+                    e.printStackTrace();
+                    responseMessage = "-2";     //card doesn't exist in mongoDB
                 }
 
                 exchange.sendResponseHeaders(200, responseMessage.length());

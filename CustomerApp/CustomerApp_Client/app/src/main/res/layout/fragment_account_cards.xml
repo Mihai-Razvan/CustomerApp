@@ -34,6 +34,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -69,11 +70,21 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/act_account_cardsF_addMethod_button"
+            android:id="@+id/act_account_cardsF_addCard_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add payment method"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="Add payment method" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/act_account_cardsF_addFunds_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Add funds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
