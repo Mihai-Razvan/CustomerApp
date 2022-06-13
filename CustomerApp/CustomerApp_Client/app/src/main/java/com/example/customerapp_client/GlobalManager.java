@@ -14,7 +14,7 @@ public class GlobalManager {
 
     public static String httpNGROKAddress()
     {
-        return "http://5f44-2a02-2f0c-5a09-aa00-5870-2c65-325b-b63f.ngrok.io";
+        return "http://d4c8-2a02-2f0c-5a09-aa00-5870-2c65-325b-b63f.ngrok.io";
     }
 
     public static void setClientId(int clientId) {
@@ -49,6 +49,24 @@ public class GlobalManager {
         editor.apply();
     }
 
+    public static void setPayMethod(Context context, String payMethod)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.getPayMethod(), payMethod);
+        editor.apply();
+    }
+
+    public static void setCard(Context context, String cardNumber, String expirationDate, String cvv)      //the selected card
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(Constants.getCardNumber(), cardNumber);
+        editor.putString(Constants.getCardExpirationDate(), expirationDate);
+        editor.putString(Constants.getCvv(), cvv);
+        editor.apply();
+    }
+
     public static String getSavedEmailOrUsername(Context context)  //returns emailOrUsername if user is logged in, otherwise null
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -61,4 +79,27 @@ public class GlobalManager {
         return sharedPreferences.getString(Constants.getPassword(), null);
     }
 
+    public static String getPayMethod(Context context)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(Constants.getPayMethod(), null);
+    }
+
+    public static String getCardNumber(Context context)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(Constants.getCardNumber(), null);
+    }
+
+    public static String getExpirationDate(Context context)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(Constants.getCardExpirationDate(), null);
+    }
+
+    public static String getCvv(Context context)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(Constants.getCvv(), null);
+    }
 }

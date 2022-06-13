@@ -14,14 +14,22 @@ import java.util.ArrayList;
 public class HttpRequestsBills implements Runnable, HttpRequestBasics {
 
     private final String path;
-    private String connectionStatus;
+    private String status;
     private DataBill bill;
     private ArrayList<DataBill> billList;
 
+    private String indexId;
+
     public HttpRequestsBills(String path) {
         this.path = path;
-        this.connectionStatus = "Failed";
+        this.status = "Failed";
         billList = new ArrayList<>();
+    }
+
+    public HttpRequestsBills(String path, String indexId) {     //used for /bills/pay
+        this.path = path;
+        this.indexId = indexId;
+        this.status = "Failed";
     }
 
     @Override
@@ -36,6 +44,10 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
         if(path.equals("/bills"))
         {
             path_bills();
+        }
+        else if(path.equals("/bills/pay"))
+        {
+            path_bills_pay();
         }
     }
 
@@ -63,11 +75,39 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
             String responseLine = response.readLine();
             parseBillsListJson(responseLine);
 
-            connectionStatus = "Successful";
+            status = "Successful";
             System.out.println(responseLine);
         }
         catch (IOException e) {
             System.out.println("COULDN'T SEND HTTP REQUEST: " + e.getMessage());
+        }
+    }
+
+    private void path_bills_pay()
+    {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/bills/pay");            //http://10.0.2.2:8080/bills
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseBillPayRequestToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String responseLine = response.readLine();
+
+            status = responseLine;       //could be 1 or -1
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T PAY BILL: " + e.getMessage());
+            status = "-1";
         }
     }
 
@@ -96,14 +136,21 @@ public class HttpRequestsBills implements Runnable, HttpRequestBasics {
             String fullAddress = jsonBill.get("fullAddress").getAsString();
             String releaseDate = jsonBill.get("releaseDate").getAsString();
             String payDate = jsonBill.get("payDate").getAsString();
+            String indexId = jsonBill.get("indexId").getAsString();
 
-            bill = new DataBill(total, status, fullAddress, releaseDate, payDate);
+            bill = new DataBill(total, status, fullAddress, releaseDate, payDate, indexId);
             billList.add(bill);
         }
     }
 
-    public String getConnectionStatus() {
-        return connectionStatus;
+
+    private String parseBillPayRequestToJson()
+    {
+        return "{'indexId': " + indexId + "}";
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public DataBill getBill()

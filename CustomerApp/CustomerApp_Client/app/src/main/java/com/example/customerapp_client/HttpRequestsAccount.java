@@ -39,7 +39,7 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
     private String amount;    //used for /account/balance/add
 
     private final ArrayList<String> addressesList = new ArrayList<>();    //they are in fullAddress form
-    private final ArrayList<String> cardsList = new ArrayList<>();  //it contains the last 4 digits for every card number
+    private final ArrayList<DataCard> cardsList = new ArrayList<>();
 
     public HttpRequestsAccount(String path, String city, String street, String number, String details) {      //used for /account/addresses/new requests, or delete
         this.path = path;
@@ -88,6 +88,12 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         this.status = "Failed";
     }
 
+    public HttpRequestsAccount(String path, float amount) {      //used for /account/balance/reduce
+        this.path = path;
+        this.amount = Float.toString(amount);
+        this.status = "Failed";
+    }
+
     @Override
     public void run() {
         choosePath();
@@ -128,6 +134,12 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
                 break;
             case "/account/balance/add":
                 path_balance_add();
+                break;
+            case "/account/balance/reduce":
+                path_balance_reduce();
+                break;
+            case "/account/cards/spend":
+                path_cards_spend();
                 break;
         }
     }
@@ -428,6 +440,57 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         }
     }
 
+    private void path_balance_reduce() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/balance/reduce");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseReduceBalanceToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            status = response.readLine();
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T ADD FUNDS: " + e.getMessage());
+            status = "-1";
+        }
+    }
+
+    private void path_cards_spend() {
+        try {
+            URL url = new URL(GlobalManager.httpNGROKAddress() + "/account/cards/spend");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setDoOutput(true);
+            connection.setConnectTimeout(2000);
+
+            DataOutputStream request = new DataOutputStream(connection.getOutputStream());
+            String message = parseAddFundsToJson();
+            request.writeBytes(message);
+            request.flush();
+            request.close();
+
+            BufferedReader response = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            status = response.readLine();
+        }
+        catch (IOException e) {
+            System.out.println("COULDN'T SPEND FROM CARD: " + e.getMessage());
+            status = "-2";
+        }
+    }
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,9 +585,12 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
         for(int i = 0; i < numOfCards; i++)
         {
             String key = "id" + Integer.toString(i);
-            String cardNumber = jsonObject.get(key).getAsString();
+            JsonObject jsonCard = jsonObject.getAsJsonObject(key);
+            String cardNumber = jsonCard.get("cardNumber").getAsString();
+            String expirationDate = jsonCard.get("expirationDate").getAsString();
+            String cvv = jsonCard.get("cvv").getAsString();
 
-            cardsList.add(cardNumber);
+            cardsList.add(new DataCard(cardNumber, expirationDate, cvv));
         }
     }
 
@@ -537,11 +603,17 @@ public class HttpRequestsAccount implements Runnable, HttpRequestBasics {
                 ", 'amount': '" + amount + "'}";
     }
 
+    private String parseReduceBalanceToJson()
+    {
+        return "{'clientId': " + GlobalManager.getClientId() +
+             ", 'amount': " + amount + "}";
+    }
+
     public ArrayList<String> getAddressesList() {
         return addressesList;
     }
 
-    public ArrayList<String> getCardsList() {return cardsList;}
+    public ArrayList<DataCard> getCardsList() {return cardsList;}
 
     public String getStatus()
     {

@@ -8,14 +8,16 @@ public class DataBill {  //class contains info about a bill, so info from table 
     private final String payDate;
     private final String status;
     private final String fullAddress;
+    private final String indexId;
 
-    public DataBill(String total, String status, String fullAddress, String releaseDate, String payDate)
+    public DataBill(String total, String status, String fullAddress, String releaseDate, String payDate, String indexId)
     {
         this.total = total;
         this.status = status;
         this.fullAddress = fullAddress;
         this.releaseDate = releaseDate;
         this.payDate = payDate;
+        this.indexId = indexId;
     }
 
 
@@ -29,8 +31,12 @@ public class DataBill {  //class contains info about a bill, so info from table 
     }
 
     public String  getFullAddress(){return fullAddress;}
+
     public String getReleaseDate() {return releaseDate;}
 
     public String getPayDate() {return payDate;}
 
+    public String getIndexId() {
+        return indexId;
+    }
 }

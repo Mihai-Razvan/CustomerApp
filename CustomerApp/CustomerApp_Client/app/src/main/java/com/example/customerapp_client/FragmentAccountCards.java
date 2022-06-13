@@ -26,7 +26,7 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
     TextView act_account_cardsF_balance_TW;
 
     View view;
-    ArrayList<String> cardsList;   //it contains the last 4 digits for every card number
+    ArrayList<DataCard> cardsList;
     float balance;
 
     @Override
@@ -36,6 +36,9 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
 
         getActivityElements();
         setListeners();
+
+        if(GlobalManager.getPayMethod(getContext()) == null)
+            GlobalManager.setPayMethod(getContext(), "Wallet");
 
         cardsList = new ArrayList<>();
         addCardsList();
@@ -58,6 +61,7 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
     {
         act_account_cardsF_addCard_button_onClick();
         act_account_cardsF_addFunds_button_onClick();
+        act_account_cardsF_radioGroup_onCheckedChange();
     }
 
     private void act_account_cardsF_addCard_button_onClick()
@@ -93,20 +97,29 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
             int cardsListSize = cardsList.size();
             for(int i = 0 ; i < cardsListSize; i++)
             {
+                DataCard dataCard = cardsList.get(i);
                 RadioButton radioButton = new RadioButton(getContext());
-                radioButton.setText("**** " + cardsList.get(i));
+                radioButton.setText("**** " + dataCard.getCardNumber().substring(12, 16));
 
                 radioButton.setLayoutParams(new RadioGroup.LayoutParams(RadioGroup.LayoutParams.MATCH_PARENT, RadioGroup.LayoutParams.WRAP_CONTENT));
-                radioButton.setTextColor(Color.BLACK);
+                radioButton.setTextColor(Color.parseColor("#000000"));
                 if(i != cardsListSize - 1)
                     radioButton.setBackgroundResource(R.drawable.test_border_3);
 
                 act_account_cardsF_radioGroup.addView(radioButton);
+                if(GlobalManager.getPayMethod(getContext()).equals("Card") && dataCard.getCardNumber().equals(GlobalManager.getCardNumber(getContext())) &&
+                        dataCard.getExpirationDate().equals(GlobalManager.getExpirationDate(getContext())) && dataCard.getCvv().equals(GlobalManager.getCvv(getContext())))
+                {
+                    act_account_cardsF_radioGroup.check(act_account_cardsF_radioGroup.getChildAt(i + 1).getId());
+                }
             }
         }
         catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        if(GlobalManager.getPayMethod(getContext()).equals("Wallet"))
+            act_account_cardsF_radioGroup.check(act_account_cardsF_radioGroup.getChildAt(0).getId());
     }
 
     private void getBalance()
@@ -131,6 +144,28 @@ public class FragmentAccountCards extends Fragment implements ActivityBasics{
         else
             act_account_cardsF_balance_TW.setText("RON " + balance);
     }
+
+    private void  act_account_cardsF_radioGroup_onCheckedChange()
+    {
+        act_account_cardsF_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+               int checkedButtonId = act_account_cardsF_radioGroup.getCheckedRadioButtonId();
+               int checkedButtonIndexInGroup = act_account_cardsF_radioGroup.indexOfChild(view.findViewById(checkedButtonId));
+
+                if(checkedButtonIndexInGroup == 0)
+                    GlobalManager.setPayMethod(getContext(), "Wallet");
+                else
+                {
+                    GlobalManager.setPayMethod(getContext(), "Card");
+                    DataCard selectedCard = cardsList.get(checkedButtonIndexInGroup - 1);
+                    GlobalManager.setCard(getContext(), selectedCard.getCardNumber(), selectedCard.getExpirationDate(), selectedCard.getCvv());
+                }
+            }
+        });
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void setAddCardFragment()
     {

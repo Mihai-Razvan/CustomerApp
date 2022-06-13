@@ -38,6 +38,8 @@ public class HttpContextAccount implements HttpContextBasics {
         context_account_cards();
         context_account_balance();
         context_account_balance_add();
+        context_account_balance_reduce();
+        context_account_cards_spend();
     }
 
     ///////////////////////////////////////////////CONTEXTS/////////////////////////////////////////////
@@ -384,6 +386,75 @@ public class HttpContextAccount implements HttpContextBasics {
                 catch (NullPointerException e) {
                     e.printStackTrace();
                     responseMessage = "-2";     //card doesn't exist in mongoDB
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_balance_reduce() {   //returns -1 if internal error,  1 if ok
+        server.createContext("/account/balance/reduce", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/balance/reduce");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage;
+
+                try {
+                    int clientId = MethodsAccount.extractClientIdFromJson(requestLine);
+                    float amount = Float.parseFloat(MethodsAccount.extractAmountFromJson(requestLine));
+
+                    DatabasePOST.reduceFunds(clientId, amount);   //SQLEXCEPTION could come from here
+                    responseMessage = "1";
+                }
+                catch (SQLException e){
+                    e.printStackTrace();
+                    responseMessage = "-1";
+                }
+
+                exchange.sendResponseHeaders(200, responseMessage.length());
+                DataOutputStream response = new DataOutputStream(exchange.getResponseBody());
+                response.writeBytes(responseMessage);
+                response.flush();
+                response.close();
+            }
+        });
+    }
+
+    private void context_account_cards_spend() {   //returns -2 if internal error, -1 if not enougth funds, 1 if ok
+        server.createContext("/account/cards/spend", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+
+                System.out.println("REQUEST RECEIVED ON /account/cards/spend");
+                BufferedReader request = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
+                String requestLine = request.readLine();
+                String responseMessage;
+
+                try {
+                    float amount = Float.parseFloat(MethodsAccount.extractAmountFromJson(requestLine));
+                    String cardNumber = MethodsAccount.extractCardNumberFromJson(requestLine);
+                    String expirationDate = MethodsAccount.extractExpirationDateFromJson(requestLine);
+                    String cvv = MethodsAccount.extractCVVFromJson(requestLine);
+
+                    if(Bank.getSold(cardNumber, cvv, expirationDate) < amount)
+                        responseMessage = "-1";
+                    else
+                    {
+                        Bank.reduceSold(cardNumber, cvv, expirationDate, amount);      //MongoCommandException could come from here
+                        responseMessage = "1";
+                    }
+                }
+                catch (MongoCommandException e){
+                    e.printStackTrace();
+                    responseMessage = "-2";
                 }
 
                 exchange.sendResponseHeaders(200, responseMessage.length());

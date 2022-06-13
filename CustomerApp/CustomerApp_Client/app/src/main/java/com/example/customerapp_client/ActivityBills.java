@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class ActivityBills extends AppCompatActivity implements ActivityBasics {
 
-    private Button act_bills_add_button;
     private RecyclerView act_bills_recyclerView;
     private Spinner act_bills_locations_spinner;
 
@@ -50,25 +49,14 @@ public class ActivityBills extends AppCompatActivity implements ActivityBasics {
     public void getActivityElements()
     {
         act_bills_recyclerView = findViewById(R.id.act_bills_recyclerView);
-        act_bills_add_button = findViewById(R.id.act_bills_add_button);
         act_bills_locations_spinner = findViewById(R.id.act_index_spinner);
     }
 
     @Override
     public void setListeners() {
-        act_bills_add_button_onClick();
         act_bills_locations_spinner_OnItemSelected();
     }
 
-    private void act_bills_add_button_onClick()
-    {
-        act_bills_add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("ADD BILL BUTTON PRESSED");
-            }
-        });
-    }
 
     private void act_bills_locations_spinner_OnItemSelected()       //when you select one of the addresses
     {
@@ -115,7 +103,7 @@ public class ActivityBills extends AppCompatActivity implements ActivityBasics {
 
     private void setBillsAdapter()
     {
-        billsAdapter = new AdapterBills(usedBillsList);
+        billsAdapter = new AdapterBills(usedBillsList, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         act_bills_recyclerView.setLayoutManager(layoutManager);
         act_bills_recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -144,7 +132,7 @@ public class ActivityBills extends AppCompatActivity implements ActivityBasics {
 
         try {
             connectionThread.join();
-            String connectionStatus = httpRequestsBills.getConnectionStatus();
+            String connectionStatus = httpRequestsBills.getStatus();
 
             if(connectionStatus.equals("Successful"))
             {

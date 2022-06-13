@@ -220,6 +220,20 @@ public class DatabasePOST {
         }
     }
 
+    public static void reduceFunds(int clientId, float amount) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            statement.execute("UPDATE Wallet\n" +
+                                  "SET balance = balance - " + amount);
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
+
     public static int registerUser(String email, String username, String password) //returns -3 if username already exists, -2 if email exists, -1 internal server error, newClientId if ok
     {
         String dbConnectionStatus;
@@ -327,6 +341,23 @@ public class DatabasePOST {
             connection.close();
 
             System.out.println("SUCCESSFULLY ADDED INDEX TO DATABASE");
+        }
+        catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void payBill(int indexId) throws SQLException
+    {
+        try {
+            Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
+            Statement statement = connection.createStatement();
+
+            statement.execute("UPDATE Bill\n" +
+                                  "SET status = 'Paid'\n" +
+                                  "WHERE index_id = " + indexId);
         }
         catch (SQLException e) {
             throw e;

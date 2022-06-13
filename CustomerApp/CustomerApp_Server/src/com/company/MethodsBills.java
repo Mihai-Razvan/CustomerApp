@@ -18,8 +18,9 @@ public class MethodsBills {
             String fullAddressField = "'fullAddress': '" + billDataList.get(i).getFullAddress() + "'";
             String releaseDateField = "'releaseDate': '" + billDataList.get(i).getReleaseDate() + "'";
             String payDateField = "'payDate': '" + billDataList.get(i).getPayDate() + "'";
+            String indexIdField = "'indexId': '" + billDataList.get(i).getIndexId() + "'";
 
-            jsonResponse += ",'id" + Integer.toString(i) + "': {" + totalField + "," + statusField + "," + fullAddressField + "," + releaseDateField + "," + payDateField + "}";
+            jsonResponse += ",'id" + Integer.toString(i) + "': {" + totalField + "," + statusField + "," + fullAddressField + "," + releaseDateField + "," + payDateField + "," + indexIdField + "}";
         }
 
         jsonResponse += "}";
@@ -32,6 +33,13 @@ public class MethodsBills {
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
 
         return jsonObject.get("clientId").getAsInt();
+    }
+
+    public static int getIndexIdFromJson(String jsonString)
+    {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+
+        return jsonObject.get("indexId").getAsInt();
     }
 
 }

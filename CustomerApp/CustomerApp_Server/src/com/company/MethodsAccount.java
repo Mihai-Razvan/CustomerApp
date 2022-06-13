@@ -128,14 +128,16 @@ public class MethodsAccount {
         return jsonObject.get("amount").getAsString();
     }
 
-    public static String cardListToJson(ArrayList<String> cardsList)
+    public static String cardListToJson(ArrayList<DataCard> cardsList)
     {
         String jsonResponse = "{'numOfCards': " + Integer.toString(cardsList.size());
 
         for(int i = 0; i < cardsList.size(); i++)
         {
-            String cardNumberField = ", 'id" + i + "': " + cardsList.get(i);
-            jsonResponse += cardNumberField;
+            String cardNumberField = "'cardNumber': '" + cardsList.get(i).getCardNumber() + "'";
+            String expirationDateField = "'expirationDate': '" + cardsList.get(i).getExpirationDate() + "'";
+            String cvvField = "'cvv': '" + cardsList.get(i).getCvv() + "'";
+            jsonResponse += ", 'id" + Integer.toString(i) + "': {" + cardNumberField + "," + expirationDateField + "," + cvvField + "}";
         }
 
         jsonResponse += "}";

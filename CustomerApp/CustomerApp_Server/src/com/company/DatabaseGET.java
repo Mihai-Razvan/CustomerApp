@@ -1,5 +1,7 @@
 package com.company;
 
+import com.BankingLibrary.Card;
+
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,8 +18,8 @@ public class DatabaseGET {
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT b.total AS 'Total', b.release_date AS 'ReleaseDate', b.pay_date AS 'PayDate', " +
-                                                             "b.status AS 'Status', a.city AS 'City', a.street AS 'Street', a.number AS 'Number', a.details AS 'Details'\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT b.total AS 'Total', b.release_date AS 'ReleaseDate', b.pay_date AS 'PayDate', b.status AS 'Status', " +
+                                                             "a.city AS 'City', a.street AS 'Street', a.number AS 'Number', a.details AS 'Details', b.index_id AS 'IndexId'\n" +
                                                              "FROM Client c, Bill b, Index_Table i, Address a\n" +
                                                              "WHERE c.client_id = " + clientId + "\n" +
                                                              "AND c.client_id = a.client_id\n" +
@@ -30,6 +32,7 @@ public class DatabaseGET {
                 String status = resultSet.getString("Status");
                 String releaseDate = resultSet.getString("ReleaseDate");
                 String payDate = resultSet.getString("PayDate");
+                String indexId = resultSet.getString("IndexId");
 
                 String city = resultSet.getString("City");
                 String street = resultSet.getString("Street");
@@ -38,7 +41,7 @@ public class DatabaseGET {
 
                 String fullAddress = city + ", " + street + ", " + number + ", " + details;
 
-                DataBill billData = new DataBill(total, status, fullAddress, releaseDate, payDate);
+                DataBill billData = new DataBill(total, status, fullAddress, releaseDate, payDate, indexId);
                 billDataList.add(billData);
             }
 
@@ -230,22 +233,25 @@ public class DatabaseGET {
         }
     }
 
-    public static ArrayList<String> getCards(int clientId) throws SQLException
+    public static ArrayList<DataCard> getCards(int clientId) throws SQLException
     {
-        ArrayList<String> cardsList = new ArrayList<>();   //in this list we keep the 4 digits of every card
+        ArrayList<DataCard> cardsList = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT card_number AS 'CardNumber'\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT card_number AS 'CardNumber', expiration_date AS 'ExpirationDate', cvv AS 'Cvv'\n" +
                                                              "FROM Card\n" +
                                                              "WHERE client_id = " + clientId + "\n" +
                                                              "AND status = 'Active'");
 
             while(resultSet.next())
             {
-                String lastDigits = resultSet.getString("CardNumber").substring(12, 16);
-                cardsList.add(lastDigits);
+                String cardNumber = resultSet.getString("CardNumber");
+                String expirationDate = resultSet.getString("ExpirationDate");
+                String cvv = resultSet.getString("Cvv");
+
+                cardsList.add(new DataCard(cardNumber, expirationDate, cvv));
             }
 
             connection.close();
