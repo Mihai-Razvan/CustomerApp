@@ -138,7 +138,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    android:id="@+id/act_main_test_button"
+                    android:id="@+id/act_main_wallet_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"

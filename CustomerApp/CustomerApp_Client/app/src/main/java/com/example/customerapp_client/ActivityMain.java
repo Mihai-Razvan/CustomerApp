@@ -18,7 +18,7 @@ import com.example.customerapp_client.databinding.ActivityMainBinding;
 
 public class ActivityMain extends AppCompatActivity implements ActivityBasics {
 
-    private ImageButton act_main_test_button;
+    private ImageButton act_main_wallet_button;
     private ImageButton act_main_bills_button;
     private ImageButton act_main_account_button;
     private ImageButton act_main_deals_button;
@@ -37,7 +37,7 @@ public class ActivityMain extends AppCompatActivity implements ActivityBasics {
 
     @Override
     public void getActivityElements() {
-        act_main_test_button = findViewById(R.id.act_main_test_button);
+        act_main_wallet_button = findViewById(R.id.act_main_wallet_button);
         act_main_bills_button = findViewById(R.id.act_main_bills_button);
         act_main_account_button = findViewById(R.id.act_main_account_button);
         act_main_deals_button = findViewById(R.id.act_main_deals_button);
@@ -48,7 +48,7 @@ public class ActivityMain extends AppCompatActivity implements ActivityBasics {
     @Override
     public void setListeners()
     {
-        act_main_test_button_onClick();
+        act_main_wallet_button_onClick();
         act_main_bills_button_onClick();
         act_main_account_button_onClick();
         act_main_deals_button_onClick();
@@ -56,37 +56,11 @@ public class ActivityMain extends AppCompatActivity implements ActivityBasics {
         act_main_contact_button_onClick();
     }
 
-    private void act_main_test_button_onClick() {
-        act_main_test_button.setOnClickListener(new View.OnClickListener() {
+    private void act_main_wallet_button_onClick() {
+        act_main_wallet_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("TEST ACTIVITY");
-
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    NotificationChannel channel = new NotificationChannel("My notification", "My notification", NotificationManager.IMPORTANCE_DEFAULT);
-//                    NotificationManager manager = activity.getSystemService(NotificationManager.class);
-//                    manager.createNotificationChannel(channel);
-//                }
-//
-//                NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, "My notification");
-//                builder.setContentTitle("Title");
-//                builder.setContentText("This is a notification");
-//                builder.setSmallIcon(R.mipmap.place_holder_logo_foreground);
-//                builder.setAutoCancel(true);
-//
-//                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(activity);
-//
-//                Intent indexIntent = new Intent(activity, ActivityIndex.class);
-//                Intent mainIntent = new Intent(activity, ActivityMain.class);
-//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
-//                stackBuilder.addParentStack(ActivityMain.class);
-//                stackBuilder.addNextIntent(mainIntent);
-//                stackBuilder.addNextIntent(indexIntent);
-//
-//                PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-//                builder.setContentIntent(resultPendingIntent);
-//
-//                managerCompat.notify(1, builder.build());
+                startActivity(new Intent(ActivityMain.this, ActivityWallet.class));
             }
         });
     }
