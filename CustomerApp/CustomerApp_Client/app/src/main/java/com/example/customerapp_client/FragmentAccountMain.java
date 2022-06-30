@@ -23,7 +23,6 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
     LinearLayout act_account_mainF_contactInfo_layout;
     LinearLayout act_account_mainF_changePassword_layout;
     LinearLayout act_account_mainF_addresses_layout;
-    LinearLayout act_account_mainF_cards_layout;
     LinearLayout act_account_mainF_deleteAccount_layout;
 
     LinearLayout act_account_mainF_warning_layout;
@@ -52,7 +51,6 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         act_account_mainF_contactInfo_layout = view.findViewById(R.id.act_account_mainF_contactInfo_layout);
         act_account_mainF_changePassword_layout = view.findViewById(R.id.act_account_mainF_changePassword_layout);
         act_account_mainF_addresses_layout = view.findViewById(R.id.act_account_mainF_addresses_layout);
-        act_account_mainF_cards_layout = view.findViewById(R.id.act_account_mainF_cards_layout);
         act_account_mainF_deleteAccount_layout = view.findViewById(R.id.act_account_mainF_deleteAccount_layout);
 
         act_account_mainF_warning_layout = view.findViewById(R.id.act_account_mainF_warning_layout);
@@ -74,7 +72,6 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         act_account_mainF_warningNo_layout_onClick();
         act_account_mainF_contactInfo_layout_onClick();
         act_account_mainF_addresses_layout_onClick();
-        act_account_mainF_cards_layout_onClick();
         act_account_mainF_deleteAccount_layout_onClick();
         act_account_mainF_changePassword_layout_onClick();
         act_account_mainF_logOut_button_onClick();
@@ -110,15 +107,6 @@ public class FragmentAccountMain extends Fragment implements ActivityBasics{
         });
     }
 
-    private void act_account_mainF_cards_layout_onClick()
-    {
-        act_account_mainF_cards_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setCardsFragment();
-            }
-        });
-    }
 
     private void act_account_mainF_deleteAccount_layout_onClick() {
 

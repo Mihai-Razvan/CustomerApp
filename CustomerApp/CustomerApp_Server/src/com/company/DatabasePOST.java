@@ -178,10 +178,10 @@ public class DatabasePOST {
             Connection connection = DriverManager.getConnection(GlobalManager.getDatabasePath());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*)\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT *\n" +
                                                              "FROM Card\n" +
                                                              "WHERE card_number = '" + cardNumber + "'\n" +
-                                                             "AND expiration_date = + '" + expirationDate + "'\n" +
+                                                             "AND expiration_date = '" + expirationDate + "'\n" +
                                                              "AND cvv = '" + cvv + "'\n" +
                                                              "AND status = 'Active'\n" +
                                                              "AND client_id = " + clientId);
@@ -195,7 +195,7 @@ public class DatabasePOST {
             int cardId = resultSet.getInt("NumOfRows") + 1;     //id is numOfRows + 1
 
             statement.execute("INSERT INTO Card\n" +
-                                  "VALUES (" + cardId + ", " + clientId + ", '" + cardNumber + "', '" + expirationDate + "', '" + cvv + "', 'ACTIVE')");
+                                  "VALUES (" + cardId + ", " + clientId + ", '" + cardNumber + "', '" + expirationDate + "', '" + cvv + "', 'Active')");
 
             connection.close();
 
